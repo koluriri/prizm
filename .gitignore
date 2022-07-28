@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+### StorybookJs ###
+# website: https://storybook.js.org/
+
+storybook-static/
