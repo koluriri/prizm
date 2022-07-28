@@ -1,0 +1,76 @@
+{
+  "name": "hello-world",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.11.45",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4",
+    "typesync": "^0.9.2",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "fix": "npm run -s format && npm run -s lint:fix",
+    "format": "prettier --write --loglevel=warn 'src/**/*.{js,jsx,ts,tsx,gql,graphql,json}'",
+    "lint": "npm run -s lint:style; npm run -s lint:es",
+    "lint:fix": "npm run -s lint:style:fix && npm run -s lint:es:fix",
+    "lint:es": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint:es:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint:conflict": "eslint-config-prettier 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint:style": "stylelint 'src/**/*.{css,less,sass,scss}'",
+    "lint:style:fix": "stylelint --fix 'src/**/*.{css,less,sass,scss}'",
+    "preinstall": "typesync || :"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/eslint": "^8.4.5",
+    "@types/prettier": "^2.6.3",
+    "@types/testing-library__jest-dom": "^5.14.5",
+    "@types/testing-library__user-event": "^4.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "prettier": "^2.7.1",
+    "stylelint": "^14.9.1",
+    "stylelint-config-recess-order": "^3.0.0",
+    "stylelint-config-standard": "^26.0.0",
+    "stylelint-order": "^5.0.0"
+  }
+}
