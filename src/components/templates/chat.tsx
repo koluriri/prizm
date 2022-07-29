@@ -2,10 +2,11 @@
 import { css } from '@emotion/react';
 import { FC, useRef, useEffect } from 'react';
 
-import Message, { MessageObject } from 'components/molecules/message';
+import { MessageObject, Messages } from 'data/types';
+import Message from 'components/molecules/message';
 
 const Chat: FC<{
-  messages: MessageObject[];
+  messages: Messages;
 }> = ({ messages }) => {
   const chatView = useRef<HTMLDivElement>(null);
   useEffect(() => {

@@ -1,8 +1,6 @@
-type Questions = {
-  [prefecture: string]: string[];
-};
+import { DefinedQuestions } from 'data/types';
 
-const cities: Questions = {
+const cities: DefinedQuestions = {
   神奈川県: [
     '横浜市',
     '川崎市',

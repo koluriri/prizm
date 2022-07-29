@@ -48,12 +48,7 @@ export const prefecture = [
   '沖縄県',
 ] as const;
 
-export type PrefectureStr = typeof prefecture[number];
-export type HintObj = {
-  [key in PrefectureStr]: string | number;
-};
-
-export const hint: HintObj[] = [
+export const hint = [
   {
     北海道: 5381733,
     宮城県: 2333899,

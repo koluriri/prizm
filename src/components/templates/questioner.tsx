@@ -2,21 +2,7 @@ import { FC, useRef, useEffect, useState } from 'react';
 
 import BigQuestion from 'components/organisms/bigquestion';
 import QuestionList from 'components/organisms/questionlist';
-
-const modes = ['easy', 'normal', 'hard', 'hell', 'station', 'cape'] as const;
-export type Mode = typeof modes[number];
-
-type modesConvert = {
-  [key in Mode]: (t: string) => string;
-};
-const modesConvert: modesConvert = {
-  easy: (t) => t,
-  normal: (t) => t.substr(0, 2),
-  hard: (t) => t.charAt(0),
-  hell: (t) => t.charAt(1),
-  station: (t) => t,
-  cape: (t) => t,
-};
+import { Mode, modesConvert } from 'data/types';
 
 const Questioner: FC<{
   mode: Mode;

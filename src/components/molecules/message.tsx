@@ -1,21 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { FC } from 'react';
-
-export type MessageTypes = 'answer' | 'hint' | 'start' | 'score';
-export type AnswerMessage = {
-  id: number;
-  name: string;
-  type: 'answer';
-  value: string;
-  matched: boolean;
-};
-export type GameMessage = {
-  id: number;
-  type: 'hint' | 'start' | 'score';
-  value: string;
-};
-export type MessageObject = AnswerMessage | GameMessage;
+import { MessageObject } from 'data/types';
 
 const Chat: FC<{
   message: MessageObject;

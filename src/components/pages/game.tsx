@@ -3,17 +3,17 @@ import { css } from '@emotion/react';
 import { FC, useEffect, useState } from 'react';
 import shuffle from 'lodash/shuffle';
 
-import Questioner, { Mode } from 'components/templates/questioner';
-import Chat from 'components/templates/chat';
-import { MessageObject } from 'components/molecules/message';
-import AnswerInput from 'components/templates/answerinput';
-
+import { MessageObject, Mode, Messages } from 'data/types';
 import { prefecture } from 'data/prefecture';
 import cities from 'data/cities';
 
+import Questioner from 'components/templates/questioner';
+import Chat from 'components/templates/chat';
+import AnswerInput from 'components/templates/answerinput';
+
 const Game: FC<{ setHome: () => void }> = ({ setHome }) => {
   const [isDuringGame, setIsDuringGame] = useState(true);
-  const [messages, setMessages] = useState<MessageObject[]>([]);
+  const [messages, setMessages] = useState<Messages>([]);
   const setMessage = (message: MessageObject) =>
     setMessages((histories) => [...histories, message]);
 

@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { FC, FormEvent, useState } from 'react';
 import UserRemain from 'components/molecules/userremain';
-import { MessageObject } from 'components/molecules/message';
+import { MessageObject } from 'data/types';
 
 const AnswerInput: FC<{
   setMessage: (message: MessageObject) => void;
