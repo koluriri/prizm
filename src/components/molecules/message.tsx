@@ -1,22 +1,55 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { FC } from 'react';
 
 export type MessageTypes = 'answer' | 'hint' | 'start' | 'score';
-export type MessageType = {
+export type AnswerMessage = {
   id: number;
   name: string;
-  type: MessageTypes;
-  value?: string;
-  matched?: boolean;
+  type: 'answer';
+  value: string;
+  matched: boolean;
 };
+export type GameMessage = {
+  id: number;
+  type: 'hint' | 'start' | 'score';
+  value: string;
+};
+export type MessageObject = AnswerMessage | GameMessage;
 
 const Chat: FC<{
-  message: MessageType;
-}> = ({ message }) => (
-  <p key={message.id}>
-    {message.name}
-    <br />
-    {message.value ?? ''}
-  </p>
-);
+  message: MessageObject;
+}> = ({ message }) => {
+  if (message.type === 'answer') {
+    const answerStyle = css({
+      padding: '8px 10px',
+      width: 'fit-content',
+      border: '1px solid #bbb',
+      borderRadius: '8px',
+      margin: '0 0 10px',
+    });
+    const matchStyle = message.matched
+      ? css({
+          background: '#9fff9f',
+        })
+      : css({
+          background: '#ffd9d9',
+        });
+
+    return (
+      <div
+        css={[answerStyle, matchStyle]}
+        data-match={message.matched}
+        key={message.id}
+      >
+        <b css={{ fontSize: '0.7em' }}>{message.name}</b>
+        <br />
+        {message.value}
+      </div>
+    );
+  }
+
+  return <p key={message.id}>{message.value}</p>;
+};
 
 export default Chat;

@@ -1,14 +1,20 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import Questioner, { Mode } from 'components/templates/questioner';
 import Chat from 'components/templates/chat';
-import { MessageType } from 'components/molecules/message';
+import { MessageObject } from 'components/molecules/message';
 import AnswerInput from 'components/templates/answerinput';
 
-const Game: FC = () => {
-  const mode: Mode = 'easy';
+const Game: FC<{ setHome: () => void }> = ({ setHome }) => {
+  const [isDuringGame, setIsDuringGame] = useState(true);
+  const [messages, setMessages] = useState<MessageObject[]>([]);
+  const setMessage = (message: MessageObject) =>
+    setMessages((histories) => [...histories, message]);
+
+  const mode: Mode = 'hard';
+  const answer = '神奈川';
   const questions: string[] = [
     '富士山',
     'おんぷ',
@@ -24,27 +30,35 @@ const Game: FC = () => {
     'ドア',
     '間接照明',
   ];
-  const isAnswered = false;
-  const messages: MessageType[] = [
-    { id: 1, name: 'うみねずみ', type: 'answer', value: '北海道' },
-    { id: 2, name: 'ソルトリバー', type: 'answer', value: '奈良県' },
-    { id: 3, name: 'うみねずみ', type: 'answer', value: '京都' },
-  ];
+
+  useEffect(() => {
+    if (
+      messages.find((message) => message.type === 'answer' && message.matched)
+    )
+      setIsDuringGame(false);
+  }, [messages]);
 
   const gameView = css({
     display: 'grid',
-    gridTemplateColumns: '60% 40%',
+    gridTemplateColumns: '40% 60%',
   });
 
   return (
-    <>
-      <div>初級モード</div>
-      <div css={gameView}>
-        <Questioner mode={mode} questions={questions} isAnswered={isAnswered} />
-        <Chat messages={messages} />
-        <AnswerInput />
-      </div>
-    </>
+    <div css={gameView}>
+      <Chat messages={messages} />
+      <Questioner
+        mode={mode}
+        questions={questions}
+        isDuringGame={isDuringGame}
+        finishGame={() => setIsDuringGame(false)}
+      />
+      <AnswerInput
+        setMessage={setMessage}
+        answer={answer}
+        isDuringGame={isDuringGame}
+        setHome={setHome}
+      />
+    </div>
   );
 };
 

@@ -17,9 +17,12 @@ const container = css({
 const App: FC = () => {
   const [isGame, setIsGame] = useState(false);
   const setGame = () => setIsGame(true);
+  const setHome = () => setIsGame(false);
 
   return (
-    <div css={container}>{isGame ? <Game /> : <Home setGame={setGame} />}</div>
+    <div css={container}>
+      {isGame ? <Game setHome={setHome} /> : <Home setGame={setGame} />}
+    </div>
   );
 };
 

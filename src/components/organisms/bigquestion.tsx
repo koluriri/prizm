@@ -3,14 +3,14 @@ import { css } from '@emotion/react';
 import { FC } from 'react';
 
 const BigQuestion: FC<{
-  displayText: string;
-}> = ({ displayText }) => (
+  displayQuestion: string;
+}> = ({ displayQuestion }) => (
   <div
     css={css`
       font-size: 180px;
     `}
   >
-    {displayText}
+    {displayQuestion}
   </div>
 );
 
