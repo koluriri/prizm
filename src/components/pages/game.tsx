@@ -1,12 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { FC, useEffect, useState } from 'react';
+import shuffle from 'lodash/shuffle';
 
 import Questioner, { Mode } from 'components/templates/questioner';
 import Chat from 'components/templates/chat';
 import { MessageObject } from 'components/molecules/message';
 import AnswerInput from 'components/templates/answerinput';
 
+import { prefecture } from 'data/prefecture';
 import cities from 'data/cities';
 
 const Game: FC<{ setHome: () => void }> = ({ setHome }) => {
@@ -15,19 +17,17 @@ const Game: FC<{ setHome: () => void }> = ({ setHome }) => {
   const setMessage = (message: MessageObject) =>
     setMessages((histories) => [...histories, message]);
 
-  const mode: Mode = 'hard';
+  const [mode, setMode] = useState<Mode>('easy');
   const [answer, setAnswer] = useState('');
   const [questions, setQuestions] = useState<string[]>([]);
 
   useEffect(() => {
     // 都道府県をランダムに取得
-    const prefecture =
-      Object.keys(cities)[
-        Math.floor(Math.random() * Object.keys(cities).length)
-      ];
-    setAnswer(prefecture);
-    setQuestions(cities[prefecture]);
+    const randomPref = shuffle(prefecture)[0];
+    setAnswer(randomPref);
+    setQuestions(shuffle(cities[randomPref]).slice(0, 30));
     setIsDuringGame(true);
+    setMode('hard');
   }, []);
 
   console.log(answer);

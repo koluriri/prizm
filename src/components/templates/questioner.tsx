@@ -31,6 +31,12 @@ const Questioner: FC<{
 
   const timerId = useRef<NodeJS.Timeout>();
   const clearTimer = () => clearInterval(timerId.current);
+
+  const displayQuestions = questions.map((question) =>
+    isDuringGame ? modesConvert[mode](question) : modesConvert.easy(question),
+  );
+  const displayQuestion = displayQuestions[currentQuesIndex - 1];
+
   // 初回マウントでタイマーセット
   useEffect(() => {
     setCurrentQuesIndex(1);
@@ -38,11 +44,6 @@ const Questioner: FC<{
 
     return clearTimer;
   }, [questions]);
-
-  const displayQuestions = questions.map((question) =>
-    isDuringGame ? modesConvert[mode](question) : modesConvert.easy(question),
-  );
-  const displayQuestion = displayQuestions[currentQuesIndex - 1];
 
   // currentQuesIndexが変わるたびに実行。全部回したら負け処理
   useEffect(() => {
