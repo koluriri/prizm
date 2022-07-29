@@ -1,4 +1,8 @@
-const capes = {
+type Questions = {
+  [prefecture: string]: string[];
+};
+
+const capes: Questions = {
   京都府: ['天橋立', '経ケ岬', '久美浜湾', '夕日ケ浦', '金ヶ岬', '犬ヶ岬'],
   福井県: [
     '東尋坊',

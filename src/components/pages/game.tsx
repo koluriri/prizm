@@ -7,6 +7,8 @@ import Chat from 'components/templates/chat';
 import { MessageObject } from 'components/molecules/message';
 import AnswerInput from 'components/templates/answerinput';
 
+import cities from 'data/cities';
+
 const Game: FC<{ setHome: () => void }> = ({ setHome }) => {
   const [isDuringGame, setIsDuringGame] = useState(true);
   const [messages, setMessages] = useState<MessageObject[]>([]);
@@ -14,22 +16,23 @@ const Game: FC<{ setHome: () => void }> = ({ setHome }) => {
     setMessages((histories) => [...histories, message]);
 
   const mode: Mode = 'hard';
-  const answer = '神奈川';
-  const questions: string[] = [
-    '富士山',
-    'おんぷ',
-    '北海道',
-    '日曜日',
-    '顕微鏡',
-    'あいぱっど',
-    '充電器',
-    '時計',
-    '針',
-    '照明',
-    '関節',
-    'ドア',
-    '間接照明',
-  ];
+  const [answer, setAnswer] = useState('');
+  const [questions, setQuestions] = useState<string[]>([]);
+
+  useEffect(() => {
+    // 都道府県をランダムに取得
+    const prefecture =
+      Object.keys(cities)[
+        Math.floor(Math.random() * Object.keys(cities).length)
+      ];
+    setAnswer(prefecture);
+    setQuestions(cities[prefecture]);
+    setIsDuringGame(true);
+  }, []);
+
+  console.log(answer);
+  console.log(questions);
+  console.log(isDuringGame);
 
   useEffect(() => {
     if (

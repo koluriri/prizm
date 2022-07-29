@@ -37,7 +37,7 @@ const Questioner: FC<{
     timerId.current = setInterval(questionMover, timerSeconds * 1000);
 
     return clearTimer;
-  }, []);
+  }, [questions]);
 
   const displayQuestions = questions.map((question) =>
     isDuringGame ? modesConvert[mode](question) : modesConvert.easy(question),

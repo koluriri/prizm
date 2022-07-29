@@ -1,4 +1,8 @@
-const cities = {
+type Questions = {
+  [prefecture: string]: string[];
+};
+
+const cities: Questions = {
   神奈川県: [
     '横浜市',
     '川崎市',

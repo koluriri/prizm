@@ -1,4 +1,8 @@
-const stations = {
+type Questions = {
+  [prefecture: string]: string[];
+};
+
+const stations: Questions = {
   北海道: [
     '函館駅',
     '五稜郭駅',
