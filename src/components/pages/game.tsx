@@ -1,63 +1,67 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, useEffect, useState } from 'react';
-import shuffle from 'lodash/shuffle';
+import { FC, useEffect, useState, useCallback } from 'react';
 
-import { MessageObject, Mode, Messages } from 'data/types';
-import { prefecture } from 'data/prefecture';
-import cities from 'data/cities';
+import { listenGameDeleted, deleteGame } from 'hooks/database';
+import { MessageObject, Messages, GameObj } from 'data/types';
 
 import Questioner from 'components/templates/questioner';
 import Chat from 'components/templates/chat';
 import AnswerInput from 'components/templates/answerinput';
 
-const Game: FC<{ setHome: () => void }> = ({ setHome }) => {
+const Game: FC<{
+  setHome: () => void;
+  gameKey: string;
+  gameObj: GameObj;
+}> = ({ setHome, gameKey, gameObj }) => {
   const [isDuringGame, setIsDuringGame] = useState(true);
+
   const [messages, setMessages] = useState<Messages>([]);
   const setMessage = (message: MessageObject) =>
     setMessages((histories) => [...histories, message]);
 
-  const [mode, setMode] = useState<Mode>('easy');
-  const [answer, setAnswer] = useState('');
-  const [questions, setQuestions] = useState<string[]>([]);
+  const finishGame = useCallback(
+    (isWrote = false) => {
+      if (!isWrote) deleteGame(gameKey);
+      setIsDuringGame(false);
+    },
+    [gameKey],
+  );
 
   useEffect(() => {
-    // 都道府県をランダムに取得
-    const randomPref = shuffle(prefecture)[0];
-    setAnswer(randomPref);
-    setQuestions(shuffle(cities[randomPref]).slice(0, 30));
-    setIsDuringGame(true);
-    setMode('hard');
-  }, []);
+    listenGameDeleted(gameKey, () => finishGame(true));
 
-  console.log(answer);
-  console.log(questions);
+    console.log('------');
+    console.log('game started!');
+    console.log(`answer: ${gameObj.answer}`);
+    console.log(`questions: `);
+    console.log(gameObj.questions);
+    console.log('------');
+
+    return () => finishGame();
+  }, [gameKey, gameObj, finishGame]);
+
+  console.log(`isDuringGame: `);
   console.log(isDuringGame);
 
-  useEffect(() => {
-    if (
-      messages.find((message) => message.type === 'answer' && message.matched)
-    )
-      setIsDuringGame(false);
-  }, [messages]);
-
-  const gameView = css({
-    display: 'grid',
-    gridTemplateColumns: '40% 60%',
-  });
-
   return (
-    <div css={gameView}>
+    <div
+      css={css({
+        display: 'grid',
+        gridTemplateColumns: '40% 60%',
+      })}
+    >
       <Chat messages={messages} />
       <Questioner
-        mode={mode}
-        questions={questions}
+        gameKey={gameKey}
+        gameObj={gameObj}
         isDuringGame={isDuringGame}
-        finishGame={() => setIsDuringGame(false)}
+        finishGame={() => finishGame()}
       />
       <AnswerInput
         setMessage={setMessage}
-        answer={answer}
+        gameKey={gameKey}
+        answer={gameObj.answer}
         isDuringGame={isDuringGame}
         setHome={setHome}
       />

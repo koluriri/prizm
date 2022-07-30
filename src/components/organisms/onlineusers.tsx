@@ -1,10 +1,9 @@
+import { Users } from 'data/types';
 import { FC } from 'react';
 
-const OnlineUsers: FC = () => (
+const OnlineUsers: FC<{ users: Users | undefined }> = ({ users }) => (
   <ul>
-    <li>うみねずみ</li>
-    <li>ソルトリバー</li>
-    <li>きびだんご</li>
+    {users && Object.keys(users).map((key) => <li>{users[key].userName}</li>)}
   </ul>
 );
 

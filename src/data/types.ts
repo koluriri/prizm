@@ -48,10 +48,10 @@ export type DefinedQuestions = {
 };
 
 /* Game */
-export type DateTime =
-  `${number}-${number}-${number} ${number}:${number}:${number}`;
+// export type DateTime = `${number}-${number}-${number} ${number}:${number}:${number}`;
+export type DateTime = string;
 export type Questions = string[];
-export type GameStatus = 'active' | 'systemWon' | 'userWon' | 'inactive';
+export type GameStatus = 'active' | 'systemWon' | 'userWon' | 'finished';
 export type GameObj = {
   answer: PrefectureStr;
   questions: Questions;
@@ -65,7 +65,10 @@ export type GameObj = {
 /* User */
 export type UserObj = {
   userName: string;
-  score: number;
-  remain: number;
-  joiningGame: string;
+  score?: number;
+  remain?: number;
+  joiningGame?: string;
+};
+export type Users = {
+  [key: string]: UserObj;
 };
