@@ -1,7 +1,7 @@
 import { prefecture } from 'data/prefecture';
 
 /* GAME mode */
-const modes = ['easy', 'normal', 'hard', 'hell', 'station', 'cape'] as const;
+const modes = ['easy', 'normal', 'hard', 'hell', 'station'] as const;
 export type Mode = typeof modes[number];
 
 export const modesConvert: { [key in Mode]: (t: string) => string } = {
@@ -10,7 +10,6 @@ export const modesConvert: { [key in Mode]: (t: string) => string } = {
   hard: (t) => t.charAt(0),
   hell: (t) => t.charAt(1),
   station: (t) => t,
-  cape: (t) => t,
 };
 export const modesDisplay: { [key in Mode]: string } = {
   easy: '初級（市町村）',
@@ -18,7 +17,6 @@ export const modesDisplay: { [key in Mode]: string } = {
   hard: '上級（市町村の頭文字）',
   hell: 'ゲキムズ（市町村の2文字目）',
   station: '駅モード',
-  cape: '岬モード',
 };
 
 /* message */

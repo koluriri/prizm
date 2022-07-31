@@ -1,6 +1,6 @@
 import { DefinedQuestions } from 'data/types';
 
-const cities: DefinedQuestions = {
+const cities = (): DefinedQuestions => ({
   神奈川県: [
     '横浜市',
     '川崎市',
@@ -1836,6 +1836,6 @@ const cities: DefinedQuestions = {
     '小菅村',
     '丹波山村',
   ],
-};
+});
 
 export default cities;

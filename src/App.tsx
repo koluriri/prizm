@@ -3,10 +3,9 @@ import { css } from '@emotion/react';
 import { FC, useEffect, useState, useCallback } from 'react';
 import shuffle from 'lodash/shuffle';
 
-import { GameObj, Mode, PrefectureStr } from 'data/types';
+import { GameObj, Mode, PrefectureStr, Questions } from 'data/types';
 import { listenGame, writeNewGame, deleteUser } from 'hooks/database';
 import { prefecture } from 'data/prefecture';
-import cities from 'data/cities';
 
 import Game from 'components/pages/game';
 import Home from 'components/pages/home';
@@ -24,19 +23,30 @@ const App: FC = () => {
     const created = new Date();
     const randomPref: PrefectureStr = shuffle(prefecture)[0];
 
-    writeNewGame({
-      answer: randomPref,
-      questions: shuffle(cities[randomPref]).slice(0, 30),
-      mode,
-      status: 'active',
-      messages: [],
-      users,
-      created: `${created.getFullYear()}-${
-        created.getMonth() + 1
-      }-${created.getDate()} ${created.getHours()}:${
-        created.getMinutes() + 1
-      }:${created.getSeconds()}`.replace(/\n|\r/g, ''),
-    });
+    const write = (questions: Questions) =>
+      writeNewGame({
+        answer: randomPref,
+        questions,
+        mode,
+        status: 'active',
+        messages: [],
+        users,
+        created: `${created.getFullYear()}-${
+          created.getMonth() + 1
+        }-${created.getDate()} ${created.getHours()}:${
+          created.getMinutes() + 1
+        }:${created.getSeconds()}`.replace(/\n|\r/g, ''),
+      });
+
+    const importPath = mode === 'station' ? 'stations' : 'cities';
+    import(`data/${importPath}`)
+      .then((data: typeof import('./data/cities')) => {
+        write(shuffle(data.default()[randomPref]).slice(0, 30));
+      })
+      .catch((err) => {
+        alert('データを読み込めませんでした');
+        console.log(err);
+      });
   };
 
   const toOfflineUser = useCallback(() => {
