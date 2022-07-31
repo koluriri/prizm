@@ -91,7 +91,7 @@ export const newOnlineUser = (user: UserObj): string => {
   return newUserKey;
 };
 
-export const toOfflineUser = (userKey: string): void => {
+export const deleteUser = (userKey: string): void => {
   set(ref(database, `Users/${userKey}`), null)
     .then(() => {
       console.log(`userを削除: ${userKey}`);

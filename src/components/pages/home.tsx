@@ -40,8 +40,6 @@ const Home: FC<{
     listenUsers((data) => {
       setUsers(data);
     });
-
-    // return () => toOfflineUser(userKey);
   }, [userKey, setUserKey]);
 
   return (
@@ -50,7 +48,7 @@ const Home: FC<{
 
       <p css={css({ background: '#efefef' })}>参加者を待機中</p>
 
-      <OnlineUsers users={users} />
+      <OnlineUsers users={users} me={userKey} />
 
       <select value={mode} onChange={(e) => setMode(e.target.value as Mode)}>
         {Object.keys(modesDisplay).map((key) => (

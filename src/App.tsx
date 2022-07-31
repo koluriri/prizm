@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, useCallback } from 'react';
 import shuffle from 'lodash/shuffle';
 
 import { GameObj, Mode, PrefectureStr } from 'data/types';
-import { listenGame, writeNewGame } from 'hooks/database';
+import { listenGame, writeNewGame, deleteUser } from 'hooks/database';
 import { prefecture } from 'data/prefecture';
 import cities from 'data/cities';
 
@@ -39,15 +39,32 @@ const App: FC = () => {
     });
   };
 
+  const toOfflineUser = useCallback(() => {
+    deleteUser(userKey);
+    setUserKey('');
+  }, [userKey]);
+
   useEffect(() => {
-    // eslint-disable-next-line consistent-return
-    listenGame(userKey, (data) => {
-      if (!data.key || gameKey !== '') return false;
-      setGameKey(data.key);
-      setGameObj(data.val() as GameObj);
-      console.log(`new game: ${data.key}`);
-    });
-  }, [gameKey, userKey]);
+    if (userKey !== '') {
+      // eslint-disable-next-line consistent-return
+      listenGame(userKey, (data) => {
+        if (!data.key || gameKey !== '') return false;
+        toOfflineUser();
+
+        setGameKey(data.key);
+        setGameObj(data.val() as GameObj);
+        console.log(`new game: ${data.key}`);
+      });
+    }
+  }, [gameKey, userKey, toOfflineUser]);
+
+  useEffect(() => {
+    const callback = () => deleteUser(userKey);
+
+    window.addEventListener('beforeunload', callback);
+
+    return () => window.removeEventListener('beforeunload', callback);
+  }, [userKey]);
 
   return (
     <div
