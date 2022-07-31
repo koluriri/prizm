@@ -27,3 +27,12 @@ yarn-error.log*
 # website: https://storybook.js.org/
 
 storybook-static/
+
+### Firebase ###
+.idea
+**/.firebaserc
+.firebaserc
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/
