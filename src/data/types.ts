@@ -22,19 +22,34 @@ export const modesDisplay: { [key in Mode]: string } = {
 /* message */
 export type MessageTypes = 'answer' | 'hint' | 'start' | 'score';
 export type AnswerMessage = {
-  id: number;
+  key?: string | null;
   name: string;
   type: 'answer';
   value: string;
   matched: boolean;
 };
 export type GameMessage = {
-  id: number;
-  type: 'hint' | 'start' | 'score';
+  key?: string | null;
+  type: 'hint' | 'start' | 'score' | 'remain';
   value: string;
 };
 export type MessageObject = AnswerMessage | GameMessage;
 export type Messages = MessageObject[];
+
+export const isAnswerMessage = (arg: unknown): arg is AnswerMessage => {
+  const m = arg as AnswerMessage;
+
+  return (
+    m?.type === 'answer' &&
+    typeof m?.name === 'string' &&
+    typeof m?.matched === 'boolean'
+  );
+};
+export const isGameMessage = (arg: unknown): arg is GameMessage => {
+  const m = arg as GameMessage;
+
+  return typeof m?.value === 'string';
+};
 
 /* prefecture */
 export type PrefectureStr = typeof prefecture[number];
@@ -54,9 +69,9 @@ export type GameObj = {
   answer: PrefectureStr;
   questions: Questions;
   mode: Mode;
-  status: GameStatus;
   messages: Messages;
   users: string[];
+  startBy: string;
   created: DateTime;
 };
 

@@ -12,7 +12,15 @@ import {
   onValue,
 } from 'firebase/database';
 
-import { GameObj, UserObj, Users } from 'data/types';
+import {
+  AnswerMessage,
+  GameMessage,
+  GameObj,
+  isAnswerMessage,
+  MessageObject,
+  UserObj,
+  Users,
+} from 'data/types';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -28,6 +36,52 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
+/* Message */
+export const listenMessage = (
+  gameKey: string,
+  callback: (data: MessageObject) => any,
+) => {
+  const gamesRef = ref(database, `Games/${gameKey}/messages`);
+  onChildAdded(gamesRef, (data) => {
+    console.log('Listen Message on database.ts');
+    let message;
+    if (isAnswerMessage(data.val())) {
+      console.log('Message Type is Answer');
+      message = data.val() as AnswerMessage;
+    } else {
+      console.log('Message Type is Game');
+      message = data.val() as GameMessage;
+    }
+    callback({
+      ...message,
+      key: data.key,
+    });
+  });
+};
+
+export const pushMessage = (
+  gameKey: string,
+  message: MessageObject,
+): string => {
+  const newMessageKey =
+    push(child(ref(database), `Games/${gameKey}/messages`)).key ?? '';
+  const updates: { [key: string]: any } = {};
+  updates[`Games/${gameKey}/messages/${newMessageKey}`] = message;
+
+  update(ref(database), updates)
+    .then(() => {
+      console.log(`message pushed!`);
+    })
+    .catch((err) => {
+      alert('エラー：メッセージを書き込みできませんでした');
+      console.error(err);
+    });
+
+  return newMessageKey;
+};
+
+/* Game */
+
 export const writeNewGame = (game: GameObj): void => {
   const newGameKey = push(child(ref(database), 'Games')).key ?? '';
   const updates: { [key: string]: any } = {};
@@ -36,6 +90,10 @@ export const writeNewGame = (game: GameObj): void => {
   update(ref(database), updates)
     .then(() => {
       console.log(`new game wrote!`);
+      pushMessage(newGameKey, {
+        type: 'start',
+        value: `${game.startBy}が${game.mode}モードで開始しました！`,
+      });
     })
     .catch((err) => {
       alert('エラー：ゲームを書き込みできませんでした');
@@ -50,8 +108,7 @@ export const listenGame = (
   const gamesRef = ref(database, 'Games/');
   onChildAdded(gamesRef, (data) => {
     const gameData = data.val() as GameObj;
-    if (gameData.status === 'active' && gameData.users.includes(userKey))
-      callback(data);
+    if (gameData.users.includes(userKey)) callback(data);
   });
 };
 
@@ -73,6 +130,8 @@ export const deleteGame = (gameKey: string): void => {
       console.error(err);
     });
 };
+
+/* User */
 
 export const newOnlineUser = (user: UserObj): string => {
   const newUserKey = push(child(ref(database), 'Users')).key ?? '';

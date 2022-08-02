@@ -28,7 +28,7 @@ const App: FC = () => {
         answer: randomPref,
         questions,
         mode,
-        status: 'active',
+        startBy: userKey,
         messages: [],
         users,
         created: `${created.getFullYear()}-${
