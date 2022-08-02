@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { FC } from 'react';
 import { MessageObject } from 'data/types';
 
-const Chat: FC<{
+const Message: FC<{
   message: MessageObject;
 }> = ({ message }) => {
   if (message.type === 'answer') {
@@ -26,7 +26,7 @@ const Chat: FC<{
       <div
         css={[answerStyle, matchStyle]}
         data-match={message.matched}
-        key={message.id}
+        key={message.key}
       >
         <b css={{ fontSize: '0.7em' }}>{message.name}</b>
         <br />
@@ -35,7 +35,7 @@ const Chat: FC<{
     );
   }
 
-  return <p key={message.id}>{message.value}</p>;
+  return <p>予期しないメッセージ</p>;
 };
 
-export default Chat;
+export default Message;

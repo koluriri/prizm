@@ -22,19 +22,29 @@ export const modesDisplay: { [key in Mode]: string } = {
 /* message */
 export type MessageTypes = 'answer' | 'hint' | 'start' | 'score';
 export type AnswerMessage = {
-  id: number;
+  key?: string | null;
   name: string;
   type: 'answer';
   value: string;
   matched: boolean;
 };
 export type GameMessage = {
-  id: number;
+  key?: string | null;
   type: 'hint' | 'start' | 'score';
   value: string;
 };
 export type MessageObject = AnswerMessage | GameMessage;
 export type Messages = MessageObject[];
+
+export const isAnswerMessage = (arg: unknown): arg is AnswerMessage => {
+  const m = arg as AnswerMessage;
+
+  return (
+    m?.type === 'answer' &&
+    typeof m?.name === 'string' &&
+    typeof m?.matched === 'boolean'
+  );
+};
 
 /* prefecture */
 export type PrefectureStr = typeof prefecture[number];

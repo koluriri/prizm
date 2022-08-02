@@ -2,30 +2,27 @@
 import { css } from '@emotion/react';
 import { FC, FormEvent, useState } from 'react';
 import UserRemain from 'components/molecules/userremain';
-import { MessageObject } from 'data/types';
-import { deleteGame } from 'hooks/database';
+import { deleteGame, pushMessage } from 'hooks/database';
 
 const AnswerInput: FC<{
-  setMessage: (message: MessageObject) => void;
   gameKey: string;
   answer: string;
   isDuringGame: boolean;
   setHome: () => void;
-}> = ({ setMessage, gameKey, answer, isDuringGame, setHome }) => {
+}> = ({ gameKey, answer, isDuringGame, setHome }) => {
   const [answerInputValue, setAnswerInputValue] = useState('');
 
   const answerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (answerInputValue) {
-      if (answer === answerInputValue) deleteGame(gameKey);
-      setMessage({
-        id: 1,
+      pushMessage(gameKey, {
         name: 'うみねずみ',
         type: 'answer',
         matched: answer === answerInputValue,
         value: answerInputValue,
       });
       setAnswerInputValue('');
+      if (answer === answerInputValue) deleteGame(gameKey);
     }
   };
 

@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { FC, useEffect, useState, useCallback } from 'react';
 
 import { listenGameDeleted, deleteGame } from 'hooks/database';
-import { MessageObject, Messages, GameObj } from 'data/types';
+import { GameObj } from 'data/types';
 
 import Questioner from 'components/templates/questioner';
 import Chat from 'components/templates/chat';
@@ -15,10 +15,6 @@ const Game: FC<{
   gameObj: GameObj;
 }> = ({ setHome, gameKey, gameObj }) => {
   const [isDuringGame, setIsDuringGame] = useState(true);
-
-  const [messages, setMessages] = useState<Messages>([]);
-  const setMessage = (message: MessageObject) =>
-    setMessages((histories) => [...histories, message]);
 
   const finishGame = useCallback(
     (isWrote = false) => {
@@ -51,7 +47,7 @@ const Game: FC<{
         gridTemplateColumns: '40% 60%',
       })}
     >
-      <Chat messages={messages} />
+      <Chat gameKey={gameKey} />
       <Questioner
         gameKey={gameKey}
         gameObj={gameObj}
@@ -59,7 +55,6 @@ const Game: FC<{
         finishGame={() => finishGame()}
       />
       <AnswerInput
-        setMessage={setMessage}
         gameKey={gameKey}
         answer={gameObj.answer}
         isDuringGame={isDuringGame}

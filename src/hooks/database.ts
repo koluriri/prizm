@@ -10,10 +10,16 @@ import {
   onChildRemoved,
   DataSnapshot,
   onValue,
-  onChildChanged,
 } from 'firebase/database';
 
-import { GameObj, MessageObject, UserObj, Users } from 'data/types';
+import {
+  AnswerMessage,
+  GameObj,
+  isAnswerMessage,
+  MessageObject,
+  UserObj,
+  Users,
+} from 'data/types';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -77,11 +83,19 @@ export const deleteGame = (gameKey: string): void => {
 
 export const listenMessage = (
   gameKey: string,
-  callback: (data: DataSnapshot) => any,
+  callback: (data: MessageObject) => any,
 ) => {
   const gamesRef = ref(database, `Games/${gameKey}/messages`);
-  onChildChanged(gamesRef, (data) => {
-    callback(data);
+  onChildAdded(gamesRef, (data) => {
+    console.log('Listen Message on database.ts');
+    if (isAnswerMessage(data.val())) {
+      console.log('Message Type is Answer');
+      const message = data.val() as AnswerMessage;
+      callback({
+        ...message,
+        key: data.key,
+      });
+    }
   });
 };
 
