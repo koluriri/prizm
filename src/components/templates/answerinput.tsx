@@ -22,7 +22,13 @@ const AnswerInput: FC<{
         value: answerInputValue,
       });
       setAnswerInputValue('');
-      if (answer === answerInputValue) deleteGame(gameKey);
+      if (answer === answerInputValue) {
+        pushMessage(gameKey, {
+          type: 'score',
+          value: 'うみねずみさんのあたり！スコアはなんちゃら',
+        });
+        deleteGame(gameKey);
+      }
     }
   };
 
