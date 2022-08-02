@@ -14,6 +14,7 @@ import {
 
 import {
   AnswerMessage,
+  GameMessage,
   GameObj,
   isAnswerMessage,
   MessageObject,
@@ -35,52 +36,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-export const writeNewGame = (game: GameObj): void => {
-  const newGameKey = push(child(ref(database), 'Games')).key ?? '';
-  const updates: { [key: string]: any } = {};
-  updates[`Games/${newGameKey}`] = game;
-
-  update(ref(database), updates)
-    .then(() => {
-      console.log(`new game wrote!`);
-    })
-    .catch((err) => {
-      alert('エラー：ゲームを書き込みできませんでした');
-      console.error(err);
-    });
-};
-
-export const listenGame = (
-  userKey: string,
-  callback: (data: DataSnapshot) => any,
-) => {
-  const gamesRef = ref(database, 'Games/');
-  onChildAdded(gamesRef, (data) => {
-    const gameData = data.val() as GameObj;
-    if (gameData.status === 'active' && gameData.users.includes(userKey))
-      callback(data);
-  });
-};
-
-export const listenGameDeleted = (gameKey: string, callback: () => any) => {
-  const gamesRef = ref(database, `Games/${gameKey}`);
-  onChildRemoved(gamesRef, () => {
-    console.log(`gameの削除を受け取り: ${gameKey}`);
-    callback();
-  });
-};
-
-export const deleteGame = (gameKey: string): void => {
-  set(ref(database, `Games/${gameKey}`), null)
-    .then(() => {
-      console.log(`gameを削除: ${gameKey}`);
-    })
-    .catch((err) => {
-      alert('エラー：ゲームを終了できませんでした');
-      console.error(err);
-    });
-};
-
+/* Message */
 export const listenMessage = (
   gameKey: string,
   callback: (data: MessageObject) => any,
@@ -88,14 +44,18 @@ export const listenMessage = (
   const gamesRef = ref(database, `Games/${gameKey}/messages`);
   onChildAdded(gamesRef, (data) => {
     console.log('Listen Message on database.ts');
+    let message;
     if (isAnswerMessage(data.val())) {
       console.log('Message Type is Answer');
-      const message = data.val() as AnswerMessage;
-      callback({
-        ...message,
-        key: data.key,
-      });
+      message = data.val() as AnswerMessage;
+    } else {
+      console.log('Message Type is Game');
+      message = data.val() as GameMessage;
     }
+    callback({
+      ...message,
+      key: data.key,
+    });
   });
 };
 
@@ -119,6 +79,59 @@ export const pushMessage = (
 
   return newMessageKey;
 };
+
+/* Game */
+
+export const writeNewGame = (game: GameObj): void => {
+  const newGameKey = push(child(ref(database), 'Games')).key ?? '';
+  const updates: { [key: string]: any } = {};
+  updates[`Games/${newGameKey}`] = game;
+
+  update(ref(database), updates)
+    .then(() => {
+      console.log(`new game wrote!`);
+      pushMessage(newGameKey, {
+        type: 'start',
+        value: `${game.startBy}が${game.mode}モードで開始しました！`,
+      });
+    })
+    .catch((err) => {
+      alert('エラー：ゲームを書き込みできませんでした');
+      console.error(err);
+    });
+};
+
+export const listenGame = (
+  userKey: string,
+  callback: (data: DataSnapshot) => any,
+) => {
+  const gamesRef = ref(database, 'Games/');
+  onChildAdded(gamesRef, (data) => {
+    const gameData = data.val() as GameObj;
+    if (gameData.users.includes(userKey)) callback(data);
+  });
+};
+
+export const listenGameDeleted = (gameKey: string, callback: () => any) => {
+  const gamesRef = ref(database, `Games/${gameKey}`);
+  onChildRemoved(gamesRef, () => {
+    console.log(`gameの削除を受け取り: ${gameKey}`);
+    callback();
+  });
+};
+
+export const deleteGame = (gameKey: string): void => {
+  set(ref(database, `Games/${gameKey}`), null)
+    .then(() => {
+      console.log(`gameを削除: ${gameKey}`);
+    })
+    .catch((err) => {
+      alert('エラー：ゲームを終了できませんでした');
+      console.error(err);
+    });
+};
+
+/* User */
 
 export const newOnlineUser = (user: UserObj): string => {
   const newUserKey = push(child(ref(database), 'Users')).key ?? '';

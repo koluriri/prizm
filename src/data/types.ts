@@ -30,7 +30,7 @@ export type AnswerMessage = {
 };
 export type GameMessage = {
   key?: string | null;
-  type: 'hint' | 'start' | 'score';
+  type: 'hint' | 'start' | 'score' | 'remain';
   value: string;
 };
 export type MessageObject = AnswerMessage | GameMessage;
@@ -44,6 +44,11 @@ export const isAnswerMessage = (arg: unknown): arg is AnswerMessage => {
     typeof m?.name === 'string' &&
     typeof m?.matched === 'boolean'
   );
+};
+export const isGameMessage = (arg: unknown): arg is GameMessage => {
+  const m = arg as GameMessage;
+
+  return typeof m?.value === 'string';
 };
 
 /* prefecture */
@@ -64,9 +69,9 @@ export type GameObj = {
   answer: PrefectureStr;
   questions: Questions;
   mode: Mode;
-  status: GameStatus;
   messages: Messages;
   users: string[];
+  startBy: string;
   created: DateTime;
 };
 

@@ -6,36 +6,38 @@ import { MessageObject } from 'data/types';
 const Message: FC<{
   message: MessageObject;
 }> = ({ message }) => {
+  const answerStyle = css({
+    padding: '8px 10px',
+    width: 'fit-content',
+    border: '1px solid #bbb',
+    borderRadius: '8px',
+    margin: '0 0 10px',
+  });
+  let matchStyle;
+  let name: string | null = null;
+
   if (message.type === 'answer') {
-    const answerStyle = css({
-      padding: '8px 10px',
-      width: 'fit-content',
-      border: '1px solid #bbb',
-      borderRadius: '8px',
-      margin: '0 0 10px',
-    });
-    const matchStyle = message.matched
+    matchStyle = message.matched
       ? css({
           background: '#9fff9f',
         })
       : css({
           background: '#ffd9d9',
         });
-
-    return (
-      <div
-        css={[answerStyle, matchStyle]}
-        data-match={message.matched}
-        key={message.key}
-      >
-        <b css={{ fontSize: '0.7em' }}>{message.name}</b>
-        <br />
-        {message.value}
-      </div>
-    );
+    name = message.name;
   }
 
-  return <p>予期しないメッセージ</p>;
+  return (
+    <div css={[answerStyle, matchStyle]} key={message.key}>
+      {name !== null && (
+        <>
+          <b css={{ fontSize: '0.7em' }}>{name}</b>
+          <br />
+        </>
+      )}
+      {message.value}
+    </div>
+  );
 };
 
 export default Message;
