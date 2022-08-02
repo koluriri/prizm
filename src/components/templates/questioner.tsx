@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { FC, useRef, useEffect, useState } from 'react';
 
 import BigQuestion from 'components/organisms/bigquestion';
@@ -47,7 +49,14 @@ const Questioner: FC<{
   const displayQuestion = displayQuestions[currentQuesIndex - 1];
 
   return (
-    <div className="questioner">
+    <div
+      css={css`
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+      `}
+    >
       <div>{modesDisplay[gameObj.mode]}</div>
 
       {isDuringGame && <BigQuestion displayQuestion={displayQuestion} />}
