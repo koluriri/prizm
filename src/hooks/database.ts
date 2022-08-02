@@ -10,9 +10,10 @@ import {
   onChildRemoved,
   DataSnapshot,
   onValue,
+  onChildChanged,
 } from 'firebase/database';
 
-import { GameObj, UserObj, Users } from 'data/types';
+import { GameObj, MessageObject, UserObj, Users } from 'data/types';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -72,6 +73,37 @@ export const deleteGame = (gameKey: string): void => {
       alert('エラー：ゲームを終了できませんでした');
       console.error(err);
     });
+};
+
+export const listenMessage = (
+  gameKey: string,
+  callback: (data: DataSnapshot) => any,
+) => {
+  const gamesRef = ref(database, `Games/${gameKey}/messages`);
+  onChildChanged(gamesRef, (data) => {
+    callback(data);
+  });
+};
+
+export const pushMessage = (
+  gameKey: string,
+  message: MessageObject,
+): string => {
+  const newMessageKey =
+    push(child(ref(database), `Games/${gameKey}/messages`)).key ?? '';
+  const updates: { [key: string]: any } = {};
+  updates[`Games/${gameKey}/messages/${newMessageKey}`] = message;
+
+  update(ref(database), updates)
+    .then(() => {
+      console.log(`message pushed!`);
+    })
+    .catch((err) => {
+      alert('エラー：メッセージを書き込みできませんでした');
+      console.error(err);
+    });
+
+  return newMessageKey;
 };
 
 export const newOnlineUser = (user: UserObj): string => {
