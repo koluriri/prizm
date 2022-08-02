@@ -27,8 +27,6 @@ const Chat: FC<{ gameKey: string }> = ({ gameKey }) => {
   }, [messages]);
 
   const chatViewStyle = css`
-    height: calc(100vh - 105px);
-    height: 250px;
     overflow-y: auto;
     margin-bottom: 18px;
     &::-webkit-scrollbar {

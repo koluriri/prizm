@@ -16,9 +16,9 @@ const BigQuestion: FC<{
   return (
     <div
       css={css({
-        width: '200px',
-        height: '200px',
-        fontSize: fontSize(200, displayQuestion),
+        width: '140px',
+        height: '140px',
+        fontSize: fontSize(140, displayQuestion),
         display: 'inline-flex',
         justifyContent: 'center',
         alignItems: 'center',

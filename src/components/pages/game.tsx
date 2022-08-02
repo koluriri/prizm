@@ -15,6 +15,7 @@ const Game: FC<{
   gameObj: GameObj;
 }> = ({ setHome, gameKey, gameObj }) => {
   const [isDuringGame, setIsDuringGame] = useState(true);
+  const [gameHeight, setGameHeight] = useState(visualViewport.height);
 
   const finishGame = useCallback(
     (isWrote = false) => {
@@ -37,14 +38,29 @@ const Game: FC<{
     return () => finishGame();
   }, [gameKey, gameObj, finishGame]);
 
+  const onWindowResize = () => {
+    setGameHeight(visualViewport.height);
+  };
+  useEffect(() => {
+    window.visualViewport.addEventListener('resize', onWindowResize);
+
+    return () => {
+      window.visualViewport.removeEventListener('resize', onWindowResize);
+    };
+  });
+
   console.log(`isDuringGame: `);
   console.log(isDuringGame);
 
   return (
     <div
       css={css({
+        height: gameHeight - 20,
+        maxHeight: '700px',
+        transition: '0.2s height',
         display: 'grid',
         gridTemplateColumns: '40% 60%',
+        gridTemplateRows: '1fr 80px',
       })}
     >
       <Chat gameKey={gameKey} />
