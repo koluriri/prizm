@@ -108,7 +108,7 @@ export const listenGame = (
   const gamesRef = ref(database, 'Games/');
   onChildAdded(gamesRef, (data) => {
     const gameData = data.val() as GameObj;
-    if (gameData.users.includes(userKey)) callback(data);
+    if (gameData.users && gameData.users.includes(userKey)) callback(data);
   });
 };
 
