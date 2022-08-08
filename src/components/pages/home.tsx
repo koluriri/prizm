@@ -1,16 +1,23 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { FC, useEffect, useState, useCallback } from 'react';
+import shuffle from 'lodash/shuffle';
+
 import OnlineUsers from 'components/organisms/onlineusers';
-import { Mode, modesDisplay, Users } from 'data/types';
-import { listenUsers, newOnlineUser } from 'hooks/database';
+import {
+  Mode,
+  modesDisplay,
+  Users,
+  PrefectureStr,
+  Questions,
+} from 'data/types';
+import { prefecture } from 'data/prefecture';
+import { listenUsers, writeNewGame, newOnlineUser } from 'hooks/database';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 import { userSlice, initialUserName } from 'ducks/user';
 
-const Home: FC<{
-  setGame: (mode: Mode, users: string[]) => void;
-}> = ({ setGame }) => {
+const Home: FC = () => {
   const userName = useSelector((state: RootState) => state.user.name);
   const userKey = useSelector((state: RootState) => state.user.key);
   const dispatch = useDispatch();
@@ -52,6 +59,37 @@ const Home: FC<{
       setUsers(data);
     });
   }, [dispatch, userKey, userName, setUserKey, getUserName]);
+
+  // TODO:ファイル分割する
+  const setGame = (mode: Mode, gameUsers: string[]) => {
+    const created = new Date();
+    const randomPref: PrefectureStr = shuffle(prefecture)[0];
+
+    const write = (questions: Questions) =>
+      writeNewGame({
+        answer: randomPref,
+        questions,
+        mode,
+        startBy: userName,
+        messages: [],
+        users: gameUsers,
+        created: `${created.getFullYear()}-${
+          created.getMonth() + 1
+        }-${created.getDate()} ${created.getHours()}:${
+          created.getMinutes() + 1
+        }:${created.getSeconds()}`.replace(/\n|\r/g, ''),
+      });
+
+    const importPath = mode === 'station' ? 'stations' : 'cities';
+    import(`data/${importPath}`)
+      .then((data: typeof import('data/cities')) => {
+        write(shuffle(data.default()[randomPref]).slice(0, 30));
+      })
+      .catch((err) => {
+        alert('データを読み込めませんでした');
+        console.log(err);
+      });
+  };
 
   const [mode, setMode] = useState<Mode>('hard');
 

@@ -1,22 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { FC, useEffect } from 'react';
-import shuffle from 'lodash/shuffle';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 import { userSlice } from 'ducks/user';
 import { gameSlice } from 'ducks/game';
 
-import { GameObj, Mode, PrefectureStr, Questions } from 'data/types';
-import { listenGame, writeNewGame, deleteUser } from 'hooks/database';
-import { prefecture } from 'data/prefecture';
+import { GameObj } from 'data/types';
+import { listenGame, deleteUser } from 'hooks/database';
 
 import Game from 'components/pages/game';
 import Home from 'components/pages/home';
 import './App.css';
 
 const App: FC = () => {
-  const userName = useSelector((state: RootState) => state.user.name);
   const userKey = useSelector((state: RootState) => state.user.key);
   const dispatch = useDispatch();
   const { unsetUserKey } = userSlice.actions;
@@ -24,37 +21,6 @@ const App: FC = () => {
 
   const gameKey = useSelector((state: RootState) => state.game.key);
   const gameObj = useSelector((state: RootState) => state.game.entity);
-
-  // setGameは別ファイルにしたほうが分けたほうがいいと思う
-  const setGame = (mode: Mode, users: string[]) => {
-    const created = new Date();
-    const randomPref: PrefectureStr = shuffle(prefecture)[0];
-
-    const write = (questions: Questions) =>
-      writeNewGame({
-        answer: randomPref,
-        questions,
-        mode,
-        startBy: userName,
-        messages: [],
-        users,
-        created: `${created.getFullYear()}-${
-          created.getMonth() + 1
-        }-${created.getDate()} ${created.getHours()}:${
-          created.getMinutes() + 1
-        }:${created.getSeconds()}`.replace(/\n|\r/g, ''),
-      });
-
-    const importPath = mode === 'station' ? 'stations' : 'cities';
-    import(`data/${importPath}`)
-      .then((data: typeof import('./data/cities')) => {
-        write(shuffle(data.default()[randomPref]).slice(0, 30));
-      })
-      .catch((err) => {
-        alert('データを読み込めませんでした');
-        console.log(err);
-      });
-  };
 
   useEffect(() => {
     if (userKey !== '') {
@@ -97,7 +63,7 @@ const App: FC = () => {
           gameObj={gameObj}
         />
       ) : (
-        <Home setGame={setGame} />
+        <Home />
       )}
     </div>
   );
