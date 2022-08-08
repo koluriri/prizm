@@ -1,20 +1,28 @@
 import { FC } from 'react';
 
+import { useSelector } from 'react-redux';
+import { RootState } from 'ducks/rootReducer';
+
 const QuestionList: FC<{
   questions: string[];
-  isDuringGame: boolean;
   // eslint-disable-next-line react/require-default-props
   current?: number;
-}> = ({ questions, isDuringGame, current = 0 }) => (
-  <div>
-    {questions.map((question, index) =>
-      index < current || !isDuringGame ? (
-        <span>{question} </span>
-      ) : (
-        <span>・</span>
-      ),
-    )}
-  </div>
-);
+}> = ({ questions, current = 0 }) => {
+  const isDuringGame = useSelector(
+    (state: RootState) => state.game.isDuringGame,
+  );
+
+  return (
+    <div>
+      {questions.map((question, index) =>
+        index < current || !isDuringGame ? (
+          <span>{question} </span>
+        ) : (
+          <span>・</span>
+        ),
+      )}
+    </div>
+  );
+};
 
 export default QuestionList;

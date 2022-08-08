@@ -2,16 +2,21 @@
 import { css } from '@emotion/react';
 import { FC, useRef, useEffect, useState } from 'react';
 
+import { useSelector } from 'react-redux';
+import { RootState } from 'ducks/rootReducer';
+
 import BigQuestion from 'components/organisms/bigquestion';
 import QuestionList from 'components/organisms/questionlist';
-import { GameObj, modesConvert, modesDisplay } from 'data/types';
+import { modesConvert, modesDisplay } from 'data/types';
 
 const Questioner: FC<{
-  gameKey: string;
-  gameObj: GameObj;
-  isDuringGame: boolean;
   finishGame: () => void;
-}> = ({ gameKey, gameObj, isDuringGame, finishGame }) => {
+}> = ({ finishGame }) => {
+  const gameObj = useSelector((state: RootState) => state.game.entity);
+  const isDuringGame = useSelector(
+    (state: RootState) => state.game.isDuringGame,
+  );
+
   const [currentQuesIndex, setCurrentQuesIndex] = useState(1);
 
   const timerId = useRef<NodeJS.Timeout>();
@@ -32,6 +37,7 @@ const Questioner: FC<{
   // currentQuesIndexが変わるたびに実行。全部回したら負け処理
   useEffect(() => {
     if (
+      gameObj &&
       currentQuesIndex === gameObj.questions.length &&
       gameObj.questions.length !== 0
     ) {
@@ -39,14 +45,17 @@ const Questioner: FC<{
       finishGame();
       clearTimer();
     }
-  }, [currentQuesIndex, gameObj.questions, gameKey, finishGame]);
+  }, [currentQuesIndex, gameObj, finishGame]);
 
-  const displayQuestions = gameObj.questions.map((question) =>
-    isDuringGame
-      ? modesConvert[gameObj.mode](question)
-      : modesConvert.easy(question),
-  );
-  const displayQuestion = displayQuestions[currentQuesIndex - 1];
+  const displayQuestions =
+    gameObj &&
+    gameObj.questions.map((question) =>
+      isDuringGame
+        ? modesConvert[gameObj.mode](question)
+        : modesConvert.easy(question),
+    );
+  const displayQuestion =
+    displayQuestions && displayQuestions[currentQuesIndex - 1];
 
   return (
     <div
@@ -57,15 +66,15 @@ const Questioner: FC<{
         justify-content: space-evenly;
       `}
     >
-      <div>{modesDisplay[gameObj.mode]}</div>
+      <div>{gameObj && modesDisplay[gameObj.mode]}</div>
 
-      {isDuringGame && <BigQuestion displayQuestion={displayQuestion} />}
+      {isDuringGame && displayQuestion && (
+        <BigQuestion displayQuestion={displayQuestion} />
+      )}
 
-      <QuestionList
-        questions={displayQuestions}
-        current={currentQuesIndex}
-        isDuringGame={isDuringGame}
-      />
+      {displayQuestions && (
+        <QuestionList questions={displayQuestions} current={currentQuesIndex} />
+      )}
     </div>
   );
 };
