@@ -18,8 +18,8 @@ const Game: FC<{
   const [gameHeight, setGameHeight] = useState(visualViewport.height);
 
   const finishGame = useCallback(
-    (isWrote = false) => {
-      if (!isWrote) deleteGame(gameKey);
+    (isDeleted = false) => {
+      if (!isDeleted) deleteGame(gameKey);
       setIsDuringGame(false);
     },
     [gameKey],

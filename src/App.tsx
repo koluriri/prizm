@@ -23,10 +23,11 @@ const App: FC = () => {
   const gameObj = useSelector((state: RootState) => state.game.entity);
 
   useEffect(() => {
+    // listenGameはユーザー追加処理の後に移動しても良い気もするけど・・。
     if (userKey !== '') {
       // eslint-disable-next-line consistent-return
       listenGame(userKey, (data) => {
-        if (!data.key || gameKey !== '') return false;
+        if (!data.key) return false;
 
         deleteUser(userKey);
         dispatch(unsetUserKey());
@@ -36,14 +37,13 @@ const App: FC = () => {
         console.log(`new game: ${data.key}`);
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [gameKey, userKey]);
 
-  useEffect(() => {
     const callback = () => deleteUser(userKey);
     window.addEventListener('beforeunload', callback);
 
     return () => window.removeEventListener('beforeunload', callback);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userKey]);
 
   return (

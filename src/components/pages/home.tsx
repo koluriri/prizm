@@ -20,6 +20,7 @@ import { userSlice, initialUserName } from 'ducks/user';
 const Home: FC = () => {
   const userName = useSelector((state: RootState) => state.user.name);
   const userKey = useSelector((state: RootState) => state.user.key);
+  const gameKey = useSelector((state: RootState) => state.game.key);
   const dispatch = useDispatch();
   const { setUserKey, setUserName } = userSlice.actions;
 
@@ -45,12 +46,12 @@ const Home: FC = () => {
     }
 
     return initialUserName;
-  }, [userName, dispatch, setUserName]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userName]);
 
   const [users, setUsers] = useState<Users>();
   useEffect(() => {
-    if (userKey === '' && userName === initialUserName) {
-      // TODO: ここでゲーム中かどうかの判定もしないと、ゲーム中もオンラインになってしまう
+    if (userKey === '' && gameKey === '') {
       dispatch(setUserKey(newOnlineUser({ userName: getUserName() })));
       console.log('dispatch setUserKey & newOnlineUser');
     }
@@ -58,10 +59,12 @@ const Home: FC = () => {
     listenUsers((data) => {
       setUsers(data);
     });
-  }, [dispatch, userKey, userName, setUserKey, getUserName]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userKey, gameKey]);
 
-  // TODO:ファイル分割する
-  const setGame = (mode: Mode, gameUsers: string[]) => {
+  // TODO:別コンポーネントにする
+  const [mode, setMode] = useState<Mode>('hard');
+  const setGame = (gameUsers: string[]) => {
     const created = new Date();
     const randomPref: PrefectureStr = shuffle(prefecture)[0];
 
@@ -91,8 +94,6 @@ const Home: FC = () => {
       });
   };
 
-  const [mode, setMode] = useState<Mode>('hard');
-
   return (
     <>
       <h1>Prizm</h1>
@@ -110,7 +111,7 @@ const Home: FC = () => {
       <br />
 
       {users && (
-        <button type="button" onClick={() => setGame(mode, Object.keys(users))}>
+        <button type="button" onClick={() => setGame(Object.keys(users))}>
           この参加者でゲームを開始
         </button>
       )}
