@@ -25,7 +25,7 @@ const Game: FC<{
       if (!isDeleted) deleteGame(gameKey);
       dispatch(stopGame());
     },
-    [gameKey],
+    [gameKey, dispatch, stopGame],
   );
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Game: FC<{
     console.log('------');
 
     return () => finishGame();
-  }, [gameKey, gameObj, dispatch, stopGame]);
+  }, [gameKey, gameObj, finishGame]);
 
   const [gameHeight, setGameHeight] = useState(visualViewport.height);
 
