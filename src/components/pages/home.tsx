@@ -16,8 +16,6 @@ const Home: FC<{
   const dispatch = useDispatch();
   const { setUserKey, setUserName } = userSlice.actions;
 
-  const [mode, setMode] = useState<Mode>('hard');
-
   const getUserName = useCallback((): string => {
     if (userName !== initialUserName) return userName;
 
@@ -54,6 +52,8 @@ const Home: FC<{
       setUsers(data);
     });
   }, [dispatch, userKey, userName, setUserKey, getUserName]);
+
+  const [mode, setMode] = useState<Mode>('hard');
 
   return (
     <>

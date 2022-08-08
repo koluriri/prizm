@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import shuffle from 'lodash/shuffle';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 import { userSlice } from 'ducks/user';
+import { gameSlice } from 'ducks/game';
 
 import { GameObj, Mode, PrefectureStr, Questions } from 'data/types';
 import { listenGame, writeNewGame, deleteUser } from 'hooks/database';
@@ -19,11 +20,11 @@ const App: FC = () => {
   const userKey = useSelector((state: RootState) => state.user.key);
   const dispatch = useDispatch();
   const { unsetUserKey } = userSlice.actions;
+  const { setGameKey, setGameEntity, unsetGame } = gameSlice.actions;
 
-  const [gameKey, setGameKey] = useState('');
-  const [gameObj, setGameObj] = useState<GameObj>();
+  const gameKey = useSelector((state: RootState) => state.game.key);
+  const gameObj = useSelector((state: RootState) => state.game.entity);
 
-  const setHome = () => setGameKey('');
   // setGameは別ファイルにしたほうが分けたほうがいいと思う
   const setGame = (mode: Mode, users: string[]) => {
     const created = new Date();
@@ -64,16 +65,16 @@ const App: FC = () => {
         deleteUser(userKey);
         dispatch(unsetUserKey());
 
-        setGameKey(data.key);
-        setGameObj(data.val() as GameObj);
+        dispatch(setGameKey(data.key));
+        dispatch(setGameEntity(data.val() as GameObj));
         console.log(`new game: ${data.key}`);
       });
     }
-  }, [gameKey, userKey, dispatch, unsetUserKey]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameKey, userKey]);
 
   useEffect(() => {
     const callback = () => deleteUser(userKey);
-
     window.addEventListener('beforeunload', callback);
 
     return () => window.removeEventListener('beforeunload', callback);
@@ -90,7 +91,11 @@ const App: FC = () => {
       })}
     >
       {gameKey !== '' && gameObj ? (
-        <Game setHome={setHome} gameKey={gameKey} gameObj={gameObj} />
+        <Game
+          setHome={() => dispatch(unsetGame())}
+          gameKey={gameKey}
+          gameObj={gameObj}
+        />
       ) : (
         <Home setGame={setGame} />
       )}
