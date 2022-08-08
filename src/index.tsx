@@ -2,13 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
-
+import rootReducer from './ducks/rootReducer';
 import 'normalize.css';
 import App from './App';
-import { userSlice } from './ducks/user';
 import reportWebVitals from './reportWebVitals';
 
-const store = configureStore({ reducer: { user: userSlice.reducer } });
+const store = configureStore({ reducer: rootReducer });
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

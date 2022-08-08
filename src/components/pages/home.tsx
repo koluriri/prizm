@@ -1,20 +1,32 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, useCallback } from 'react';
 import OnlineUsers from 'components/organisms/onlineusers';
 import { Mode, modesDisplay, Users } from 'data/types';
 import { listenUsers, newOnlineUser } from 'hooks/database';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'ducks/rootReducer';
+import { userSlice, initialUserName } from 'ducks/user';
 
 const Home: FC<{
   setGame: (mode: Mode, users: string[]) => void;
-  userKey: string;
-  setUserKey: (key: string) => void;
-}> = ({ setGame, userKey, setUserKey }) => {
+}> = ({ setGame }) => {
+  const userName = useSelector((state: RootState) => state.user.name);
+  const userKey = useSelector((state: RootState) => state.user.key);
+  const dispatch = useDispatch();
+  const { setUserKey, setUserName } = userSlice.actions;
+
   const [mode, setMode] = useState<Mode>('hard');
 
-  const getUserName = (): string => {
-    const userName = localStorage.getItem('prizm-username');
-    if (userName && userName !== '') return userName;
+  const getUserName = useCallback((): string => {
+    if (userName !== initialUserName) return userName;
+
+    const localUserName = localStorage.getItem('prizm-username');
+    if (localUserName && localUserName !== '') {
+      dispatch(setUserName(localUserName));
+
+      return localUserName;
+    }
 
     const inputName = window.prompt(
       'プレイしたいユーザー名をおしえてください',
@@ -22,25 +34,26 @@ const Home: FC<{
     );
     if (inputName) {
       localStorage.setItem('prizm-username', inputName);
+      dispatch(setUserName(inputName));
 
       return inputName;
     }
 
-    return '海ネズミ';
-  };
-
-  console.log(getUserName());
+    return initialUserName;
+  }, [userName, dispatch, setUserName]);
 
   const [users, setUsers] = useState<Users>();
   useEffect(() => {
-    if (userKey === '') {
-      const newUserKey = newOnlineUser({ userName: getUserName() });
-      setUserKey(newUserKey);
+    if (userKey === '' && userName === initialUserName) {
+      // TODO: ここでゲーム中かどうかの判定もしないと、ゲーム中もオンラインになってしまう
+      dispatch(setUserKey(newOnlineUser({ userName: getUserName() })));
+      console.log('dispatch setUserKey & newOnlineUser');
     }
+
     listenUsers((data) => {
       setUsers(data);
     });
-  }, [userKey, setUserKey]);
+  }, [dispatch, userKey, userName, setUserKey, getUserName]);
 
   return (
     <>

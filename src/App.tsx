@@ -1,7 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, useEffect, useState, useCallback } from 'react';
+import { FC, useEffect, useState } from 'react';
 import shuffle from 'lodash/shuffle';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'ducks/rootReducer';
+import { userSlice } from 'ducks/user';
 
 import { GameObj, Mode, PrefectureStr, Questions } from 'data/types';
 import { listenGame, writeNewGame, deleteUser } from 'hooks/database';
@@ -12,7 +15,10 @@ import Home from 'components/pages/home';
 import './App.css';
 
 const App: FC = () => {
-  const [userKey, setUserKey] = useState('');
+  const userName = useSelector((state: RootState) => state.user.name);
+  const userKey = useSelector((state: RootState) => state.user.key);
+  const dispatch = useDispatch();
+  const { unsetUserKey } = userSlice.actions;
 
   const [gameKey, setGameKey] = useState('');
   const [gameObj, setGameObj] = useState<GameObj>();
@@ -28,7 +34,7 @@ const App: FC = () => {
         answer: randomPref,
         questions,
         mode,
-        startBy: userKey,
+        startBy: userName,
         messages: [],
         users,
         created: `${created.getFullYear()}-${
@@ -49,24 +55,21 @@ const App: FC = () => {
       });
   };
 
-  const toOfflineUser = useCallback(() => {
-    deleteUser(userKey);
-    setUserKey('');
-  }, [userKey]);
-
   useEffect(() => {
     if (userKey !== '') {
       // eslint-disable-next-line consistent-return
       listenGame(userKey, (data) => {
         if (!data.key || gameKey !== '') return false;
-        toOfflineUser();
+
+        deleteUser(userKey);
+        dispatch(unsetUserKey());
 
         setGameKey(data.key);
         setGameObj(data.val() as GameObj);
         console.log(`new game: ${data.key}`);
       });
     }
-  }, [gameKey, userKey, toOfflineUser]);
+  }, [gameKey, userKey, dispatch, unsetUserKey]);
 
   useEffect(() => {
     const callback = () => deleteUser(userKey);
@@ -89,11 +92,7 @@ const App: FC = () => {
       {gameKey !== '' && gameObj ? (
         <Game setHome={setHome} gameKey={gameKey} gameObj={gameObj} />
       ) : (
-        <Home
-          setGame={setGame}
-          userKey={userKey}
-          setUserKey={(key: string) => setUserKey(key)}
-        />
+        <Home setGame={setGame} />
       )}
     </div>
   );
