@@ -7,10 +7,13 @@ import { RootState } from 'ducks/rootReducer';
 
 import UserRemain from 'components/molecules/userremain';
 import { deleteGame, pushMessage } from 'utils/database';
+import useUserName from 'hooks/use-username';
 
 const AnswerInput: FC<{
   setHome: () => void;
 }> = ({ setHome }) => {
+  const userName = useUserName();
+
   const gameKey = useSelector((state: RootState) => state.game.key);
   const gameAnswer = useSelector(
     (state: RootState) => state.game.entity?.answer,
@@ -25,7 +28,7 @@ const AnswerInput: FC<{
     e.preventDefault();
     if (answerInputValue) {
       pushMessage(gameKey, {
-        name: 'うみねずみ',
+        name: userName,
         type: 'answer',
         matched: gameAnswer === answerInputValue,
         value: answerInputValue,
@@ -34,7 +37,7 @@ const AnswerInput: FC<{
       if (gameAnswer === answerInputValue) {
         pushMessage(gameKey, {
           type: 'score',
-          value: 'うみねずみさんのあたり！スコアはなんちゃら',
+          value: `${userName}さんのあたり！スコアはなんちゃら`,
         });
         deleteGame(gameKey);
       }
