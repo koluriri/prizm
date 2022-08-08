@@ -7,7 +7,7 @@ import { userSlice } from 'ducks/user';
 import { gameSlice } from 'ducks/game';
 
 import { GameObj } from 'data/types';
-import { listenGame, deleteUser } from 'hooks/database';
+import { listenGame, deleteUser } from 'utils/database';
 
 import Game from 'components/pages/game';
 import Home from 'components/pages/home';

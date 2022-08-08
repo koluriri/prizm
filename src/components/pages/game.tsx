@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { FC, useEffect, useState, useCallback } from 'react';
 
-import { listenGameDeleted, deleteGame } from 'hooks/database';
+import { listenGameDeleted, deleteGame } from 'utils/database';
 import { GameObj } from 'data/types';
 
 import Questioner from 'components/templates/questioner';

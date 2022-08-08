@@ -12,7 +12,7 @@ import {
   Questions,
 } from 'data/types';
 import { prefecture } from 'data/prefecture';
-import { listenUsers, writeNewGame, newOnlineUser } from 'hooks/database';
+import { listenUsers, writeNewGame, newOnlineUser } from 'utils/database';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 import { userSlice, initialUserName } from 'ducks/user';

@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { FC, FormEvent, useState } from 'react';
 import UserRemain from 'components/molecules/userremain';
-import { deleteGame, pushMessage } from 'hooks/database';
+import { deleteGame, pushMessage } from 'utils/database';
 
 const AnswerInput: FC<{
   gameKey: string;
