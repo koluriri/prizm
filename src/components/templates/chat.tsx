@@ -2,11 +2,16 @@
 import { css } from '@emotion/react';
 import { FC, useEffect, useRef, useState } from 'react';
 
+import { useSelector } from 'react-redux';
+import { RootState } from 'ducks/rootReducer';
+
 import { MessageObject, Messages } from 'data/types';
 import Message from 'components/molecules/message';
-import { listenMessage } from 'hooks/database';
+import { listenMessage } from 'utils/database';
 
-const Chat: FC<{ gameKey: string }> = ({ gameKey }) => {
+const Chat: FC = () => {
+  const gameKey = useSelector((state: RootState) => state.game.key);
+
   const chatView = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<Messages>([]);
 

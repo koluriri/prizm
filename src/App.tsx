@@ -1,79 +1,60 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, useEffect, useState, useCallback } from 'react';
-import shuffle from 'lodash/shuffle';
+import { FC, useEffect } from 'react';
 
-import { GameObj, Mode, PrefectureStr, Questions } from 'data/types';
-import { listenGame, writeNewGame, deleteUser } from 'hooks/database';
-import { prefecture } from 'data/prefecture';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'ducks/rootReducer';
+import { userSlice } from 'ducks/user';
+import { gameSlice } from 'ducks/game';
+
+import { GameObj } from 'data/types';
+import { listenGame, deleteUser, newOnlineUser } from 'utils/database';
+import useUserName from 'hooks/use-username';
 
 import Game from 'components/pages/game';
 import Home from 'components/pages/home';
 import './App.css';
 
 const App: FC = () => {
-  const [userKey, setUserKey] = useState('');
+  const userName = useUserName();
+  const userKey = useSelector((state: RootState) => state.user.key);
+  const dispatch = useDispatch();
+  const { setUserKey, unsetUserKey } = userSlice.actions;
+  const { setGameKey, setGameEntity, unsetGame } = gameSlice.actions;
 
-  const [gameKey, setGameKey] = useState('');
-  const [gameObj, setGameObj] = useState<GameObj>();
+  const gameKey = useSelector((state: RootState) => state.game.key);
+  const gameObj = useSelector((state: RootState) => state.game.entity);
 
-  const setHome = () => setGameKey('');
-  // setGameは別ファイルにしたほうが分けたほうがいいと思う
-  const setGame = (mode: Mode, users: string[]) => {
-    const created = new Date();
-    const randomPref: PrefectureStr = shuffle(prefecture)[0];
-
-    const write = (questions: Questions) =>
-      writeNewGame({
-        answer: randomPref,
-        questions,
-        mode,
-        startBy: userKey,
-        messages: [],
-        users,
-        created: `${created.getFullYear()}-${
-          created.getMonth() + 1
-        }-${created.getDate()} ${created.getHours()}:${
-          created.getMinutes() + 1
-        }:${created.getSeconds()}`.replace(/\n|\r/g, ''),
-      });
-
-    const importPath = mode === 'station' ? 'stations' : 'cities';
-    import(`data/${importPath}`)
-      .then((data: typeof import('./data/cities')) => {
-        write(shuffle(data.default()[randomPref]).slice(0, 30));
-      })
-      .catch((err) => {
-        alert('データを読み込めませんでした');
-        console.log(err);
-      });
-  };
-
-  const toOfflineUser = useCallback(() => {
-    deleteUser(userKey);
-    setUserKey('');
-  }, [userKey]);
+  useEffect(() => {
+    if (userKey === '' && gameKey === '') {
+      dispatch(setUserKey(newOnlineUser({ userName })));
+      console.log('dispatch setUserKey & newOnlineUser');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userKey, gameKey, userName]);
 
   useEffect(() => {
     if (userKey !== '') {
       // eslint-disable-next-line consistent-return
       listenGame(userKey, (data) => {
-        if (!data.key || gameKey !== '') return false;
-        toOfflineUser();
+        if (!data.key) return false;
 
-        setGameKey(data.key);
-        setGameObj(data.val() as GameObj);
+        deleteUser(userKey);
+        dispatch(unsetUserKey());
+        dispatch(setGameKey(data.key));
+        dispatch(setGameEntity(data.val() as GameObj));
+
         console.log(`new game: ${data.key}`);
       });
     }
-  }, [gameKey, userKey, toOfflineUser]);
 
-  useEffect(() => {
-    const callback = () => deleteUser(userKey);
-
+    const callback = () => {
+      if (userKey !== '') deleteUser(userKey);
+    };
     window.addEventListener('beforeunload', callback);
 
     return () => window.removeEventListener('beforeunload', callback);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userKey]);
 
   return (
@@ -87,13 +68,9 @@ const App: FC = () => {
       })}
     >
       {gameKey !== '' && gameObj ? (
-        <Game setHome={setHome} gameKey={gameKey} gameObj={gameObj} />
+        <Game setHome={() => dispatch(unsetGame())} />
       ) : (
-        <Home
-          setGame={setGame}
-          userKey={userKey}
-          setUserKey={(key: string) => setUserKey(key)}
-        />
+        <Home />
       )}
     </div>
   );

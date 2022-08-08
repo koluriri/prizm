@@ -1,31 +1,43 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { FC, FormEvent, useState } from 'react';
+
+import { useSelector } from 'react-redux';
+import { RootState } from 'ducks/rootReducer';
+
 import UserRemain from 'components/molecules/userremain';
-import { deleteGame, pushMessage } from 'hooks/database';
+import { deleteGame, pushMessage } from 'utils/database';
+import useUserName from 'hooks/use-username';
 
 const AnswerInput: FC<{
-  gameKey: string;
-  answer: string;
-  isDuringGame: boolean;
   setHome: () => void;
-}> = ({ gameKey, answer, isDuringGame, setHome }) => {
+}> = ({ setHome }) => {
+  const userName = useUserName();
+
+  const gameKey = useSelector((state: RootState) => state.game.key);
+  const gameAnswer = useSelector(
+    (state: RootState) => state.game.entity?.answer,
+  );
+  const isDuringGame = useSelector(
+    (state: RootState) => state.game.isDuringGame,
+  );
+
   const [answerInputValue, setAnswerInputValue] = useState('');
 
   const answerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (answerInputValue) {
       pushMessage(gameKey, {
-        name: 'うみねずみ',
+        name: userName,
         type: 'answer',
-        matched: answer === answerInputValue,
+        matched: gameAnswer === answerInputValue,
         value: answerInputValue,
       });
       setAnswerInputValue('');
-      if (answer === answerInputValue) {
+      if (gameAnswer === answerInputValue) {
         pushMessage(gameKey, {
           type: 'score',
-          value: 'うみねずみさんのあたり！スコアはなんちゃら',
+          value: `${userName}さんのあたり！スコアはなんちゃら`,
         });
         deleteGame(gameKey);
       }
