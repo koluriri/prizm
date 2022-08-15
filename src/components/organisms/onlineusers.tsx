@@ -17,7 +17,8 @@ const OnlineUsers: FC<{
           Object.keys(users).map((key) => (
             <li key={key}>
               {users[key].userName}
-              {key === me && ' (あなた)'}
+              {key === me && ' (あなた) '}
+              スコア:{users[key].score || '0'}
             </li>
           ))}
       </ul>

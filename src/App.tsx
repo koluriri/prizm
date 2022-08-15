@@ -7,7 +7,7 @@ import { RootState } from 'ducks/rootReducer';
 import { userSlice } from 'ducks/user';
 import { gameSlice } from 'ducks/game';
 
-import { GameObj } from 'data/types';
+import { GameObj, localScoreKey } from 'data/types';
 import { listenGame, deleteUser, newOnlineUser } from 'utils/database';
 import useUserName from 'hooks/use-username';
 
@@ -27,7 +27,15 @@ const App: FC = () => {
 
   useEffect(() => {
     if (userKey === '' && gameKey === '') {
-      dispatch(setUserKey(newOnlineUser({ userName })));
+      dispatch(
+        setUserKey(
+          newOnlineUser({
+            userName,
+            score:
+              parseInt(String(localStorage.getItem(localScoreKey)), 10) || 0,
+          }),
+        ),
+      );
       console.log('dispatch setUserKey & newOnlineUser');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
