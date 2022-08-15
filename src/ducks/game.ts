@@ -41,9 +41,14 @@ export const gameSlice = createSlice({
       ...state,
       currentQuesIndex: state.currentQuesIndex + 1,
     }),
-    pullMessage: (state, action: PayloadAction<MessageObject>) => ({
-      ...state,
-      messages: [...state.messages, action.payload],
-    }),
+    pullMessage: (state, action: PayloadAction<MessageObject>) => {
+      if (state.messages.find((msg) => msg.key === action.payload.key))
+        return state;
+
+      return {
+        ...state,
+        messages: [...state.messages, action.payload],
+      };
+    },
   },
 });
