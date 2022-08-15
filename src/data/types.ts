@@ -92,3 +92,5 @@ export type UserObj = {
 export type Users = {
   [key: string]: UserObj;
 };
+export const localScoreKey = 'prizm-score';
+export const localUserNameKey = 'prizm-username';

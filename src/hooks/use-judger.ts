@@ -3,7 +3,7 @@ import { RootState } from 'ducks/rootReducer';
 
 import { deleteGame, pushMessage } from 'utils/database';
 import useUserName from 'hooks/use-username';
-import { modesScore } from 'data/types';
+import { modesScore, localScoreKey } from 'data/types';
 
 const useJudger = (): [(inputValue: string) => void] => {
   const userName = useUserName();
@@ -33,9 +33,15 @@ const useJudger = (): [(inputValue: string) => void] => {
         ),
       );
 
+      const localScore = localStorage.getItem(localScoreKey);
+      const setValue = String(
+        localScore ? parseInt(localScore, 10) + score : score,
+      );
+      localStorage.setItem(localScoreKey, setValue);
+
       pushMessage(gameKey, {
         type: 'score',
-        value: `${userName}さんのあたり！スコアは${score}`,
+        value: `${userName}さんのあたり！スコア+${score}`,
       });
       deleteGame(gameKey);
     }
