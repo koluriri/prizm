@@ -8,6 +8,7 @@ import { RootState } from 'ducks/rootReducer';
 import UserRemain from 'components/molecules/userremain';
 import useJudger from 'hooks/use-judger';
 import { pushMessage } from 'utils/database';
+import { initialRemain } from 'data/types';
 
 const AnswerInput: FC<{
   setHome: () => void;
@@ -21,7 +22,7 @@ const AnswerInput: FC<{
   const [answerInputValue, setAnswerInputValue] = useState('');
   const [judge] = useJudger();
 
-  const [remain, setRemain] = useState(3);
+  const [remain, setRemain] = useState(initialRemain);
 
   const answerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

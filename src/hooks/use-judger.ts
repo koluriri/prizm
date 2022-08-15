@@ -18,7 +18,21 @@ const useJudger = (): [(inputValue: string) => void] => {
     (state: RootState) => state.game.currentQuesIndex,
   );
 
+  const messages = useSelector((state: RootState) => state.game.messages);
+  const allRemains = useSelector((state: RootState) => state.game.allRemains);
+
   const judge = (inputValue: string) => {
+    if (gameAnswer !== inputValue) {
+      const answerLength =
+        messages.filter(
+          (message) => message.type === 'answer' && message.matched === false,
+        ).length + 1;
+      if (answerLength === allRemains) {
+        console.log('Prizmの勝ち');
+        deleteGame(gameKey);
+      }
+    }
+
     pushMessage(gameKey, {
       name: userName,
       type: 'answer',
