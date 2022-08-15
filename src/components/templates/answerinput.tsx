@@ -9,6 +9,7 @@ import UserRemain from 'components/molecules/userremain';
 import useJudger from 'hooks/use-judger';
 import { pushMessage } from 'utils/database';
 import { initialRemain } from 'data/types';
+import canonicalizePref from 'utils/canonicalizepref';
 
 const AnswerInput: FC<{
   setHome: () => void;
@@ -24,9 +25,11 @@ const AnswerInput: FC<{
 
   const [remain, setRemain] = useState(initialRemain);
 
+  const [canonicalized, setCanonicalized] = useState<string | false>(false);
+
   const answerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (answerInputValue) {
+    if (canonicalized && canonicalized !== '') {
       if (remain <= 0) {
         pushMessage(gameKey, {
           type: 'remain',
@@ -34,8 +37,9 @@ const AnswerInput: FC<{
         });
       } else {
         setRemain((state) => state - 1);
-        judge(answerInputValue);
+        judge(canonicalized);
         setAnswerInputValue('');
+        setCanonicalized(false);
       }
     }
   };
@@ -56,11 +60,15 @@ const AnswerInput: FC<{
         <>
           <UserRemain remain={remain} />
           <form onSubmit={(e) => answerSubmit(e)}>
+            <p>{canonicalized && `${canonicalized} (Enterで送信）`}</p>
             <input
               type="text"
               css={formControl}
               value={answerInputValue}
-              onChange={(e) => setAnswerInputValue(e.target.value)}
+              onChange={(e) => {
+                setAnswerInputValue(e.target.value);
+                setCanonicalized(canonicalizePref(e.target.value));
+              }}
             />
           </form>
         </>

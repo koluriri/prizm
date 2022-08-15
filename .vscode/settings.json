@@ -37,6 +37,9 @@
   "npm.packageManager": "yarn",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "cSpell.words": [
+    "canonicalize",
+    "canonicalized",
+    "canonicalizer",
     "prizm"
   ]
 }
