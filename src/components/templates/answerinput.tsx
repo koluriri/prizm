@@ -22,6 +22,11 @@ const AnswerInput: FC<{
     (state: RootState) => state.game.isDuringGame,
   );
 
+  const gameObj = useSelector((state: RootState) => state.game.entity);
+  const currentQuesIndex = useSelector(
+    (state: RootState) => state.game.currentQuesIndex,
+  );
+
   const [answerInputValue, setAnswerInputValue] = useState('');
 
   const answerSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -34,10 +39,14 @@ const AnswerInput: FC<{
         value: answerInputValue,
       });
       setAnswerInputValue('');
-      if (gameAnswer === answerInputValue) {
+      if (gameObj && gameAnswer === answerInputValue) {
+        const score = Math.round(
+          100 - (100 / gameObj.questions.length) * (currentQuesIndex - 1),
+        );
+
         pushMessage(gameKey, {
           type: 'score',
-          value: `${userName}さんのあたり！スコアはなんちゃら`,
+          value: `${userName}さんのあたり！スコアは${score}`,
         });
         deleteGame(gameKey);
       }
