@@ -18,9 +18,12 @@ const AnswerInput: FC<{
   const [answerInputValue, setAnswerInputValue] = useState('');
   const [judge] = useJudger();
 
+  const [remain, setRemain] = useState(3);
+
   const answerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (answerInputValue) {
+      setRemain((state) => state - 1);
       judge(answerInputValue);
       setAnswerInputValue('');
     }
@@ -40,7 +43,7 @@ const AnswerInput: FC<{
     <div css={answerinput}>
       {isDuringGame ? (
         <>
-          <UserRemain userId={1} />
+          <UserRemain remain={remain} />
           <form onSubmit={(e) => answerSubmit(e)}>
             <input
               type="text"
