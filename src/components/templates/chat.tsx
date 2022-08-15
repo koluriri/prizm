@@ -1,11 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
+import { gameSlice } from 'ducks/game';
 
-import { MessageObject, Messages } from 'data/types';
+import { MessageObject } from 'data/types';
 import Message from 'components/molecules/message';
 import { listenMessage } from 'utils/database';
 
@@ -13,15 +14,18 @@ const Chat: FC = () => {
   const gameKey = useSelector((state: RootState) => state.game.key);
 
   const chatView = useRef<HTMLDivElement>(null);
-  const [messages, setMessages] = useState<Messages>([]);
+
+  const messages = useSelector((state: RootState) => state.game.messages);
+  const dispatch = useDispatch();
+  const { pullMessage } = gameSlice.actions;
 
   useEffect(() => {
     listenMessage(gameKey, (message) => {
       console.log('listen Message on Chat Component');
       console.log(message);
-      setMessages((histories) => [...histories, message]);
+      dispatch(pullMessage(message));
     });
-  }, [gameKey]);
+  }, [gameKey, dispatch, pullMessage]);
 
   useEffect(() => {
     if (chatView.current)

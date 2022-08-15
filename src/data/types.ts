@@ -94,3 +94,4 @@ export type Users = {
 };
 export const localScoreKey = 'prizm-score';
 export const localUserNameKey = 'prizm-username';
+export const initialRemain = 3;
