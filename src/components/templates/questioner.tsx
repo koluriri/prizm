@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, useRef, useEffect, useState } from 'react';
+import { FC, useRef, useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
+import { gameSlice } from 'ducks/game';
 
 import BigQuestion from 'components/organisms/bigquestion';
 import QuestionList from 'components/organisms/questionlist';
@@ -17,7 +18,11 @@ const Questioner: FC<{
     (state: RootState) => state.game.isDuringGame,
   );
 
-  const [currentQuesIndex, setCurrentQuesIndex] = useState(1);
+  const currentQuesIndex = useSelector(
+    (state: RootState) => state.game.currentQuesIndex,
+  );
+  const dispatch = useDispatch();
+  const { proceedQuesIndex } = gameSlice.actions;
 
   const timerId = useRef<NodeJS.Timeout>();
   const clearTimer = () => clearInterval(timerId.current);
@@ -26,13 +31,13 @@ const Questioner: FC<{
     if (isDuringGame) {
       const timerSeconds = 1.5;
       timerId.current = setInterval(
-        () => setCurrentQuesIndex((i) => i + 1),
+        () => dispatch(proceedQuesIndex()),
         timerSeconds * 1000,
       );
     }
 
     return clearTimer;
-  }, [isDuringGame]);
+  }, [isDuringGame, dispatch, proceedQuesIndex]);
 
   // currentQuesIndexが変わるたびに実行。全部回したら負け処理
   useEffect(() => {
