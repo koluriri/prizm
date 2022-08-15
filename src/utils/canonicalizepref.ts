@@ -51,9 +51,12 @@ const variationPref: {
 };
 
 const canonicalizePref = (input: string) => {
-  const canonicalizedInput: string = input
+  let canonicalizedInput: string = input
     .replace(/[！-～]/g, (s) => String.fromCharCode(s.charCodeAt(0) - 0xfee0))
     .toLowerCase();
+  if (/^[\u3040-\u309F]/gu.test(canonicalizedInput)) {
+    canonicalizedInput = canonicalizedInput.replace(/[a-zA-z]/g, '');
+  }
 
   const filtered = Object.keys(variationPref).filter((pref) =>
     variationPref[pref].find((various: string) =>
