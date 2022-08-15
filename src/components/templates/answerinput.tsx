@@ -9,6 +9,7 @@ import UserRemain from 'components/molecules/userremain';
 import useJudger from 'hooks/use-judger';
 import { pushMessage } from 'utils/database';
 import { initialRemain } from 'data/types';
+import canonicalizePref from 'utils/canonicalizepref';
 
 const AnswerInput: FC<{
   setHome: () => void;
@@ -40,6 +41,11 @@ const AnswerInput: FC<{
     }
   };
 
+  const canonicalizer = (input: string) => {
+    const canonicalized = canonicalizePref(input);
+    if (canonicalized) setAnswerInputValue(canonicalized);
+  };
+
   const answerinput = css({ gridColumn: '1 / 3' });
   const formControl = css({
     width: '100%',
@@ -60,7 +66,10 @@ const AnswerInput: FC<{
               type="text"
               css={formControl}
               value={answerInputValue}
-              onChange={(e) => setAnswerInputValue(e.target.value)}
+              onChange={(e) => {
+                setAnswerInputValue(e.target.value);
+                canonicalizer(e.target.value);
+              }}
             />
           </form>
         </>
