@@ -6,53 +6,23 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
 import UserRemain from 'components/molecules/userremain';
-import { deleteGame, pushMessage } from 'utils/database';
-import useUserName from 'hooks/use-username';
-import { modesScore } from 'data/types';
+import useJudger from 'hooks/use-judger';
 
 const AnswerInput: FC<{
   setHome: () => void;
 }> = ({ setHome }) => {
-  const userName = useUserName();
-
-  const gameKey = useSelector((state: RootState) => state.game.key);
-  const gameAnswer = useSelector(
-    (state: RootState) => state.game.entity?.answer,
-  );
   const isDuringGame = useSelector(
     (state: RootState) => state.game.isDuringGame,
   );
 
-  const gameObj = useSelector((state: RootState) => state.game.entity);
-  const currentQuesIndex = useSelector(
-    (state: RootState) => state.game.currentQuesIndex,
-  );
-
   const [answerInputValue, setAnswerInputValue] = useState('');
+  const [judge] = useJudger();
 
   const answerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (answerInputValue) {
-      pushMessage(gameKey, {
-        name: userName,
-        type: 'answer',
-        matched: gameAnswer === answerInputValue,
-        value: answerInputValue,
-      });
+      judge(answerInputValue);
       setAnswerInputValue('');
-      if (gameObj && gameAnswer === answerInputValue) {
-        const score = Math.round(
-          modesScore[gameObj.mode](
-            100 - (100 / gameObj.questions.length) * (currentQuesIndex - 1),
-          ),
-        );
-
-        pushMessage(gameKey, {
-          type: 'score',
-          value: `${userName}さんのあたり！スコアは${score}`,
-        });
-        deleteGame(gameKey);
-      }
     }
   };
 
