@@ -8,6 +8,7 @@ import { RootState } from 'ducks/rootReducer';
 import UserRemain from 'components/molecules/userremain';
 import { deleteGame, pushMessage } from 'utils/database';
 import useUserName from 'hooks/use-username';
+import { modesScore } from 'data/types';
 
 const AnswerInput: FC<{
   setHome: () => void;
@@ -41,7 +42,9 @@ const AnswerInput: FC<{
       setAnswerInputValue('');
       if (gameObj && gameAnswer === answerInputValue) {
         const score = Math.round(
-          100 - (100 / gameObj.questions.length) * (currentQuesIndex - 1),
+          modesScore[gameObj.mode](
+            100 - (100 / gameObj.questions.length) * (currentQuesIndex - 1),
+          ),
         );
 
         pushMessage(gameKey, {
