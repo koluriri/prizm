@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 import { userSlice, initialUserName } from 'ducks/user';
+import { localUserNameKey } from 'data/types';
 
 const useUserName = (): string => {
   const userName = useSelector((state: RootState) => state.user.name);
@@ -9,9 +10,7 @@ const useUserName = (): string => {
 
   if (userName !== initialUserName) return userName;
 
-  const localStorageKey = 'prizm-username';
-
-  const localUserName = localStorage.getItem(localStorageKey);
+  const localUserName = localStorage.getItem(localUserNameKey);
   if (
     localUserName &&
     localUserName !== '' &&
@@ -27,7 +26,7 @@ const useUserName = (): string => {
     '',
   );
   if (inputName) {
-    localStorage.setItem(localStorageKey, inputName);
+    localStorage.setItem(localUserNameKey, inputName);
     dispatch(setUserName(inputName));
 
     return inputName;

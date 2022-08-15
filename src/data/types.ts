@@ -4,6 +4,13 @@ import { prefecture } from 'data/prefecture';
 const modes = ['easy', 'normal', 'hard', 'hell', 'station'] as const;
 export type Mode = typeof modes[number];
 
+export const modesDisplay: { [key in Mode]: string } = {
+  easy: '初級（市町村）',
+  normal: '中級（市町村の最初の2文字）',
+  hard: '上級（市町村の頭文字）',
+  hell: 'ゲキムズ（市町村の2文字目）',
+  station: '駅モード',
+};
 export const modesConvert: { [key in Mode]: (t: string) => string } = {
   easy: (t) => t,
   normal: (t) => t.substr(0, 2),
@@ -11,12 +18,12 @@ export const modesConvert: { [key in Mode]: (t: string) => string } = {
   hell: (t) => t.charAt(1),
   station: (t) => t,
 };
-export const modesDisplay: { [key in Mode]: string } = {
-  easy: '初級（市町村）',
-  normal: '中級（市町村の最初の2文字）',
-  hard: '上級（市町村の頭文字）',
-  hell: 'ゲキムズ（市町村の2文字目）',
-  station: '駅モード',
+export const modesScore: { [key in Mode]: (score: number) => number } = {
+  easy: (score) => score * 0.75,
+  normal: (score) => score,
+  hard: (score) => score * 1.3,
+  hell: (score) => score * 1.45,
+  station: (score) => score * 0.9,
 };
 
 /* message */
@@ -85,3 +92,5 @@ export type UserObj = {
 export type Users = {
   [key: string]: UserObj;
 };
+export const localScoreKey = 'prizm-score';
+export const localUserNameKey = 'prizm-username';
