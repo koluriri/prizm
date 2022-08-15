@@ -7,6 +7,7 @@ import { RootState } from 'ducks/rootReducer';
 
 import UserRemain from 'components/molecules/userremain';
 import useJudger from 'hooks/use-judger';
+import { pushMessage } from 'utils/database';
 
 const AnswerInput: FC<{
   setHome: () => void;
@@ -14,6 +15,8 @@ const AnswerInput: FC<{
   const isDuringGame = useSelector(
     (state: RootState) => state.game.isDuringGame,
   );
+
+  const gameKey = useSelector((state: RootState) => state.game.key);
 
   const [answerInputValue, setAnswerInputValue] = useState('');
   const [judge] = useJudger();
@@ -23,9 +26,16 @@ const AnswerInput: FC<{
   const answerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (answerInputValue) {
-      setRemain((state) => state - 1);
-      judge(answerInputValue);
-      setAnswerInputValue('');
+      if (remain <= 0) {
+        pushMessage(gameKey, {
+          type: 'remain',
+          value: `もう残機がありません`,
+        });
+      } else {
+        setRemain((state) => state - 1);
+        judge(answerInputValue);
+        setAnswerInputValue('');
+      }
     }
   };
 
