@@ -25,7 +25,9 @@ const AnswerInput: FC<{
 
   const [remain, setRemain] = useState(initialRemain);
 
-  const [canonicalized, setCanonicalized] = useState<string | false>(false);
+  const [[canonicalized, suggest], setCanonicalized] = useState<
+    [string | false, string]
+  >([false, '']);
 
   const answerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,7 +41,7 @@ const AnswerInput: FC<{
         setRemain((state) => state - 1);
         judge(canonicalized);
         setAnswerInputValue('');
-        setCanonicalized(false);
+        setCanonicalized([false, suggest]);
       }
     }
   };
@@ -60,7 +62,9 @@ const AnswerInput: FC<{
         <>
           <UserRemain remain={remain} />
           <form onSubmit={(e) => answerSubmit(e)}>
-            <p>{canonicalized && `${canonicalized} (Enterで送信）`}</p>
+            <p>
+              {canonicalized && `${suggest} : ${canonicalized} (Enterで送信）`}
+            </p>
             <input
               type="text"
               css={formControl}
