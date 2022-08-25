@@ -21,7 +21,9 @@ const Home: FC<{ editMode: () => void }> = ({ editMode }) => {
   const clearTimer = () => clearInterval(timerId.current);
 
   useEffect(() => {
-    timerId.current = setInterval(() => updatePingStamp(userKey), 3000);
+    timerId.current = setInterval(() => {
+      if (userKey) updatePingStamp(userKey);
+    }, 3000);
 
     listenUsers((data) => {
       setUsers(data);
