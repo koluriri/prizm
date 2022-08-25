@@ -27,6 +27,13 @@
   --orange: #ffb554;
 }
 
+html,
+body {
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
 body {
   position: relative;
   font-family: Poppins, 'Zen Maru Gothic', sans-serif;
@@ -40,7 +47,22 @@ em {
   background: transparent;
 }
 
-.link-button {
+/* a,
+button {
+  transition: transform 0.2s;
+}
+
+a:hover,
+button:hover {
+  transform: scale(0.98);
+}
+
+a:active,
+button:active {
+  transform: scale(0.95);
+} */
+
+.button-link {
   padding: 0;
   font-weight: inherit;
   color: var(--primary-color);
@@ -51,8 +73,51 @@ em {
   appearance: none;
 }
 
-.link-button:hover {
+.button-link:hover {
   opacity: 0.85;
+}
+
+.button-hinomaru {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 101px;
+  height: 101px;
+  padding: 5px;
+  margin: 10px auto;
+  font-size: 27px;
+  font-weight: 900;
+  line-height: 1.03;
+  color: var(--bg-color);
+  cursor: pointer;
+  background: var(--red);
+  border: 0;
+  border-radius: 50%;
+  appearance: none;
+}
+
+.button-hinomaru:hover {
+  background: #be3943;
+}
+
+.bordercomp {
+  padding: 6px 15px 5px;
+  margin: 3px;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--primary-color);
+  white-space: nowrap;
+  cursor: pointer;
+  background: transparent;
+  border: 4px solid var(--primary-color);
+  border-radius: 30px;
+  appearance: none;
+}
+
+.bordercomp[data-active='true'] {
+  color: var(--bg-color);
+  background: var(--primary-color);
 }
 
 .loading {

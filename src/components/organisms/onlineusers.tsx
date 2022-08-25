@@ -56,7 +56,7 @@ const OnlineUsers: FC<{
         {usersLength !== 0 && (
           <button
             type="button"
-            className="link-button"
+            className="button-link"
             onClick={() => editMode()}
           >
             名前を変更する
@@ -68,7 +68,9 @@ const OnlineUsers: FC<{
     margin: 0;
     padding: 25px 23px 21px;
     list-style-type: none;
-    min-height: 150px;
+    min-height: 110px;
+    max-height: 270px;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;`)}

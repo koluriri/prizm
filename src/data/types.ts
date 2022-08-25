@@ -5,8 +5,22 @@ const modes = ['easy', 'normal', 'hard', 'hell', 'station'] as const;
 export type Mode = typeof modes[number];
 
 export const modesDisplay: { [key in Mode]: string } = {
+  easy: '初級',
+  normal: '中級',
+  hard: '上級',
+  hell: 'ゲキムズ',
+  station: '駅',
+};
+export const modesCaption: { [key in Mode]: string } = {
+  easy: '市町村が出題されます',
+  normal: '市町村の冒頭2文字が出題されます',
+  hard: '市町村の頭文字が出題されます',
+  hell: '市町村の2文字目が出題されます',
+  station: '駅が出題されます',
+};
+export const modesDetail: { [key in Mode]: string } = {
   easy: '初級（市町村）',
-  normal: '中級（市町村の最初の2文字）',
+  normal: '中級（市町村の冒頭2文字）',
   hard: '上級（市町村の頭文字）',
   hell: 'ゲキムズ（市町村の2文字目）',
   station: '駅モード',

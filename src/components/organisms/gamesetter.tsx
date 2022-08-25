@@ -1,9 +1,12 @@
-import { FC, useState } from 'react';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import { FC, useEffect, useState } from 'react';
 import shuffle from 'lodash/shuffle';
 
 import {
   localUserNameKey,
   Mode,
+  modesCaption,
   modesDisplay,
   PrefectureStr,
   Questions,
@@ -18,6 +21,11 @@ const GameSetter: FC<{
 }> = ({ users }) => {
   const [mode, setMode] = useState<Mode>('hard');
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;
+
+  const [modeCaption, setModeCaption] = useState('');
+  useEffect(() => {
+    setModeCaption(modesCaption[mode]);
+  }, [mode]);
 
   const setGame = (gameUsers: string[]) => {
     const created = new Date();
@@ -50,22 +58,45 @@ const GameSetter: FC<{
   };
 
   return (
-    <div className="gameSetter">
-      <select value={mode} onChange={(e) => setMode(e.target.value as Mode)}>
-        {Object.keys(modesDisplay).map((key) => (
-          <option key={key} value={key}>
-            {modesDisplay[key as Mode]}
-          </option>
-        ))}
-      </select>
-
-      <br />
-
+    <div css={css(`padding-top:25px;`)}>
       {users && (
-        <button type="button" onClick={() => setGame(Object.keys(users))}>
-          この参加者でゲームを開始
-        </button>
+        <>
+          <div css={css(`text-align: center;`)}>
+            {Object.keys(modesDisplay).map((key) => (
+              <button
+                type="button"
+                key={key}
+                onClick={() => setMode(key as Mode)}
+                className="bordercomp"
+                data-active={key === mode}
+              >
+                {modesDisplay[key as Mode]}
+              </button>
+            ))}
+          </div>
+
+          <p
+            css={css(`
+      font-weight: 700;
+      font-size: 16px;
+      text-align: center;
+      color: #7A5154;
+      `)}
+          >
+            {modeCaption}
+          </p>
+
+          <button
+            type="button"
+            onClick={() => setGame(Object.keys(users))}
+            className="button-hinomaru"
+          >
+            ゲーム開始
+          </button>
+        </>
       )}
+
+      {!users && <span className="loading" />}
     </div>
   );
 };
