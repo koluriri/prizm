@@ -38,8 +38,14 @@ const Chat: FC = () => {
   const chatViewStyle = css`
     overflow-y: auto;
     margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    flex-flow: column nowrap;
     &::-webkit-scrollbar {
       display: none;
+    }
+    & > :first-child {
+      margin-top: auto !important;
     }
   `;
 
