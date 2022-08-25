@@ -4,15 +4,15 @@ import { FC, useEffect, useRef, useState } from 'react';
 
 import OnlineUsers from 'components/organisms/onlineusers';
 import GameSetter from 'components/organisms/gamesetter';
-import { Users } from 'data/types';
+import { localUserNameKey, Users } from 'data/types';
 import { listenUsers, updatePingStamp } from 'utils/database';
 
-import useUserName from 'hooks/use-username';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
+import { initialUserName } from 'ducks/user';
 
-const Home: FC = () => {
-  const userName = useUserName();
+const Home: FC<{ editMode: () => void }> = ({ editMode }) => {
+  const userName = localStorage.getItem(localUserNameKey) || initialUserName;
   const userKey = useSelector((state: RootState) => state.user.key);
 
   const [users, setUsers] = useState<Users>();
@@ -42,7 +42,7 @@ const Home: FC = () => {
 
       <p>
         {userName}としてプレイ中{' '}
-        <button type="button" onClick={() => alert('まだ')}>
+        <button type="button" onClick={() => editMode()}>
           名前を変更
         </button>
       </p>

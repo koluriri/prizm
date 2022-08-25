@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 import shuffle from 'lodash/shuffle';
 
 import {
+  localUserNameKey,
   Mode,
   modesDisplay,
   PrefectureStr,
@@ -10,13 +11,13 @@ import {
 } from 'data/types';
 import { prefecture } from 'data/prefecture';
 import { writeNewGame } from 'utils/database';
-import useUserName from 'hooks/use-username';
+import { initialUserName } from 'ducks/user';
 
 const GameSetter: FC<{
   users: Users | undefined;
 }> = ({ users }) => {
   const [mode, setMode] = useState<Mode>('hard');
-  const userName = useUserName();
+  const userName = localStorage.getItem(localUserNameKey) || initialUserName;
 
   const setGame = (gameUsers: string[]) => {
     const created = new Date();

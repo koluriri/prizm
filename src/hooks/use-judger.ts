@@ -2,12 +2,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
 import { deleteGame, pushMessage } from 'utils/database';
-import useUserName from 'hooks/use-username';
-import { modesScore, localScoreKey } from 'data/types';
+import { modesScore, localScoreKey, localUserNameKey } from 'data/types';
 import getHint from 'utils/gethint';
+import { initialUserName } from 'ducks/user';
 
 const useJudger = (): [(inputValue: string) => void] => {
-  const userName = useUserName();
+  const userName = localStorage.getItem(localUserNameKey) || initialUserName;
 
   const gameKey = useSelector((state: RootState) => state.game.key);
   const gameAnswer = useSelector(

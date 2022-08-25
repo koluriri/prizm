@@ -1,18 +1,24 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
-import { userSlice } from 'ducks/user';
+import { initialUserName, userSlice } from 'ducks/user';
 import { gameSlice } from 'ducks/game';
 
-import { GameObj, localScoreKey } from 'data/types';
+import {
+  GameObj,
+  localScoreKey,
+  localUserColorKey,
+  localUserNameKey,
+} from 'data/types';
 import { listenGame, deleteUser, newOnlineUser } from 'utils/database';
 import useUserName from 'hooks/use-username';
 
 import Game from 'components/pages/game';
 import Home from 'components/pages/home';
+import EditUser from 'components/pages/edituser';
 import './App.css';
 
 const App: FC = () => {
@@ -25,12 +31,15 @@ const App: FC = () => {
   const gameKey = useSelector((state: RootState) => state.game.key);
   const gameObj = useSelector((state: RootState) => state.game.entity);
 
+  const [editUserMode, setEditUserMode] = useState(false);
+
   useEffect(() => {
-    if (userKey === '' && gameKey === '') {
+    if (userKey === '' && gameKey === '' && !editUserMode) {
       dispatch(
         setUserKey(
           newOnlineUser({
-            userName,
+            userName: localStorage.getItem(localUserNameKey) || initialUserName,
+            color: localStorage.getItem(localUserColorKey) || '',
             pingStamp: Date.now(),
             score:
               parseInt(String(localStorage.getItem(localScoreKey)), 10) || 0,
@@ -40,7 +49,7 @@ const App: FC = () => {
       console.log('dispatch setUserKey & newOnlineUser');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userKey, gameKey, userName]);
+  }, [userKey, gameKey, userName, editUserMode]);
 
   useEffect(() => {
     if (userKey !== '') {
@@ -66,6 +75,14 @@ const App: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userKey]);
 
+  useEffect(() => {
+    if (userKey !== '' && editUserMode) {
+      deleteUser(userKey);
+      dispatch(unsetUserKey());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editUserMode]);
+
   return (
     <div
       css={css({
@@ -76,11 +93,13 @@ const App: FC = () => {
         margin: '0 auto',
       })}
     >
-      {gameKey !== '' && gameObj ? (
-        <Game setHome={() => dispatch(unsetGame())} />
-      ) : (
-        <Home />
-      )}
+      {!editUserMode &&
+        (gameKey !== '' && gameObj ? (
+          <Game setHome={() => dispatch(unsetGame())} />
+        ) : (
+          <Home editMode={() => setEditUserMode(true)} />
+        ))}
+      {editUserMode && <EditUser toHome={() => setEditUserMode(false)} />}
     </div>
   );
 };

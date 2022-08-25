@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { Users } from 'data/types';
 import { FC } from 'react';
 
@@ -18,6 +20,7 @@ const OnlineUsers: FC<{
             (key) =>
               Date.now() - users[key].pingStamp < 3500 && (
                 <li key={key}>
+                  <span css={css(`color:${users[key].color}`)}>●</span>
                   {users[key].userName}
                   {key === me && ' (あなた) '}
                   スコア:{users[key].score || '0'}
