@@ -41,6 +41,8 @@ const names = [
   'がじゅまる',
 ];
 
-const generateName = () => names[Math.floor(Math.random() * names.length)];
+const generateName = () =>
+  names[Math.floor(Math.random() * names.length)] +
+  Math.random().toString(16).slice(-2);
 
 export default generateName;
