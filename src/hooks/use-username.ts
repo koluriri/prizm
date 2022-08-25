@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 import { userSlice, initialUserName } from 'ducks/user';
 import { localUserNameKey } from 'data/types';
+import generateName from 'utils/generatename';
 
 const useUserName = (): string => {
   const userName = useSelector((state: RootState) => state.user.name);
@@ -21,18 +22,12 @@ const useUserName = (): string => {
     return localUserName;
   }
 
-  const inputName = window.prompt(
-    'プレイしたいユーザー名をおしえてください',
-    '',
-  );
-  if (inputName) {
-    localStorage.setItem(localUserNameKey, inputName);
-    dispatch(setUserName(inputName));
+  const name = generateName();
 
-    return inputName;
-  }
+  localStorage.setItem(localUserNameKey, name);
+  dispatch(setUserName(name));
 
-  return initialUserName;
+  return name;
 };
 
 export default useUserName;
