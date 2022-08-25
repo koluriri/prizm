@@ -24,6 +24,7 @@ const useJudger = (): [(inputValue: string) => void] => {
 
   const judge = (inputValue: string) => {
     let hintMessage = '';
+    let end = false;
     if (gameAnswer !== inputValue) {
       const answerLength =
         messages.filter(
@@ -31,7 +32,7 @@ const useJudger = (): [(inputValue: string) => void] => {
         ).length + 1;
 
       if (answerLength === allRemains) {
-        console.log('Prizmの勝ち');
+        end = true;
         deleteGame(gameKey);
       } else {
         hintMessage = getHint((answerLength / allRemains) * 100, gameAnswer);
@@ -46,6 +47,11 @@ const useJudger = (): [(inputValue: string) => void] => {
     });
     if (hintMessage !== '')
       pushMessage(gameKey, { type: 'hint', value: hintMessage });
+    if (end)
+      pushMessage(gameKey, {
+        type: 'end',
+        value: '誰も答えられませんでした。',
+      });
 
     if (gameObj && gameAnswer === inputValue) {
       const score = Math.round(

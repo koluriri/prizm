@@ -37,7 +37,7 @@ export type AnswerMessage = {
 };
 export type GameMessage = {
   key?: string | null;
-  type: 'hint' | 'start' | 'score' | 'remain';
+  type: 'hint' | 'start' | 'score' | 'remain' | 'end';
   value: string;
 };
 export type MessageObject = AnswerMessage | GameMessage;

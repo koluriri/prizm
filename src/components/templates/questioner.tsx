@@ -9,11 +9,13 @@ import { gameSlice } from 'ducks/game';
 import BigQuestion from 'components/organisms/bigquestion';
 import QuestionList from 'components/organisms/questionlist';
 import { modesConvert, modesDisplay } from 'data/types';
+import { pushMessage } from 'utils/database';
 
 const Questioner: FC<{
   finishGame: () => void;
 }> = ({ finishGame }) => {
   const gameObj = useSelector((state: RootState) => state.game.entity);
+  const gameKey = useSelector((state: RootState) => state.game.key);
   const isDuringGame = useSelector(
     (state: RootState) => state.game.isDuringGame,
   );
@@ -46,11 +48,14 @@ const Questioner: FC<{
       currentQuesIndex === gameObj.questions.length &&
       gameObj.questions.length !== 0
     ) {
-      console.log('Prizmの勝ち。');
+      pushMessage(gameKey, {
+        type: 'end',
+        value: '誰も答えられませんでした。',
+      });
       finishGame();
       clearTimer();
     }
-  }, [currentQuesIndex, gameObj, finishGame]);
+  }, [currentQuesIndex, gameObj, gameKey, finishGame]);
 
   const displayQuestions =
     gameObj &&
