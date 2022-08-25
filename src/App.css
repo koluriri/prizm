@@ -1,10 +1,86 @@
+@import 'https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap';
+
 * {
   box-sizing: border-box;
-  font-family: sans-serif;
 }
 
 :root {
-  --text-color: #333;
-  --bg-color: #fff;
+  --primary-color: #0b141c;
+  --bg-color: #f2efe2;
   --font-size: 16px;
+  --indigo: #395298;
+  --lightblue: #51b2c9;
+  --green: #53822b;
+  --teal: #6dcf97;
+  --blue: #76b2b4;
+  --lightgreen: #8fb505;
+  --purple: #a068e8;
+  --brown: #c26655;
+  --tea: #c9c31e;
+  --beige: #d6a672;
+  --red: #d94550;
+  --yellow: #e8a21c;
+  --scarlet: #eb5c4b;
+  --pink: #ed9489;
+  --palepink: #f1b8b5;
+  --lightbeige: #f7e3c1;
+  --orange: #ffb554;
+}
+
+body {
+  position: relative;
+  font-family: Poppins, 'Zen Maru Gothic', sans-serif;
+  font-feature-settings: 'palt';
+  color: var(--primary-color);
+}
+
+em {
+  font-style: normal;
+  color: var(--red);
+  background: transparent;
+}
+
+.link-button {
+  padding: 0;
+  font-weight: inherit;
+  color: var(--primary-color);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  opacity: 0.7;
+  appearance: none;
+}
+
+.link-button:hover {
+  opacity: 0.85;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  transform: translateX(-15px);
+}
+
+.loading::before {
+  display: block;
+  width: 12px;
+  height: 12px;
+  content: '';
+  background: var(--red);
+  border-radius: 10px;
+  transform: rotate(0deg);
+  transform-origin: 15px;
+  animation: 1s ease 0s infinite normal prizm-loading;
+}
+
+@keyframes prizm-loading {
+  0% {
+    transform: rotate(90deg);
+  }
+
+  100% {
+    transform: rotate(450deg);
+  }
 }
