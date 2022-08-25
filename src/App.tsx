@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
 import { FC, useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -84,15 +82,7 @@ const App: FC = () => {
   }, [editUserMode]);
 
   return (
-    <div
-      css={css({
-        width: '560px',
-        maxWidth: '100%',
-        minHeight: '100vh',
-        padding: '10px',
-        margin: '0 auto',
-      })}
-    >
+    <div>
       {!editUserMode &&
         (gameKey !== '' && gameObj ? (
           <Game setHome={() => dispatch(unsetGame())} />

@@ -33,22 +33,35 @@ const Home: FC<{ editMode: () => void }> = ({ editMode }) => {
   }, [userKey]);
 
   return (
-    <>
-      <h1>Prizm</h1>
+    <div
+      css={css(`display: grid;
+    grid-template-columns: 0.5fr 280px 2fr;
+    grid-template-areas:
+        "bg logo users"
+        "bg setter users";
+    min-height: 100vh;
+    width: 100vw;`)}
+    >
+      <div css={css(`grid-area: bg;`)}>area 1</div>
+      <div css={css(`grid-area: logo;`)}>
+        <h1>Prizm</h1>
+      </div>
+      <div css={css(`grid-area: users;`)}>
+        <p css={css({ background: '#efefef' })}>参加者を待機中</p>
 
-      <p css={css({ background: '#efefef' })}>参加者を待機中</p>
+        <OnlineUsers users={users} />
+      </div>
+      <div css={css(`grid-area: setter;`)}>
+        <GameSetter users={users} />
 
-      <OnlineUsers users={users} />
-
-      <GameSetter users={users} />
-
-      <p>
-        {userName}としてプレイ中{' '}
-        <button type="button" onClick={() => editMode()}>
-          名前を変更
-        </button>
-      </p>
-    </>
+        <p>
+          {userName}としてプレイ中{' '}
+          <button type="button" onClick={() => editMode()}>
+            名前を変更
+          </button>
+        </p>
+      </div>
+    </div>
   );
 };
 
