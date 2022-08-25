@@ -1,12 +1,17 @@
 import { FC, useEffect, useState } from 'react';
 
-import { localScoreKey, localUserNameKey } from 'data/types';
+import { localScoreKey, localUserColorKey, localUserNameKey } from 'data/types';
 import { initialUserName } from 'ducks/user';
+import { colors } from 'utils/generateuser';
+import ColorSelector from 'components/molecules/colorselector';
 
 const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;
   const [inputName, setInputName] = useState(userName);
   const [inputNameMsg, setInputNameMsg] = useState('');
+
+  const userColor = localStorage.getItem(localUserColorKey) || '#000000';
+  const [selected, setSelected] = useState(userColor);
 
   useEffect(() => {
     setInputNameMsg('');
@@ -17,6 +22,7 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
   const submit = () => {
     if (!inputNameMsg) {
       localStorage.setItem(localUserNameKey, inputName);
+      localStorage.setItem(localUserColorKey, selected);
       toHome();
     }
   };
@@ -28,7 +34,6 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
         {inputName} スコア
         {parseInt(String(localStorage.getItem(localScoreKey)), 10) || 0}
       </div>
-
       <label htmlFor="inputName">
         名前
         <input
@@ -38,12 +43,17 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
           onChange={(e) => setInputName(e.target.value)}
         />
       </label>
-      <p>{inputNameMsg}</p>
-
+      <p>{inputNameMsg}</p>色
+      {colors.map((color) => (
+        <ColorSelector
+          color={color}
+          selected={selected}
+          onClick={() => setSelected(color)}
+        />
+      ))}
       <button type="button" onClick={() => toHome()}>
         もどる
       </button>
-
       <button type="button" onClick={() => submit()} disabled={!!inputNameMsg}>
         確定
       </button>

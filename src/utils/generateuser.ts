@@ -41,8 +41,28 @@ const names = [
   'がじゅまる',
 ];
 
-const generateName = () =>
+export const colors = [
+  '#395298',
+  '#51B1C9',
+  '#53822B',
+  '#6DCE97',
+  '#76B2B4',
+  '#8FB505',
+  '#9F68E8',
+  '#C26655',
+  '#C9C21E',
+  '#D6A671',
+  '#D94550',
+  '#E8A21C',
+  '#EB5C4B',
+  '#ED9489',
+  '#F1B8B5',
+  '#FFB554',
+];
+
+export const generateName = () =>
   names[Math.floor(Math.random() * names.length)] +
   Math.random().toString(16).slice(-2);
 
-export default generateName;
+export const generateColor = () =>
+  colors[Math.floor(Math.random() * colors.length)];

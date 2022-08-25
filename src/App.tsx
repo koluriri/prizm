@@ -7,7 +7,12 @@ import { RootState } from 'ducks/rootReducer';
 import { initialUserName, userSlice } from 'ducks/user';
 import { gameSlice } from 'ducks/game';
 
-import { GameObj, localScoreKey, localUserNameKey } from 'data/types';
+import {
+  GameObj,
+  localScoreKey,
+  localUserColorKey,
+  localUserNameKey,
+} from 'data/types';
 import { listenGame, deleteUser, newOnlineUser } from 'utils/database';
 import useUserName from 'hooks/use-username';
 
@@ -34,6 +39,7 @@ const App: FC = () => {
         setUserKey(
           newOnlineUser({
             userName: localStorage.getItem(localUserNameKey) || initialUserName,
+            color: localStorage.getItem(localUserColorKey) || '',
             pingStamp: Date.now(),
             score:
               parseInt(String(localStorage.getItem(localScoreKey)), 10) || 0,

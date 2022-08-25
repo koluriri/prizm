@@ -86,6 +86,7 @@ export type GameObj = {
 export type UserObj = {
   userName: string;
   pingStamp: number;
+  color: string;
   score?: number;
   remain?: number;
   joiningGame?: string;
@@ -95,4 +96,5 @@ export type Users = {
 };
 export const localScoreKey = 'prizm-score';
 export const localUserNameKey = 'prizm-username';
+export const localUserColorKey = 'prizm-usercolor';
 export const initialRemain = 3;
