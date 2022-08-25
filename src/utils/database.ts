@@ -10,6 +10,9 @@ import {
   onChildRemoved,
   DataSnapshot,
   onValue,
+  startAt,
+  query,
+  orderByChild,
 } from 'firebase/database';
 
 import {
@@ -162,8 +165,20 @@ export const deleteUser = (userKey: string): void => {
 };
 
 export const listenUsers = (callback: (users: Users) => any) => {
-  const users = ref(database, 'Users/');
+  // const users = ref(database, 'Users/');
+  const users = query(
+    ref(database, 'Users/'),
+    orderByChild('pingStamp'),
+    startAt(Date.now() - 3000),
+  );
   onValue(users, (data) => {
     callback(data.val() as Users);
   });
+};
+
+export const updatePingStamp = (userKey: string): void => {
+  const updates: { [key: string]: any } = {};
+  updates[`Users/${userKey}/pingStamp`] = Date.now();
+
+  void update(ref(database), updates);
 };

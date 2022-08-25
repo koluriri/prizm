@@ -85,6 +85,7 @@ export type GameObj = {
 /* User */
 export type UserObj = {
   userName: string;
+  pingStamp: number;
   score?: number;
   remain?: number;
   joiningGame?: string;

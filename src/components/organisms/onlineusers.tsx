@@ -14,13 +14,16 @@ const OnlineUsers: FC<{
       <p>オンラインのユーザー：</p>
       <ul>
         {users &&
-          Object.keys(users).map((key) => (
-            <li key={key}>
-              {users[key].userName}
-              {key === me && ' (あなた) '}
-              スコア:{users[key].score || '0'}
-            </li>
-          ))}
+          Object.keys(users).map(
+            (key) =>
+              Date.now() - users[key].pingStamp < 3500 && (
+                <li key={key}>
+                  {users[key].userName}
+                  {key === me && ' (あなた) '}
+                  スコア:{users[key].score || '0'}
+                </li>
+              ),
+          )}
       </ul>
     </>
   );
