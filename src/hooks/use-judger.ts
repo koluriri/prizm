@@ -4,6 +4,7 @@ import { RootState } from 'ducks/rootReducer';
 import { deleteGame, pushMessage } from 'utils/database';
 import useUserName from 'hooks/use-username';
 import { modesScore, localScoreKey } from 'data/types';
+import getHint from 'utils/gethint';
 
 const useJudger = (): [(inputValue: string) => void] => {
   const userName = useUserName();
@@ -22,14 +23,18 @@ const useJudger = (): [(inputValue: string) => void] => {
   const allRemains = useSelector((state: RootState) => state.game.allRemains);
 
   const judge = (inputValue: string) => {
+    let hintMessage = '';
     if (gameAnswer !== inputValue) {
       const answerLength =
         messages.filter(
           (message) => message.type === 'answer' && message.matched === false,
         ).length + 1;
+
       if (answerLength === allRemains) {
         console.log('Prizmの勝ち');
         deleteGame(gameKey);
+      } else {
+        hintMessage = getHint((answerLength / allRemains) * 100, gameAnswer);
       }
     }
 
@@ -39,6 +44,8 @@ const useJudger = (): [(inputValue: string) => void] => {
       matched: gameAnswer === inputValue,
       value: inputValue,
     });
+    if (hintMessage !== '')
+      pushMessage(gameKey, { type: 'hint', value: hintMessage });
 
     if (gameObj && gameAnswer === inputValue) {
       const score = Math.round(
