@@ -1,23 +1,34 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 
 import OnlineUsers from 'components/organisms/onlineusers';
 import GameSetter from 'components/organisms/gamesetter';
 import { Users } from 'data/types';
-import { listenUsers } from 'utils/database';
+import { listenUsers, updatePingStamp } from 'utils/database';
 
 import useUserName from 'hooks/use-username';
+import { useSelector } from 'react-redux';
+import { RootState } from 'ducks/rootReducer';
 
 const Home: FC = () => {
   const userName = useUserName();
+  const userKey = useSelector((state: RootState) => state.user.key);
 
   const [users, setUsers] = useState<Users>();
+
+  const timerId = useRef<NodeJS.Timeout>();
+  const clearTimer = () => clearInterval(timerId.current);
+
   useEffect(() => {
+    timerId.current = setInterval(() => updatePingStamp(userKey), 3000);
+
     listenUsers((data) => {
       setUsers(data);
     });
-  }, []);
+
+    return clearTimer;
+  }, [userKey]);
 
   return (
     <>

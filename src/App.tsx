@@ -31,6 +31,7 @@ const App: FC = () => {
         setUserKey(
           newOnlineUser({
             userName,
+            pingStamp: Date.now(),
             score:
               parseInt(String(localStorage.getItem(localScoreKey)), 10) || 0,
           }),
