@@ -82,7 +82,7 @@ const App: FC = () => {
   }, [editUserMode]);
 
   return (
-    <div>
+    <>
       {!editUserMode &&
         (gameKey !== '' && gameObj ? (
           <Game setHome={() => dispatch(unsetGame())} />
@@ -90,7 +90,7 @@ const App: FC = () => {
           <Home editMode={() => setEditUserMode(true)} />
         ))}
       {editUserMode && <EditUser toHome={() => setEditUserMode(false)} />}
-    </div>
+    </>
   );
 };
 
