@@ -68,7 +68,7 @@ const useJudger = (): [(inputValue: string) => void] => {
 
       pushMessage(gameKey, {
         type: 'score',
-        value: `${userName}さんのあたり！スコア+${score}`,
+        value: `${userName}\nスコア+${score}`,
       });
       deleteGame(gameKey);
     }

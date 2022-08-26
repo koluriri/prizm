@@ -158,6 +158,14 @@ input[type='submit'].bordercomp {
   content: 'o';
 }
 
+.message[data-type='score'] .bordercomp {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: -8px;
+  color: var(--red);
+  background: transparent;
+}
+
 @keyframes clicked {
   0% {
     transform: scale(0.8);
