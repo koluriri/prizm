@@ -13,7 +13,7 @@ const variationPref: {
   群馬県: ['群馬県', 'ぐんま', 'gunma', 'gunnma'],
   埼玉県: ['埼玉県', 'さいたま', 'saitama'],
   千葉県: ['千葉県', 'ちば', 'chiba', 'tiba'],
-  東京都: ['東京都', 'とうきょうと', 'toukyou', 'toukilyou', 'tokyo'],
+  東京都: ['東京都', 'とうきょう', 'toukyou', 'toukilyou', 'tokyo'],
   神奈川県: ['神奈川県', 'かながわ', 'kanagawa'],
   新潟県: ['新潟県', 'にいがた', 'niigata'],
   富山県: ['富山県', 'とやま', 'toyama'],

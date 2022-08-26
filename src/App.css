@@ -225,3 +225,7 @@ input[type='submit'].bordercomp {
     opacity: 1;
   }
 }
+
+input:focus {
+  outline: none;
+}
