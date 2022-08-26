@@ -76,7 +76,16 @@ const Home: FC<{ editMode: () => void }> = ({ editMode }) => {
     flex-direction: column;
     justify-content: end;`)}
       >
-        <h1 css={css(`width: 120px;margin: 0;`)}>
+        <h1
+          css={css(`
+          width: 90px;
+          margin: 0;
+
+          @media (min-width: 768px) {
+            width: 120px;
+          }
+          `)}
+        >
           <img src={logo} alt="prizm" />
         </h1>
         <h2

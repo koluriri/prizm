@@ -63,56 +63,77 @@ const GameSetter: FC<{
         <>
           <div
             css={css(`
-            display: flex;
-            overflow: auto;
-            padding-left: 60px;
-            padding-right: 60px;
-            width: fit-content;
-            max-width: 100vw;
-            margin: 0 auto;
+              margin: 0 auto;
+              width: 340px;
+              max-width: 95vw;
+              max-width: calc(100vw - 60px);
+              position: relative;
 
-            &::-webkit-scrollbar {
-              display: none;
-            }
+              &:after,&:before {
+                content: '';
+                width: 10px;
+                height: 60px;
+                background-image: linear-gradient(90deg, transparent 0%, var(--bg-color) 100%);
+                display: block;
+                position: absolute;
+                right: 0;
+                pointer-events: none;
+                top: 0;
+              }
 
-            &:after,&:before {
-              content: '';
-              width: 100px;
-              height: 60px;
-              background-image: linear-gradient(90deg, transparent 0%, var(--bg-color) 80%);
-              display: block;
-              position: absolute;
-              right: 0;
-              pointer-events: none;
-            }
+              &:before {
+                background-image: linear-gradient(-90deg, transparent 0%, var(--bg-color) 100%);
+                left: 0;
+              }
 
-            &:before {
-              width: 30px;
-              background-image: linear-gradient(-90deg, transparent 0%, var(--bg-color) 100%);
-              left: 0;
-            }
+              @media (min-width: 768px) {
+                width: auto;
 
-            @media (min-width: 768px) {
-                flex-wrap: wrap;
-                align-items: center;
-                justify-content: center;
-                padding: 0;
                 &:before, &:after {
                   content: none;
                 }
-            }`)}
+              }`)}
           >
-            {Object.keys(modesDisplay).map((key) => (
-              <button
-                type="button"
-                key={key}
-                onClick={() => setMode(key as Mode)}
-                className="bordercomp"
-                data-active={key === mode}
-              >
-                {modesDisplay[key as Mode]}
-              </button>
-            ))}
+            <div
+              css={css(`
+              display: flex;
+              overflow-y: auto;
+              padding-left: 10px;
+
+              &::-webkit-scrollbar {
+                display: none;
+              }
+
+              &:after {
+                content: '';
+                display: block;
+                min-width: 80px;
+              }
+
+              @media (min-width: 768px) {
+                padding-left: 0;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                overflow: visible;
+
+                &:after {
+                  content: none;
+                }
+              }`)}
+            >
+              {Object.keys(modesDisplay).map((key) => (
+                <button
+                  type="button"
+                  key={key}
+                  onClick={() => setMode(key as Mode)}
+                  className="bordercomp"
+                  data-active={key === mode}
+                >
+                  {modesDisplay[key as Mode]}
+                </button>
+              ))}
+            </div>
           </div>
 
           <p
