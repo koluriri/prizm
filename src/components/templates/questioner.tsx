@@ -70,10 +70,12 @@ const Questioner: FC<{
   return (
     <div
       css={css`
+        width: 100%;
+        padding-right: 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: center;
       `}
     >
       <div>{gameObj && modesDisplay[gameObj.mode]}</div>

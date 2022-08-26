@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { FC } from 'react';
 
 import { useSelector } from 'react-redux';
@@ -13,12 +15,12 @@ const QuestionList: FC<{
   );
 
   return (
-    <div>
+    <div css={css(`white-space:wrap;`)}>
       {questions.map((question, index) =>
         index < current || !isDuringGame ? (
           <span>{question} </span>
         ) : (
-          <span>・</span>
+          <span>・ </span>
         ),
       )}
     </div>

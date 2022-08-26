@@ -1,4 +1,4 @@
-@import 'https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap';
+@import 'https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Zen+Maru+Gothic:wght@500;700;900&display=swap';
 
 * {
   box-sizing: border-box;
@@ -25,6 +25,7 @@
   --palepink: #f1b8b5;
   --lightbeige: #f7e3c1;
   --orange: #ffb554;
+  --border: 4px solid var(--primary-color);
 }
 
 html,
@@ -101,17 +102,17 @@ button:active {
 }
 
 .bordercomp {
+  max-width: 100%;
   padding: 6px 15px 5px;
   margin: 3px;
   font-size: 20px;
   font-weight: 900;
   line-height: 1;
   color: var(--primary-color);
-  white-space: nowrap;
-  cursor: pointer;
+  vertical-align: middle;
   background: transparent;
-  border: 4px solid var(--primary-color);
-  border-radius: 30px;
+  border: var(--border);
+  border-radius: 23px;
   appearance: none;
 }
 
@@ -119,6 +120,34 @@ button:active {
   color: var(--bg-color);
   background: var(--primary-color);
   animation: 0.4s ease 0s 1 normal clicked;
+}
+
+a.bordercomp,
+button.bordercomp,
+input[type='submit'].bordercomp {
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.message .bordercomp {
+  background-color: var(--bg-color);
+  border: 0;
+}
+
+.message[data-type='answer'] .bordercomp {
+  background: transparent;
+  border: var(--border);
+}
+
+.message[data-type='answer'] .bordercomp[data-matched]::before {
+  height: 100%;
+  margin-right: 6px;
+  line-height: 1;
+  content: 'x';
+}
+
+.message[data-type='answer'] .bordercomp[data-matched='true']::before {
+  content: 'o';
 }
 
 @keyframes clicked {

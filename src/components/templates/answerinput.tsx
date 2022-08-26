@@ -46,7 +46,13 @@ const AnswerInput: FC<{
     }
   };
 
-  const answerinput = css({ gridColumn: '1 / 3' });
+  const answerinput = css(`
+    grid-column: 1 / 3;
+
+    @media (min-width: 768px) {
+      grid-column: 2 / 3;
+    }
+    `);
   const formControl = css({
     width: '100%',
     border: '1px solid #ddd',

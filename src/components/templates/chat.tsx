@@ -35,22 +35,39 @@ const Chat: FC = () => {
       });
   }, [messages]);
 
-  const chatViewStyle = css`
-    overflow-y: auto;
-    margin-bottom: 18px;
-    display: flex;
-    flex-direction: column;
-    flex-flow: column nowrap;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    & > :first-child {
-      margin-top: auto !important;
-    }
-  `;
-
   return (
-    <div ref={chatView} css={chatViewStyle}>
+    <div
+      ref={chatView}
+      css={css`
+        overflow-y: auto;
+        margin-bottom: 18px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        flex-flow: column nowrap;
+        padding-top: 80px;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        &::before {
+          content: '';
+          position: absolute;
+          /* top: 0; */
+          background: linear-gradient(0deg, transparent, var(--lightblue));
+          height: 80px;
+          display: block;
+          min-width: 140px;
+          width: 33%;
+          transform: translateY(-80px);
+        }
+
+        & > :first-child {
+          margin-top: auto !important;
+        }
+      `}
+    >
       {messages.map((message: MessageObject) => (
         <Message message={message} />
       ))}

@@ -44,6 +44,7 @@ const Game: FC<{
   const [gameHeight, setGameHeight] = useState(visualViewport.height);
 
   const onWindowResize = () => {
+    window.scrollTo(0, 0);
     setGameHeight(visualViewport.height);
   };
   useEffect(() => {
@@ -56,18 +57,30 @@ const Game: FC<{
 
   return (
     <div
-      css={css({
-        height: gameHeight - 20,
-        maxHeight: '700px',
-        transition: '0.2s height',
-        display: 'grid',
-        gridTemplateColumns: '40% 60%',
-        gridTemplateRows: '1fr 80px',
-      })}
+      css={css(`
+      background:#51B1C9;
+      height: ${gameHeight}px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `)}
     >
-      <Chat />
-      <Questioner finishGame={() => finishGame()} />
-      <AnswerInput setHome={setHome} />
+      <div
+        css={css(`
+          height: ${gameHeight - 20}px;
+          max-height: 600px;
+          padding: 0 30px;
+          width: 730px;
+          max-width: 100vw;
+          display: grid;
+          grid-template-columns: 1fr minmax(140px, 40%);
+          grid-template-rows: 1fr 80px;
+        `)}
+      >
+        <Questioner finishGame={() => finishGame()} />
+        <Chat />
+        <AnswerInput setHome={setHome} />
+      </div>
     </div>
   );
 };

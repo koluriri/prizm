@@ -6,36 +6,47 @@ import { MessageObject } from 'data/types';
 const Message: FC<{
   message: MessageObject;
 }> = ({ message }) => {
-  const answerStyle = css({
-    padding: '8px 10px',
-    width: 'fit-content',
-    border: '1px solid #bbb',
-    borderRadius: '8px',
-    margin: '0 0 10px',
-  });
-  let matchStyle;
   let name: string | null = null;
 
   if (message.type === 'answer') {
-    matchStyle = message.matched
-      ? css({
-          background: '#9fff9f',
-        })
-      : css({
-          background: '#ffd9d9',
-        });
     name = message.name;
   }
 
   return (
-    <div css={[answerStyle, matchStyle]} key={message.key}>
-      {name !== null && (
-        <>
-          <b css={{ fontSize: '0.7em' }}>{name}</b>
-          <br />
-        </>
+    <div
+      className="message"
+      data-type={message.type}
+      css={css`
+        display: flex;
+        justify-content: center;
+        align-items: end;
+        flex-direction: column;
+        margin: 8px 0;
+      `}
+    >
+      {name && (
+        <span
+          css={css`
+            font-size: 14px;
+            font-weight: 700;
+            margin-right: 23px;
+          `}
+        >
+          {name}
+        </span>
       )}
-      {message.value}
+      <div
+        className="bordercomp"
+        css={css`
+          font-size: 18px;
+          max-width: 130px;
+          text-align: right;
+        `}
+        data-matched={message.type === 'answer' && message.matched}
+        key={message.key}
+      >
+        {message.value.split(/(\n)/g).map((t) => (t === '\n' ? <br /> : t))}
+      </div>
     </div>
   );
 };
