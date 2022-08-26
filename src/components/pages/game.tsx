@@ -58,7 +58,7 @@ const Game: FC<{
   return (
     <div
       css={css(`
-      background:#51B1C9;
+      background:${gameObj?.color ?? 'var(--bg-color)'};
       height: ${gameHeight}px;
       display: flex;
       justify-content: center;

@@ -93,6 +93,7 @@ export type GameObj = {
   messages: Messages;
   users: string[];
   startBy: string;
+  color: string;
   created: DateTime;
 };
 

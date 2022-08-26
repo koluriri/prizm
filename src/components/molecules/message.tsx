@@ -1,11 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { FC } from 'react';
+
+import { useSelector } from 'react-redux';
+import { RootState } from 'ducks/rootReducer';
+
 import { MessageObject } from 'data/types';
 
 const Message: FC<{
   message: MessageObject;
 }> = ({ message }) => {
+  const gameColor = useSelector(
+    (state: RootState) => state.game.entity?.color ?? 'var(--bg-color)',
+  );
+
   let name: string | null = null;
 
   if (message.type === 'answer') {
@@ -37,14 +45,19 @@ const Message: FC<{
       )}
       <div
         className="bordercomp"
-        css={css`
-          font-size: 18px;
-          max-width: 130px;
-          text-align: right;
-        `}
         data-matched={message.type === 'answer' && message.matched}
         key={message.key}
       >
+        {message.type === 'hint' && (
+          <span
+            css={css`
+              color: ${gameColor};
+            `}
+          >
+            ヒント
+            <br />
+          </span>
+        )}
         {message.value.split(/(\n)/g).map((t) => (t === '\n' ? <br /> : t))}
       </div>
     </div>

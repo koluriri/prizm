@@ -12,6 +12,9 @@ import { listenMessage } from 'utils/database';
 
 const Chat: FC = () => {
   const gameKey = useSelector((state: RootState) => state.game.key);
+  const gameColor = useSelector(
+    (state: RootState) => state.game.entity?.color ?? 'var(--bg-color)',
+  );
 
   const chatView = useRef<HTMLDivElement>(null);
 
@@ -55,7 +58,7 @@ const Chat: FC = () => {
           content: '';
           position: absolute;
           /* top: 0; */
-          background: linear-gradient(0deg, transparent, var(--lightblue));
+          background: linear-gradient(0deg, transparent, ${gameColor});
           height: 80px;
           display: block;
           min-width: 140px;

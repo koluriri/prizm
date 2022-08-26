@@ -130,11 +130,19 @@ input[type='submit'].bordercomp {
 }
 
 .message .bordercomp {
+  max-width: 130px;
+  padding: 11px 16px;
+  font-size: 16px;
+  line-height: 1.3;
+  text-align: right;
   background-color: var(--bg-color);
   border: 0;
 }
 
 .message[data-type='answer'] .bordercomp {
+  padding: 6px 15px 5px;
+  font-size: 18px;
+  line-height: 1.1;
   background: transparent;
   border: var(--border);
 }

@@ -16,6 +16,23 @@ import { prefecture } from 'data/prefecture';
 import { writeNewGame } from 'utils/database';
 import { initialUserName } from 'ducks/user';
 
+const colors = [
+  '#51B1C9',
+  '#53822B',
+  '#6DCE97',
+  '#76B2B4',
+  '#8FB505',
+  '#9F68E8',
+  '#C26655',
+  '#C9C21E',
+  '#D6A671',
+  '#E8A21C',
+  '#EB5C4B',
+  '#ED9489',
+  '#F1B8B5',
+  '#FFB554',
+];
+
 const GameSetter: FC<{
   users: Users | undefined;
 }> = ({ users }) => {
@@ -38,6 +55,7 @@ const GameSetter: FC<{
         mode,
         startBy: userName,
         messages: [],
+        color: colors[Math.floor(Math.random() * colors.length)],
         users: gameUsers,
         created: `${created.getFullYear()}-${
           created.getMonth() + 1
