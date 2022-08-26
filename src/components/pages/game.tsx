@@ -24,12 +24,15 @@ const Game: FC<{
     (isDeleted = false) => {
       if (!isDeleted) deleteGame(gameKey);
       dispatch(stopGame());
+      document.body.style.backgroundColor = 'var(--bg-color)';
     },
     [gameKey, dispatch, stopGame],
   );
 
   useEffect(() => {
     listenGameDeleted(gameKey, () => finishGame(true));
+
+    document.body.style.backgroundColor = gameObj?.color ?? 'var(--bg-color)';
 
     console.log('------');
     console.log('game started!');
@@ -58,7 +61,6 @@ const Game: FC<{
   return (
     <div
       css={css(`
-      background:${gameObj?.color ?? 'var(--bg-color)'};
       height: ${gameHeight}px;
       display: flex;
       justify-content: center;

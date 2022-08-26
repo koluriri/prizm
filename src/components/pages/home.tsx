@@ -30,6 +30,8 @@ const Home: FC<{ editMode: () => void }> = ({ editMode }) => {
       setUsers(data);
     });
 
+    document.body.style.backgroundColor = 'var(--bg-color)';
+
     return clearTimer;
   }, [userKey]);
 
@@ -45,7 +47,6 @@ const Home: FC<{ editMode: () => void }> = ({ editMode }) => {
         "setter";
       min-height: 100vh;
       width: 100vw;
-      background-color: var(--bg-color);
 
       @media (min-width: 768px) {
         grid-template-columns: 1fr 280px 3fr;

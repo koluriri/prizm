@@ -40,6 +40,7 @@ body {
   font-family: Poppins, 'Zen Maru Gothic', sans-serif;
   font-feature-settings: 'palt';
   color: var(--primary-color);
+  transition: background-color 0.2s;
 }
 
 em {

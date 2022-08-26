@@ -15,6 +15,9 @@ const Chat: FC = () => {
   const gameColor = useSelector(
     (state: RootState) => state.game.entity?.color ?? 'var(--bg-color)',
   );
+  const isDuringGame = useSelector(
+    (state: RootState) => state.game.isDuringGame,
+  );
 
   const chatView = useRef<HTMLDivElement>(null);
 
@@ -38,6 +41,8 @@ const Chat: FC = () => {
       });
   }, [messages]);
 
+  const bg = isDuringGame ? gameColor : 'var(--bg-color)';
+
   return (
     <div
       ref={chatView}
@@ -58,12 +63,13 @@ const Chat: FC = () => {
           content: '';
           position: absolute;
           /* top: 0; */
-          background: linear-gradient(0deg, transparent, ${gameColor});
+          background: linear-gradient(0deg, transparent, ${bg});
           height: 80px;
           display: block;
           min-width: 140px;
           width: 33%;
           transform: translateY(-80px);
+          transition: 0.2s;
         }
 
         & > :first-child {
