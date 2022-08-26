@@ -70,6 +70,7 @@ const Chat: FC = () => {
           width: 33%;
           transform: translateY(-80px);
           transition: 0.2s;
+          animation: 1s ease 0s 1 normal fadein;
         }
 
         & > :first-child {

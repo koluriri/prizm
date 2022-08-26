@@ -35,7 +35,7 @@ const Message: FC<{
       {name && (
         <span
           css={css`
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             margin-right: 23px;
           `}
