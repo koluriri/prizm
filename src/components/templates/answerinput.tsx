@@ -90,7 +90,7 @@ const AnswerInput: FC<{
                 >
                   {answerInputValue}
                 </span>{' '}
-                {suggest.slice(answerInputValue.length)} (Enterで送信）
+                {suggest.slice(answerInputValue.length)} (改行で送信)
               </>
             )}
           </p>
