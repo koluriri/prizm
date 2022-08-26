@@ -6,6 +6,8 @@ import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
+import spbg from 'assets/sp-bg.svg';
+
 const OnlineUsers: FC<{
   users: Users | undefined;
   editMode: () => void;
@@ -31,17 +33,33 @@ const OnlineUsers: FC<{
     border-radius: 20px;
     padding: 15px 20px;
     backdrop-filter: blur(30px);
-    min-width: 320px;
-    transition: 0.2s;`)}
+    width: 340px;
+    max-width: 95%;
+    max-width: calc(100vw - 60px);
+    transition: 0.2s;
+    background-image: url(${spbg});
+    background-size: 180%;
+    background-position: -50px -50px;
+
+    @media (min-width: 768px) {
+      width: auto;
+      min-width: 350px;
+    }
+    `)}
     >
       <div
         css={css(`
-    font-size: 15px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 700;`)}
+          font-size: 13px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          font-weight: 700;
+
+          @media (min-width: 768px) {
+            font-size: 15px;
+          }
+          `)}
       >
         {usersLength === 0 && <span>接続中…</span>}
         {usersLength !== 0 && (
@@ -65,15 +83,21 @@ const OnlineUsers: FC<{
       </div>
       <ul
         css={css(`
-    margin: 0;
-    padding: 25px 23px 21px;
-    list-style-type: none;
-    min-height: 110px;
-    max-height: 270px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;`)}
+          margin: 0;
+          padding: 10px 17px 2px;
+          min-height: 50px;
+          max-height: 200px;
+          list-style-type: none;
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          @media (min-width: 768px) {
+            padding: 25px 23px 21px;
+            min-height: 110px;
+            max-height: 270px;
+          }`)}
       >
         {users &&
           Object.keys(users).map(

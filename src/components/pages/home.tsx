@@ -37,21 +37,37 @@ const Home: FC<{ editMode: () => void }> = ({ editMode }) => {
     <div
       css={css(`
       display: grid;
-      grid-template-columns: 1fr 280px 3fr;
+      grid-template-columns: 1fr;
       grid-template-areas:
-          "bg logo users"
-          "bg setter users";
+        "bg"
+        "logo"
+        "users"
+        "setter";
       min-height: 100vh;
       width: 100vw;
       background-color: var(--bg-color);
+
+      @media (min-width: 768px) {
+        grid-template-columns: 1fr 280px 3fr;
+        grid-template-areas:
+            "bg logo users"
+            "bg setter users";
+      }
     `)}
     >
       <div
-        css={css(`grid-area: bg;
-      background-image: url(${bg});
-      background-repeat: repeat-x;
-      background-size: cover;
-      background-position: right center;`)}
+        css={css(`
+        display: none;
+        grid-area: bg;
+        background-image: url(${bg});
+        background-repeat: repeat-x;
+        background-size: cover;
+        background-position: right center;
+
+        @media (min-width: 768px) {
+          display: block;
+        }
+        `)}
       />
       <div
         css={css(`grid-area: logo;
@@ -68,7 +84,7 @@ const Home: FC<{ editMode: () => void }> = ({ editMode }) => {
     font-size: 17px;
     font-weight: 900;
     line-height: 1;
-    margin: 8px 0 10px;
+    margin: 8px 0 15px;
     text-align: center;
     line-height: 1.35;`)}
         >
@@ -79,18 +95,33 @@ const Home: FC<{ editMode: () => void }> = ({ editMode }) => {
       </div>
       <div
         css={css(`
-      grid-area: users;background-image: url(${bg});
-      background-repeat: repeat-x;
-      background-size: cover;
-      background-position: left center;
-      display: flex;
-      align-items: center;
-      justify-content: start;
-      padding: 0 30px 0 10vw;`)}
+          grid-area: users;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          @media (min-width: 768px) {
+            background-image: url(${bg});
+            background-repeat: repeat-x;
+            background-position: left center;
+            background-size: cover;
+            justify-content: start;
+            padding: 0 30px 0 10vw;
+          }
+          `)}
       >
         <OnlineUsers users={users} editMode={() => editMode()} />
       </div>
-      <div css={css(`grid-area: setter;`)}>
+      <div
+        css={css(`
+        grid-area: setter;
+        padding-top:15px;
+
+        @media (min-width: 768px) {
+          padding-top:20px;
+        }
+      `)}
+      >
         <GameSetter users={users} />
       </div>
     </div>

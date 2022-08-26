@@ -58,10 +58,50 @@ const GameSetter: FC<{
   };
 
   return (
-    <div css={css(`padding-top:25px;`)}>
+    <>
       {users && (
         <>
-          <div css={css(`text-align: center;`)}>
+          <div
+            css={css(`
+            display: flex;
+            overflow: auto;
+            padding-left: 60px;
+            padding-right: 60px;
+            width: fit-content;
+            max-width: 100vw;
+            margin: 0 auto;
+
+            &::-webkit-scrollbar {
+              display: none;
+            }
+
+            &:after,&:before {
+              content: '';
+              width: 100px;
+              height: 60px;
+              background-image: linear-gradient(90deg, transparent 0%, var(--bg-color) 80%);
+              display: block;
+              position: absolute;
+              right: 0;
+              pointer-events: none;
+            }
+
+            &:before {
+              width: 30px;
+              background-image: linear-gradient(-90deg, transparent 0%, var(--bg-color) 100%);
+              left: 0;
+            }
+
+            @media (min-width: 768px) {
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                &:before, &:after {
+                  content: none;
+                }
+            }`)}
+          >
             {Object.keys(modesDisplay).map((key) => (
               <button
                 type="button"
@@ -97,7 +137,7 @@ const GameSetter: FC<{
       )}
 
       {!users && <span className="loading" />}
-    </div>
+    </>
   );
 };
 
