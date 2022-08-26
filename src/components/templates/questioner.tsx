@@ -8,7 +8,7 @@ import { gameSlice } from 'ducks/game';
 
 import BigQuestion from 'components/organisms/bigquestion';
 import QuestionList from 'components/organisms/questionlist';
-import { modesConvert, modesDisplay } from 'data/types';
+import { modesConvert, modesDetail } from 'data/types';
 import { pushMessage } from 'utils/database';
 
 const Questioner: FC<{
@@ -78,7 +78,14 @@ const Questioner: FC<{
         justify-content: center;
       `}
     >
-      <div>{gameObj && modesDisplay[gameObj.mode]}</div>
+      <div
+        css={css`
+          font-size: 15px;
+          font-weight: 700;
+        `}
+      >
+        {gameObj && modesDetail[gameObj.mode]}
+      </div>
 
       {isDuringGame && displayQuestion && (
         <BigQuestion displayQuestion={displayQuestion} />

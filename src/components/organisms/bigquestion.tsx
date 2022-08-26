@@ -16,18 +16,21 @@ const BigQuestion: FC<{
 
   return (
     <div
-      css={css({
-        width: '172px',
-        height: '172px',
-        fontSize: fontSize(172, displayQuestion),
-        display: 'inline-flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: '#eee',
-        borderRadius: '200px',
-        whiteSpace: 'nowrap',
-        wordBreak: 'keep-all',
-      })}
+      css={css`
+        width: 140px;
+        height: 140px;
+        font-size: ${fontSize(140, displayQuestion)};
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--red);
+        border-radius: 200px;
+        white-space: nowrap;
+        word-break: keep-all;
+        font-weight: 900;
+        color: var(--bg-color);
+        margin-top: 17px;
+      `}
     >
       {displayQuestion}
     </div>
