@@ -106,7 +106,7 @@ const OnlineUsers: FC<{
                 <li
                   key={key}
                   css={css(`
-                  margin: 7px 0;
+                  margin: 4px 0;
                   --user-color: ${users[key].color};
                   display: flex;
                   flex-direction: row;
@@ -114,6 +114,10 @@ const OnlineUsers: FC<{
                   font-weight: 700;
                   line-height: 1;
                   flex-wrap: wrap;
+
+                  @media (min-width: 768px) {
+                    margin: 7px 0;
+                  }
 
                   &:before {
                     content: '';
