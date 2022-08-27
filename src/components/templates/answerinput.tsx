@@ -48,13 +48,9 @@ const AnswerInput: FC<{
   return (
     <div
       css={css`
-        grid-column: 1 / 3;
+        grid-area: answerinput;
         position: relative;
         height: 45px;
-
-        @media (min-width: 768px) {
-          grid-column: 2 / 3;
-        }
       `}
     >
       {isDuringGame ? (

@@ -17,6 +17,9 @@ const Game: FC<{
 }> = ({ setHome }) => {
   const gameKey = useSelector((state: RootState) => state.game.key);
   const gameObj = useSelector((state: RootState) => state.game.entity);
+  const isDuringGame = useSelector(
+    (state: RootState) => state.game.isDuringGame,
+  );
   const dispatch = useDispatch();
   const { stopGame } = gameSlice.actions;
 
@@ -68,7 +71,7 @@ const Game: FC<{
     `)}
     >
       <div
-        css={css(`
+        css={css`
           height: ${gameHeight - 20}px;
           max-height: 600px;
           padding: 0 30px;
@@ -77,7 +80,19 @@ const Game: FC<{
           display: grid;
           grid-template-columns: 1fr minmax(140px, 40%);
           grid-template-rows: 1fr 80px;
-        `)}
+          grid-template-areas:
+            'questioner chat'
+            'answerinput answerinput';
+
+          ${isDuringGame &&
+          css`
+            @media (min-width: 768px) {
+              grid-template-areas:
+                'questioner chat'
+                'questioner answerinput';
+            }
+          `}
+        `}
       >
         <Questioner finishGame={() => finishGame()} />
         <Chat />

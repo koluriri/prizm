@@ -47,6 +47,7 @@ const Chat: FC = () => {
     <div
       ref={chatView}
       css={css`
+        grid-area: chat;
         overflow-y: auto;
         margin-bottom: 18px;
         display: flex;

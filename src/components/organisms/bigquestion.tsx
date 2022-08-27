@@ -14,12 +14,14 @@ const BigQuestion: FC<{
     return `${fontSizeVw.toString()}vw`;
   };
 
+  const size = window.innerWidth < 768 ? 140 : 172;
+
   return (
     <div
       css={css`
-        width: 140px;
-        height: 140px;
-        font-size: ${fontSize(140, displayQuestion)};
+        width: ${size}px;
+        height: ${size}px;
+        font-size: ${fontSize(size, displayQuestion)};
         display: inline-flex;
         justify-content: center;
         align-items: center;

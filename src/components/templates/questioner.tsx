@@ -70,6 +70,7 @@ const Questioner: FC<{
   return (
     <div
       css={css`
+        grid-area: questioner;
         width: 100%;
         padding-right: 10px;
         display: flex;
@@ -82,6 +83,7 @@ const Questioner: FC<{
         css={css`
           font-size: 15px;
           font-weight: 700;
+          border-bottom: 2px solid var(--primary-color);
         `}
       >
         {gameObj && modesDetail[gameObj.mode]}
