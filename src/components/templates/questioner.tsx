@@ -127,7 +127,7 @@ const Questioner: FC<{
             src={hokkaido}
             alt="北海道"
             css={css`
-              max-width: 200px;
+              max-height: 26vh;
             `}
           />
         </>
