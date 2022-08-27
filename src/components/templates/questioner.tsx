@@ -10,8 +10,7 @@ import BigQuestion from 'components/organisms/bigquestion';
 import QuestionList from 'components/organisms/questionlist';
 import { modesConvert, modesDetail } from 'data/types';
 import { pushMessage } from 'utils/database';
-
-import hokkaido from 'assets/preview-hokkaido.svg';
+import { prefectureABC } from 'data/prefecture';
 
 const Questioner: FC<{
   finishGame: () => void;
@@ -120,14 +119,15 @@ const Questioner: FC<{
                 color: ${gameObj?.color};
               `}
             >
-              AOMORI
+              {!!gameObj?.answer && prefectureABC[gameObj.answer]}
             </span>
           </h3>
           <img
-            src={hokkaido}
-            alt="北海道"
+            src={gameObj?.answer && `/pref-svg/${gameObj.answer}.svg`}
+            alt={gameObj?.answer ?? 'Unknown'}
             css={css`
               max-height: 26vh;
+              padding: 10px;
             `}
           />
         </>
