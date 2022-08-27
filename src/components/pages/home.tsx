@@ -10,7 +10,7 @@ import { listenUsers, updatePingStamp } from 'utils/database';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
-import bg from 'assets/home-bg-preview.svg';
+import bg from 'assets/home-bg.svg';
 import logo from 'assets/logo-vertical.svg';
 
 const Home: FC<{ editMode: () => void }> = ({ editMode }) => {

@@ -67,8 +67,7 @@ const Chat: FC = () => {
           background: linear-gradient(0deg, transparent, ${bg});
           height: 80px;
           display: block;
-          min-width: 140px;
-          width: 33%;
+          width: 140px;
           transform: translateY(-80px);
           transition: 0.2s;
           animation: 1s ease 0s 1 normal fadein;
