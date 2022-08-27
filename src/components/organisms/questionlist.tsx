@@ -80,8 +80,8 @@ const QuestionList: FC<{
             css={css`
               width: 2px;
               height: 1em;
-              background: var(--primary-color);
-              opacity: 0.3;
+              background: var(--red);
+              opacity: 0.7;
               display: block;
               line-height: 1;
             `}
