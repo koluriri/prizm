@@ -28,6 +28,9 @@ const QuestionList: FC<{
     margin-bottom: 3px;
     font-size: 15px;
     letter-spacing: -1px;
+    transition: 0.4s ease;
+    line-height: 1;
+    height: 1em;
   `;
 
   let duringStyle = css``;
@@ -73,7 +76,16 @@ const QuestionList: FC<{
         index < current || !isDuringGame ? (
           <span css={spanStyle}>{question} </span>
         ) : (
-          <span css={spanStyle} />
+          <span
+            css={css`
+              width: 2px;
+              height: 1em;
+              background: var(--primary-color);
+              opacity: 0.3;
+              display: block;
+              line-height: 1;
+            `}
+          />
         ),
       )}
     </div>

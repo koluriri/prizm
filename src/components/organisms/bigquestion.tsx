@@ -14,7 +14,7 @@ const BigQuestion: FC<{
     return `${fontSizeVw.toString()}vw`;
   };
 
-  const size = window.innerWidth < 768 ? 140 : 172;
+  const size = window.innerWidth < 768 ? 140 : 200;
 
   return (
     <div
