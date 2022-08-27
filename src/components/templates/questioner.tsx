@@ -11,6 +11,8 @@ import QuestionList from 'components/organisms/questionlist';
 import { modesConvert, modesDetail } from 'data/types';
 import { pushMessage } from 'utils/database';
 
+import hokkaido from 'assets/preview-hokkaido.svg';
+
 const Questioner: FC<{
   finishGame: () => void;
 }> = ({ finishGame }) => {
@@ -79,17 +81,56 @@ const Questioner: FC<{
         justify-content: center;
       `}
     >
-      <div
-        css={css`
-          font-size: 15px;
-          font-weight: 700;
-        `}
-      >
-        {gameObj && modesDetail[gameObj.mode]}
-      </div>
+      {isDuringGame && (
+        <div
+          css={css`
+            font-size: 15px;
+            font-weight: 700;
+            text-align: center;
+          `}
+        >
+          {gameObj && modesDetail[gameObj.mode]}
+        </div>
+      )}
 
       {isDuringGame && displayQuestion && (
         <BigQuestion displayQuestion={displayQuestion} />
+      )}
+
+      {!isDuringGame && (
+        <>
+          <h3
+            css={css`
+              font-size: 38px;
+              text-align: center;
+              letter-spacing: 1px;
+              font-weight: 700;
+              margin-top: 0;
+              margin-bottom: 10px;
+            `}
+          >
+            {gameObj?.answer}
+            <span
+              css={css`
+                display: block;
+                font-weight: 700;
+                font-size: 13px;
+                letter-spacing: 4px;
+                margin-top: 5px;
+                color: ${gameObj?.color};
+              `}
+            >
+              AOMORI
+            </span>
+          </h3>
+          <img
+            src={hokkaido}
+            alt="北海道"
+            css={css`
+              max-width: 200px;
+            `}
+          />
+        </>
       )}
 
       {displayQuestions && (

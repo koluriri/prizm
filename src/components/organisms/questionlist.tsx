@@ -10,6 +10,9 @@ const QuestionList: FC<{
   // eslint-disable-next-line react/require-default-props
   current?: number;
 }> = ({ questions, current = 0 }) => {
+  const gameColor = useSelector(
+    (state: RootState) => state.game.entity?.color ?? '#000000',
+  );
   const isDuringGame = useSelector(
     (state: RootState) => state.game.isDuringGame,
   );
@@ -33,11 +36,17 @@ const QuestionList: FC<{
     height: 1em;
   `;
 
-  let duringStyle = css``;
+  let duringStyle = css`
+    max-height: 186px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  `;
 
   if (!isDuringGame) {
     spanStyle = css`
-      background: rgba(0, 0, 0, 0.05);
+      background: ${gameColor}6e;
       padding: 1px 5px;
       border-radius: 15px;
       margin-right: 3px;
@@ -48,7 +57,6 @@ const QuestionList: FC<{
   } else {
     duringStyle = css`
       height: 47px;
-      overflow-x: auto;
 
       &::-webkit-scrollbar {
         display: none;
