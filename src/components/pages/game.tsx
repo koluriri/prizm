@@ -28,6 +28,9 @@ const Game: FC<{
       if (!isDeleted) deleteGame(gameKey);
       dispatch(stopGame());
       document.body.style.backgroundColor = 'var(--bg-color)';
+      document
+        .querySelector("meta[name='theme-color']")
+        ?.setAttribute('content', '#f2efe2');
     },
     [gameKey, dispatch, stopGame],
   );
@@ -36,6 +39,9 @@ const Game: FC<{
     listenGameDeleted(gameKey, () => finishGame(true));
 
     document.body.style.backgroundColor = gameObj?.color ?? 'var(--bg-color)';
+    document
+      .querySelector("meta[name='theme-color']")
+      ?.setAttribute('content', gameObj?.color ?? '#f2efe2');
 
     console.log('------');
     console.log('game started!');
@@ -63,6 +69,7 @@ const Game: FC<{
 
   return (
     <div
+      className="gamewrapper"
       css={css(`
       height: ${gameHeight}px;
       display: flex;

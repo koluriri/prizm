@@ -33,6 +33,7 @@ body {
   width: 100%;
   margin-right: 0;
   margin-left: 0;
+  background: var(--bg-color);
 }
 
 body {
@@ -272,7 +273,7 @@ body.matched {
 
 .matched .message[data-matched='true'] {
   position: absolute;
-  bottom: 27vh;
+  top: 55%;
   transform: scale(1.6);
   transform-origin: right;
 }
@@ -313,4 +314,8 @@ body.matched {
   100% {
     transform: scale(8);
   }
+}
+
+.matched .gamewrapper {
+  height: 100vh !important;
 }
