@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
 import spbg from 'assets/sp-bg.svg';
+import { FaUserAlt } from 'react-icons/fa';
 
 const OnlineUsers: FC<{
   users: Users | undefined;
@@ -64,9 +65,17 @@ const OnlineUsers: FC<{
       >
         {usersLength === 0 && <span>接続中…</span>}
         {usersLength !== 0 && (
-          <span>
-            現在、
+          <span
+            css={css`
+              display: inline-flex;
+            `}
+          >
+            現在
             <em>
+              <FaUserAlt
+                size="0.9em"
+                style={{ marginRight: 3, marginLeft: 3 }}
+              />
               <span>{usersLength}</span>人
             </em>
             が接続中
@@ -85,7 +94,7 @@ const OnlineUsers: FC<{
       <ul
         css={css`
           margin: 0;
-          padding: 10px 17px 2px;
+          padding: 10px 17px 7px;
           min-height: 50px;
           max-height: 200px;
           list-style-type: none;
@@ -98,6 +107,10 @@ const OnlineUsers: FC<{
             padding: 25px 23px 21px;
             min-height: 110px;
             max-height: 270px;
+          }
+
+          @media (max-width: 400px) {
+            padding: 10px 8px 7px;
           }
         `}
       >
@@ -139,6 +152,10 @@ const OnlineUsers: FC<{
                       font-size: 13px;
                       font-weight: 600;
                       opacity: 0.6;
+
+                      @media (max-width: 400px) {
+                        margin-right: 0;
+                      }
                     `}
                   >
                     スコア{users[key].score || '0'}
@@ -153,7 +170,7 @@ const OnlineUsers: FC<{
                         @media (max-width: 400px) {
                           width: 130px;
                           padding-left: 18px;
-                          margin-top: 6px;
+                          margin-top: 3px;
                           margin-bottom: 4px;
                           &:before {
                             content: '(';
