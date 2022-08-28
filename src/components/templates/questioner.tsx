@@ -103,10 +103,18 @@ const Questioner: FC<{
             css={css`
               font-size: 38px;
               text-align: center;
-              letter-spacing: 1px;
+              letter-spacing: -1px;
               font-weight: 700;
               margin-top: 0;
               margin-bottom: 10px;
+
+              @media (max-width: 374px) {
+                font-size: 28px;
+              }
+
+              @media (min-width: 768px) {
+                letter-spacing: 1px;
+              }
             `}
           >
             {gameObj?.answer}
