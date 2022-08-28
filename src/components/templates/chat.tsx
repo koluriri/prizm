@@ -87,6 +87,7 @@ const Chat: FC = () => {
       <div
         ref={chatView}
         className="chat"
+        data-active={isDuringGame}
         css={css`
           grid-area: chat;
           overflow-y: auto;

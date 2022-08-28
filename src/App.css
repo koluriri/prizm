@@ -293,6 +293,10 @@ body.matched {
   transform: scale(0);
 }
 
+.chat[data-active='false'] .message[data-disabled='true'] {
+  opacity: 0.3;
+}
+
 .matched .message[data-matched='true']::before {
   opacity: 1;
   animation: 1s ease 0s 1 both matched-bg;

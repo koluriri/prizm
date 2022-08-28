@@ -29,6 +29,12 @@ const Message: FC<{
   return (
     <div
       className="message"
+      data-disabled={
+        (message.type === 'answer' && !message.matched) ||
+        (message.type !== 'answer' &&
+          message.type !== 'score' &&
+          message.type !== 'end')
+      }
       data-type={message.type}
       data-matched={message.type === 'answer' && message.matched}
       css={css`

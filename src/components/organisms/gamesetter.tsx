@@ -18,7 +18,6 @@ import { initialUserName } from 'ducks/user';
 
 const colors = [
   '#51B1C9',
-  '#53822B',
   '#6DCE97',
   '#76B2B4',
   '#8FB505',

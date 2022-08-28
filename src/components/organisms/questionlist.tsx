@@ -98,7 +98,7 @@ const QuestionList: FC<{
           />
         ),
       )}
-      {isDuringGame && (
+      {/* isDuringGame && (
         <span
           css={css`
             line-height: 1.2;
@@ -107,7 +107,7 @@ const QuestionList: FC<{
         >
           ({30 - current})
         </span>
-      )}
+      ) */}
     </div>
   );
 };
