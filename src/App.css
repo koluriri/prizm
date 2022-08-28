@@ -44,6 +44,16 @@ body {
   transition: background-color 0.2s;
 }
 
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  opacity: 0.5;
+}
+
+a:hover {
+  opacity: 1;
+}
+
 em {
   font-style: normal;
   color: var(--red);
