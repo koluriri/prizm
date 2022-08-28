@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, useEffect, useRef } from 'react';
+import { FC, useCallback, useEffect, useRef } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
@@ -25,6 +25,14 @@ const Chat: FC = () => {
   const dispatch = useDispatch();
   const { pullMessage } = gameSlice.actions;
 
+  const scrollChat = useCallback(() => {
+    if (chatView.current)
+      chatView.current.scrollBy({
+        top: chatView.current.scrollHeight,
+        behavior: 'smooth',
+      });
+  }, [chatView]);
+
   useEffect(() => {
     listenMessage(gameKey, (message) => {
       console.log('listen Message on Chat Component');
@@ -37,19 +45,16 @@ const Chat: FC = () => {
         setTimeout(() => {
           document.body.classList.remove('matched');
           document.body.style.backgroundColor = 'var(--bg-color)';
+          scrollChat();
         }, 800);
       }
       dispatch(pullMessage(message));
     });
-  }, [gameKey, gameColor, dispatch, pullMessage]);
+  }, [gameKey, gameColor, scrollChat, dispatch, pullMessage]);
 
   useEffect(() => {
-    if (chatView.current)
-      chatView.current.scrollBy({
-        top: chatView.current.scrollHeight,
-        behavior: 'smooth',
-      });
-  }, [messages]);
+    scrollChat();
+  }, [messages, scrollChat]);
 
   const bg = isDuringGame ? gameColor : 'var(--bg-color)';
 

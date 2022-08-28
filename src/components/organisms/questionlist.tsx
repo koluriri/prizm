@@ -96,6 +96,16 @@ const QuestionList: FC<{
           />
         ),
       )}
+      {isDuringGame && (
+        <span
+          css={css`
+            line-height: 1.2;
+            font-size: 0.8em;
+          `}
+        >
+          ({30 - current})
+        </span>
+      )}
     </div>
   );
 };
