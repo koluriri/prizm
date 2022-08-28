@@ -339,3 +339,23 @@ body.matched {
 .matched .gamewrapper {
   height: 100vh !important;
 }
+
+@keyframes message-added {
+  0% {
+    transform: scale(0.3);
+    transform-origin: bottom right;
+  }
+
+  60% {
+    transform: scale(1.03);
+  }
+
+  80% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+    transform-origin: bottom right;
+  }
+}
