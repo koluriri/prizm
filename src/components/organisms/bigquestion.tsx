@@ -14,20 +14,25 @@ const BigQuestion: FC<{
     return `${fontSizeVw.toString()}vw`;
   };
 
+  const size = window.innerWidth < 768 ? 140 : 200;
+
   return (
     <div
-      css={css({
-        width: '140px',
-        height: '140px',
-        fontSize: fontSize(140, displayQuestion),
-        display: 'inline-flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        background: '#eee',
-        borderRadius: '200px',
-        whiteSpace: 'nowrap',
-        wordBreak: 'keep-all',
-      })}
+      css={css`
+        width: ${size}px;
+        height: ${size}px;
+        font-size: ${fontSize(size, displayQuestion)};
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--red);
+        border-radius: 200px;
+        white-space: nowrap;
+        word-break: keep-all;
+        font-weight: 900;
+        color: var(--bg-color);
+        margin-top: 17px;
+      `}
     >
       {displayQuestion}
     </div>

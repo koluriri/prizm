@@ -13,7 +13,7 @@ const ColorSelector: FC<{
     height: 20px;
     border-radius: 20px;
     vertical-align: middle;
-    margin: 0 5px;
+    margin: 0;
     cursor:pointer;
   `);
   const colorButtonBg = css(`

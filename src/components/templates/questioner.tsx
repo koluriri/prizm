@@ -8,8 +8,9 @@ import { gameSlice } from 'ducks/game';
 
 import BigQuestion from 'components/organisms/bigquestion';
 import QuestionList from 'components/organisms/questionlist';
-import { modesConvert, modesDisplay } from 'data/types';
+import { modesConvert, modesDetail } from 'data/types';
 import { pushMessage } from 'utils/database';
+import { prefectureABC } from 'data/prefecture';
 
 const Questioner: FC<{
   finishGame: () => void;
@@ -69,17 +70,69 @@ const Questioner: FC<{
 
   return (
     <div
+      className="questioner"
       css={css`
+        grid-area: questioner;
+        width: 100%;
+        padding-right: 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-evenly;
+        justify-content: center;
       `}
     >
-      <div>{gameObj && modesDisplay[gameObj.mode]}</div>
+      {isDuringGame && (
+        <div
+          css={css`
+            font-size: 15px;
+            font-weight: 700;
+            text-align: center;
+          `}
+        >
+          {gameObj && modesDetail[gameObj.mode]}
+        </div>
+      )}
 
       {isDuringGame && displayQuestion && (
         <BigQuestion displayQuestion={displayQuestion} />
+      )}
+
+      {!isDuringGame && (
+        <>
+          <h3
+            css={css`
+              font-size: 38px;
+              text-align: center;
+              letter-spacing: 1px;
+              font-weight: 700;
+              margin-top: 0;
+              margin-bottom: 10px;
+            `}
+          >
+            {gameObj?.answer}
+            <span
+              css={css`
+                display: block;
+                font-weight: 700;
+                font-size: 13px;
+                letter-spacing: 4px;
+                margin-top: 5px;
+                color: ${gameObj?.color};
+              `}
+            >
+              {!!gameObj?.answer && prefectureABC[gameObj.answer]}
+            </span>
+          </h3>
+          <img
+            src={gameObj?.answer && `/pref-svg/${gameObj.answer}.svg`}
+            alt={gameObj?.answer ?? 'Unknown'}
+            css={css`
+              max-height: 26vh;
+              padding: 10px;
+              filter: drop-shadow(3px 10px 16px rgba(50, 8, 10, 0.1));
+            `}
+          />
+        </>
       )}
 
       {displayQuestions && (

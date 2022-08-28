@@ -95,7 +95,7 @@ export const writeNewGame = (game: GameObj): void => {
       console.log(`new game wrote!`);
       pushMessage(newGameKey, {
         type: 'start',
-        value: `${game.startBy}が${game.mode}モードで開始しました！`,
+        value: `${game.startBy}が\nゲーム開始\n参加者${game.users.length}人`,
       });
     })
     .catch((err) => {

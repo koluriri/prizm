@@ -37,6 +37,7 @@
   "npm.packageManager": "yarn",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "cSpell.words": [
+    "bordercomp",
     "canonicalize",
     "canonicalized",
     "canonicalizer",

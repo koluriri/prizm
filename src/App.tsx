@@ -1,5 +1,3 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
 import { FC, useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,6 +17,7 @@ import useUserName from 'hooks/use-username';
 import Game from 'components/pages/game';
 import Home from 'components/pages/home';
 import EditUser from 'components/pages/edituser';
+import PrizmFooter from 'components/templates/prizmfooter';
 import './App.css';
 
 const App: FC = () => {
@@ -84,15 +83,7 @@ const App: FC = () => {
   }, [editUserMode]);
 
   return (
-    <div
-      css={css({
-        width: '560px',
-        maxWidth: '100%',
-        minHeight: '100vh',
-        padding: '10px',
-        margin: '0 auto',
-      })}
-    >
+    <>
       {!editUserMode &&
         (gameKey !== '' && gameObj ? (
           <Game setHome={() => dispatch(unsetGame())} />
@@ -100,7 +91,8 @@ const App: FC = () => {
           <Home editMode={() => setEditUserMode(true)} />
         ))}
       {editUserMode && <EditUser toHome={() => setEditUserMode(false)} />}
-    </div>
+      <PrizmFooter />
+    </>
   );
 };
 

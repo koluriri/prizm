@@ -5,11 +5,12 @@ import { FC, FormEvent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
-import UserRemain from 'components/molecules/userremain';
 import useJudger from 'hooks/use-judger';
 import { pushMessage } from 'utils/database';
 import { initialRemain } from 'data/types';
 import canonicalizePref from 'utils/canonicalizepref';
+
+import { FaHeart, FaTimes } from 'react-icons/fa';
 
 const AnswerInput: FC<{
   setHome: () => void;
@@ -46,40 +47,125 @@ const AnswerInput: FC<{
     }
   };
 
-  const answerinput = css({ gridColumn: '1 / 3' });
-  const formControl = css({
-    width: '100%',
-    border: '1px solid #ddd',
-    padding: '8px 18px',
-    fontSize: 'var(--font-size)',
-    borderRadius: '8px',
-    margin: '10px 0',
-  });
-
   return (
-    <div css={answerinput}>
+    <div
+      className="answerinput"
+      css={css`
+        grid-area: answerinput;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      `}
+    >
       {isDuringGame ? (
-        <>
-          <UserRemain remain={remain} />
-          <form onSubmit={(e) => answerSubmit(e)}>
-            <p>
-              {canonicalized && `${suggest} : ${canonicalized} (Enterで送信）`}
-            </p>
-            <input
-              type="text"
-              css={formControl}
-              value={answerInputValue}
-              onChange={(e) => {
-                setAnswerInputValue(e.target.value);
-                setCanonicalized(canonicalizePref(e.target.value));
-              }}
-            />
-          </form>
-        </>
+        <form onSubmit={(e) => answerSubmit(e)}>
+          <p
+            css={css`
+              position: absolute;
+              pointer-events: none;
+              font-weight: 500;
+              font-size: 23px;
+              opacity: 0.5;
+              display: flex;
+              align-items: center;
+              padding: 0 19px;
+              margin: 3px;
+              line-height: 1;
+              white-space: nowrap;
+              height: 45px;
+              vertical-align: middle;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+            `}
+          >
+            {canonicalized && (
+              <>
+                <span
+                  css={css`
+                    font-weight: 500;
+                    opacity: 0;
+                  `}
+                >
+                  {answerInputValue}
+                </span>{' '}
+                {suggest.slice(answerInputValue.length)} (改行で送信)
+              </>
+            )}
+          </p>
+          <div
+            css={css`
+              height: 45px;
+              pointer-events: none;
+              position: absolute;
+              top: 0;
+              right: 10px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin: 3px;
+            `}
+          >
+            <FaHeart />
+            <FaTimes size={10} css={{ margin: '0 1px;' }} />
+            {remain}
+          </div>
+          <input
+            type="text"
+            className="bordercomp"
+            css={css`
+              width: 100%;
+              height: 45px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 23px;
+              font-weight: 900;
+              position: absolute;
+              padding-right: 53px;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+            `}
+            value={answerInputValue}
+            onChange={(e) => {
+              setAnswerInputValue(e.target.value);
+              setCanonicalized(canonicalizePref(e.target.value));
+            }}
+          />
+        </form>
       ) : (
-        <button type="button" onClick={() => setHome()}>
-          おわる
-        </button>
+        <>
+          {/* <button
+            type="button"
+            onClick={() => alert('まだ')}
+            className="bordercomp"
+          >
+            ツイート
+            <FaTwitter
+              css={css`
+                margin-left: 3px;
+              `}
+            />
+      </button> */}
+          <button
+            type="button"
+            onClick={() => setHome()}
+            className="button-hinomaru"
+            css={css`
+              margin: 10px 0 /*10px 20px*/;
+
+              /*@media (min-width: 768px) {
+                margin-left: 80px;
+              }*/
+            `}
+          >
+            おわる
+          </button>
+        </>
       )}
     </div>
   );

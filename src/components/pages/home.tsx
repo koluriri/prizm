@@ -4,15 +4,16 @@ import { FC, useEffect, useRef, useState } from 'react';
 
 import OnlineUsers from 'components/organisms/onlineusers';
 import GameSetter from 'components/organisms/gamesetter';
-import { localUserNameKey, Users } from 'data/types';
+import { Users } from 'data/types';
 import { listenUsers, updatePingStamp } from 'utils/database';
 
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
-import { initialUserName } from 'ducks/user';
+
+import bg from 'assets/home-bg.svg';
+import logo from 'assets/logo-vertical.svg';
 
 const Home: FC<{ editMode: () => void }> = ({ editMode }) => {
-  const userName = localStorage.getItem(localUserNameKey) || initialUserName;
   const userKey = useSelector((state: RootState) => state.user.key);
 
   const [users, setUsers] = useState<Users>();
@@ -29,26 +30,111 @@ const Home: FC<{ editMode: () => void }> = ({ editMode }) => {
       setUsers(data);
     });
 
+    document.body.style.backgroundColor = 'var(--bg-color)';
+
     return clearTimer;
   }, [userKey]);
 
   return (
-    <>
-      <h1>Prizm</h1>
+    <div
+      css={css(`
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "bg"
+        "logo"
+        "users"
+        "setter";
+      min-height: 100vh;
+      width: 100vw;
 
-      <p css={css({ background: '#efefef' })}>参加者を待機中</p>
+      @media (min-width: 768px) {
+        grid-template-columns: 1fr 280px 3fr;
+        grid-template-areas:
+            "bg logo users"
+            "bg setter users";
+      }
+    `)}
+    >
+      <div
+        css={css(`
+        display: none;
+        grid-area: bg;
+        background-image: url(${bg});
+        background-repeat: repeat-x;
+        background-size: cover;
+        background-position: right center;
 
-      <OnlineUsers users={users} />
+        @media (min-width: 768px) {
+          display: block;
+        }
+        `)}
+      />
+      <div
+        css={css(`grid-area: logo;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: end;`)}
+      >
+        <h1
+          css={css(`
+          width: 90px;
+          margin: 0;
 
-      <GameSetter users={users} />
+          @media (min-width: 768px) {
+            width: 120px;
+          }
+          `)}
+        >
+          <img src={logo} alt="prizm" />
+        </h1>
+        <h2
+          css={css(`
+    font-size: 17px;
+    font-weight: 900;
+    line-height: 1;
+    margin: 8px 0 15px;
+    text-align: center;
+    line-height: 1.35;`)}
+        >
+          市町村から
+          <br />
+          都道府県を当てるだけ！
+        </h2>
+      </div>
+      <div
+        css={css(`
+          grid-area: users;
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
-      <p>
-        {userName}としてプレイ中{' '}
-        <button type="button" onClick={() => editMode()}>
-          名前を変更
-        </button>
-      </p>
-    </>
+          @media (min-width: 768px) {
+            background-image: url(${bg});
+            background-repeat: repeat-x;
+            background-position: left center;
+            background-size: cover;
+            justify-content: start;
+            padding: 0 30px 0 10vw;
+          }
+          `)}
+      >
+        <OnlineUsers users={users} editMode={() => editMode()} />
+      </div>
+      <div
+        css={css(`
+        grid-area: setter;
+        padding-top:15px;
+
+        @media (min-width: 768px) {
+          padding-top:20px;
+        }
+      `)}
+      >
+        <GameSetter users={users} />
+      </div>
+    </div>
   );
 };
 

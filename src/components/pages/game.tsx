@@ -17,6 +17,9 @@ const Game: FC<{
 }> = ({ setHome }) => {
   const gameKey = useSelector((state: RootState) => state.game.key);
   const gameObj = useSelector((state: RootState) => state.game.entity);
+  const isDuringGame = useSelector(
+    (state: RootState) => state.game.isDuringGame,
+  );
   const dispatch = useDispatch();
   const { stopGame } = gameSlice.actions;
 
@@ -24,12 +27,21 @@ const Game: FC<{
     (isDeleted = false) => {
       if (!isDeleted) deleteGame(gameKey);
       dispatch(stopGame());
+      document.body.style.backgroundColor = 'var(--bg-color)';
+      document
+        .querySelector("meta[name='theme-color']")
+        ?.setAttribute('content', '#f2efe2');
     },
     [gameKey, dispatch, stopGame],
   );
 
   useEffect(() => {
     listenGameDeleted(gameKey, () => finishGame(true));
+
+    document.body.style.backgroundColor = gameObj?.color ?? 'var(--bg-color)';
+    document
+      .querySelector("meta[name='theme-color']")
+      ?.setAttribute('content', gameObj?.color ?? '#f2efe2');
 
     console.log('------');
     console.log('game started!');
@@ -44,6 +56,7 @@ const Game: FC<{
   const [gameHeight, setGameHeight] = useState(visualViewport.height);
 
   const onWindowResize = () => {
+    window.scrollTo(0, 0);
     setGameHeight(visualViewport.height);
   };
   useEffect(() => {
@@ -56,18 +69,42 @@ const Game: FC<{
 
   return (
     <div
-      css={css({
-        height: gameHeight - 20,
-        maxHeight: '700px',
-        transition: '0.2s height',
-        display: 'grid',
-        gridTemplateColumns: '40% 60%',
-        gridTemplateRows: '1fr 80px',
-      })}
+      className="gamewrapper"
+      css={css(`
+      height: ${gameHeight}px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `)}
     >
-      <Chat />
-      <Questioner finishGame={() => finishGame()} />
-      <AnswerInput setHome={setHome} />
+      <div
+        css={css`
+          height: ${gameHeight - 20}px;
+          max-height: 600px;
+          padding: 0 30px;
+          width: 730px;
+          max-width: 100vw;
+          display: grid;
+          grid-template-columns: 1fr minmax(140px, 40%);
+          grid-template-rows: 1fr ${isDuringGame ? '49px' : '118px'};
+          grid-template-areas:
+            'questioner chat'
+            'answerinput answerinput';
+
+          ${isDuringGame &&
+          css`
+            @media (min-width: 768px) {
+              grid-template-areas:
+                'questioner chat'
+                'questioner answerinput';
+            }
+          `}
+        `}
+      >
+        <Questioner finishGame={() => finishGame()} />
+        <Chat />
+        <AnswerInput setHome={setHome} />
+      </div>
     </div>
   );
 };
