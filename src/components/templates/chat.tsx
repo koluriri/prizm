@@ -122,7 +122,7 @@ const Chat: FC = () => {
             animation: 1s ease 0s 1 normal fadein;
           }
 
-          & > :first-child {
+          & > :first-of-type {
             margin-top: auto !important;
           }
         `}

@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css, keyframes } from '@emotion/react';
-import { FC } from 'react';
+import { FC, useRef } from 'react';
 
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
+import Ztext from 'react-ztext';
 
 const BigQuestion: FC<{
   // eslint-disable-next-line react/require-default-props
@@ -25,12 +26,19 @@ const BigQuestion: FC<{
   if (window.innerWidth > 320) size = 140;
   if (window.innerWidth > 767) size = 200;
 
+  const spanDom = useRef<HTMLSpanElement>(null);
+  if (spanDom.current) {
+    const nodeList = spanDom.current.querySelectorAll('div > span > span');
+    Object.keys(nodeList).forEach((key) => {
+      nodeList[Number(key)].innerHTML = displayQuestion;
+    });
+  }
+
   return (
     <div
       css={css`
         width: ${size}px;
         height: ${size}px;
-        font-size: ${fontSize(size, displayQuestion)};
         display: inline-flex;
         justify-content: center;
         align-items: center;
@@ -98,11 +106,27 @@ const BigQuestion: FC<{
         `}
       />
       <span
+        className="bigquestion-spans"
+        ref={spanDom}
         css={css`
           position: relative;
         `}
       >
-        {displayQuestion}
+        <Ztext
+          depth="100px"
+          direction="both"
+          event="none"
+          eventRotation="30deg"
+          eventDirection="default"
+          fade={false}
+          perspective="400px"
+          layers={10}
+          style={{
+            fontSize: fontSize(size, displayQuestion),
+          }}
+        >
+          {displayQuestion}
+        </Ztext>
       </span>
     </div>
   );

@@ -133,6 +133,11 @@ button:active {
   appearance: none;
 }
 
+.bordercomp[disabled] {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
 .bordercomp.simple {
   border: 0;
 }
@@ -429,5 +434,47 @@ body.matched {
   100% {
     color: var(--primary-color);
     border-color: var(--primary-color);
+  }
+}
+
+div[data-innertext] > div > span > span > span::before {
+  content: attr(data-innertext);
+}
+
+.bigquestion-spans div > span {
+  animation: 1.5s linear 0s infinite normal rotate-horizontal;
+}
+
+.bigquestion-spans div > span > span:not(:first-of-type) {
+  color: var(--primary-color);
+}
+
+@keyframes rotate-horizontal {
+  0% {
+    transform: rotateX(0deg) rotateY(-82deg);
+  }
+
+  10% {
+    transform: rotateX(0deg) rotateY(6deg);
+  }
+
+  15% {
+    transform: rotateX(0deg) rotateY(1deg);
+  }
+
+  50% {
+    transform: rotateX(0deg) rotateY(-1deg);
+  }
+
+  90% {
+    transform: rotateX(0deg) rotateY(1deg);
+  }
+
+  95% {
+    transform: rotateX(0deg) rotateY(-6deg);
+  }
+
+  100% {
+    transform: rotateX(0deg) rotateY(82deg);
   }
 }

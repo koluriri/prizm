@@ -15,12 +15,16 @@ const ColorSelector: FC<{
     vertical-align: middle;
     margin: 0;
     cursor:pointer;
+    display: block;
+    padding: 0;
+    appearance: none;
   `);
   const colorButtonBg = css(`
     background: ${color};
   `);
   let selectedStyle = css(``);
-  if (selected === color) selectedStyle = css(`outline: 6px solid ${color}6b;`);
+  if (selected === color)
+    selectedStyle = css(`box-shadow: 0 0 0 6px ${color}6b;`);
 
   return (
     // eslint-disable-next-line jsx-a11y/control-has-associated-label
