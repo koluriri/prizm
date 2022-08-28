@@ -17,6 +17,7 @@ import useUserName from 'hooks/use-username';
 import Game from 'components/pages/game';
 import Home from 'components/pages/home';
 import EditUser from 'components/pages/edituser';
+import PrizmFooter from 'components/templates/prizmfooter';
 import './App.css';
 
 const App: FC = () => {
@@ -90,6 +91,7 @@ const App: FC = () => {
           <Home editMode={() => setEditUserMode(true)} />
         ))}
       {editUserMode && <EditUser toHome={() => setEditUserMode(false)} />}
+      <PrizmFooter />
     </>
   );
 };
