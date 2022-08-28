@@ -10,7 +10,7 @@ import { pushMessage } from 'utils/database';
 import { initialRemain } from 'data/types';
 import canonicalizePref from 'utils/canonicalizepref';
 
-import { FaHeart, FaTimes } from 'react-icons/fa';
+import { FaHeart, FaTimes, FaTwitter } from 'react-icons/fa';
 
 const AnswerInput: FC<{
   setHome: () => void;
@@ -52,7 +52,9 @@ const AnswerInput: FC<{
       css={css`
         grid-area: answerinput;
         position: relative;
-        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       `}
     >
       {isDuringGame ? (
@@ -135,9 +137,34 @@ const AnswerInput: FC<{
           />
         </form>
       ) : (
-        <button type="button" onClick={() => setHome()}>
-          おわる
-        </button>
+        <>
+          <button
+            type="button"
+            onClick={() => alert('まだ')}
+            className="bordercomp"
+          >
+            ツイート
+            <FaTwitter
+              css={css`
+                margin-left: 3px;
+              `}
+            />
+          </button>
+          <button
+            type="button"
+            onClick={() => setHome()}
+            className="button-hinomaru"
+            css={css`
+              margin: 10px 0 10px 20px;
+
+              @media (min-width: 768px) {
+                margin-left: 80px;
+              }
+            `}
+          >
+            おわる
+          </button>
+        </>
       )}
     </div>
   );

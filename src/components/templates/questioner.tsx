@@ -128,6 +128,7 @@ const Questioner: FC<{
             css={css`
               max-height: 26vh;
               padding: 10px;
+              filter: drop-shadow(3px 10px 16px rgba(50, 8, 10, 0.1));
             `}
           />
         </>

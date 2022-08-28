@@ -103,6 +103,9 @@ button:active {
 }
 
 .bordercomp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   max-width: 100%;
   padding: 6px 15px 5px;
   margin: 3px;
@@ -131,6 +134,8 @@ input[type='submit'].bordercomp {
 }
 
 .message .bordercomp {
+  flex-direction: column;
+  align-items: end;
   max-width: 130px;
   padding: 11px 16px;
   font-size: 15px;
@@ -142,6 +147,7 @@ input[type='submit'].bordercomp {
 
 .message[data-type='answer'] .bordercomp {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: end;
   padding: 6px 15px 5px;

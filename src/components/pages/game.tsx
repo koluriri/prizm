@@ -79,7 +79,7 @@ const Game: FC<{
           max-width: 100vw;
           display: grid;
           grid-template-columns: 1fr minmax(140px, 40%);
-          grid-template-rows: 1fr 80px;
+          grid-template-rows: 1fr ${isDuringGame ? '49px' : '118px'};
           grid-template-areas:
             'questioner chat'
             'answerinput answerinput';
