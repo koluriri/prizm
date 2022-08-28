@@ -10,6 +10,8 @@ import { pushMessage } from 'utils/database';
 import { initialRemain } from 'data/types';
 import canonicalizePref from 'utils/canonicalizepref';
 
+import { FaHeart, FaTimes } from 'react-icons/fa';
+
 const AnswerInput: FC<{
   setHome: () => void;
 }> = ({ setHome }) => {
@@ -103,7 +105,9 @@ const AnswerInput: FC<{
               margin: 3px;
             `}
           >
-            ♥×{remain}
+            <FaHeart />
+            <FaTimes size={10} css={{ margin: '0 1px;' }} />
+            {remain}
           </div>
           <input
             type="text"

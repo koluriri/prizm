@@ -46,7 +46,7 @@ const QuestionList: FC<{
 
   if (!isDuringGame) {
     spanStyle = css`
-      background: ${gameColor}6e;
+      background: ${gameColor}47;
       padding: 1px 5px;
       border-radius: 15px;
       margin-right: 3px;

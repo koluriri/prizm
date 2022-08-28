@@ -7,6 +7,8 @@ import { RootState } from 'ducks/rootReducer';
 
 import { MessageObject } from 'data/types';
 
+import { FaTimes } from 'react-icons/fa';
+
 const Message: FC<{
   message: MessageObject;
 }> = ({ message }) => {
@@ -15,6 +17,10 @@ const Message: FC<{
   );
 
   let name: string | null = null;
+
+  const matchIconStyle = css`
+    margin-right: 4px;
+  `;
 
   if (message.type === 'answer') {
     name = message.name;
@@ -58,6 +64,12 @@ const Message: FC<{
             <br />
           </span>
         )}
+        {message.type === 'answer' &&
+          (message.matched ? (
+            <span className="icon-circle" css={matchIconStyle} />
+          ) : (
+            <FaTimes css={matchIconStyle} />
+          ))}
         {message.value.split(/(\n)/g).map((t) => (t === '\n' ? <br /> : t))}
       </div>
     </div>

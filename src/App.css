@@ -141,22 +141,14 @@ input[type='submit'].bordercomp {
 }
 
 .message[data-type='answer'] .bordercomp {
+  display: flex;
+  align-items: center;
+  justify-content: end;
   padding: 6px 15px 5px;
   font-size: 17px;
   line-height: 1.1;
   background: transparent;
   border: var(--border);
-}
-
-.message[data-type='answer'] .bordercomp[data-matched]::before {
-  height: 100%;
-  margin-right: 6px;
-  line-height: 1;
-  content: 'x';
-}
-
-.message[data-type='answer'] .bordercomp[data-matched='true']::before {
-  content: 'o';
 }
 
 .message[data-type='score'] .bordercomp {
@@ -165,6 +157,14 @@ input[type='submit'].bordercomp {
   margin-top: -8px;
   color: var(--red);
   background: transparent;
+}
+
+.icon-circle {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  border: 3px solid;
+  border-radius: 20px;
 }
 
 @keyframes clicked {
