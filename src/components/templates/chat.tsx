@@ -37,6 +37,11 @@ const Chat: FC = () => {
     listenMessage(gameKey, (message) => {
       console.log('listen Message on Chat Component');
       console.log(message);
+      if (message.type === 'hint') {
+        setTimeout(() => {
+          scrollChat();
+        }, 400);
+      }
       if (message.type === 'answer' && message.matched) {
         document.body.classList.add('matched');
         setTimeout(() => {
@@ -61,7 +66,9 @@ const Chat: FC = () => {
   }, [gameKey, gameColor, scrollChat, dispatch, pullMessage]);
 
   useEffect(() => {
-    scrollChat();
+    setTimeout(() => {
+      scrollChat();
+    }, 150);
   }, [messages, scrollChat]);
 
   const bg = isDuringGame ? gameColor : 'var(--bg-color)';

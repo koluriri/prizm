@@ -44,7 +44,9 @@ const Message: FC<{
         flex-direction: column;
         margin: 8px 0;
         transition: 0.2s, visibility 0s;
-        animation: 0.3s ease 0s 1 normal message-added;
+        ${message.type === 'answer' && message.matched
+          ? 'transform-origin: center right;animation: 0.3s ease 0s 1 normal message-added-matched;'
+          : 'transform-origin: bottom right;animation: 0.2s ease 0s 1 normal message-added;'}
       `}
     >
       {name && (
