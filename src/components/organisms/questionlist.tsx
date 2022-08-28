@@ -4,15 +4,13 @@ import { FC, useEffect, useRef } from 'react';
 
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
+import { generateColor } from 'utils/generateuser';
 
 const QuestionList: FC<{
   questions: string[];
   // eslint-disable-next-line react/require-default-props
   current?: number;
 }> = ({ questions, current = 0 }) => {
-  const gameColor = useSelector(
-    (state: RootState) => state.game.entity?.color ?? '#000000',
-  );
   const isDuringGame = useSelector(
     (state: RootState) => state.game.isDuringGame,
   );
@@ -46,7 +44,6 @@ const QuestionList: FC<{
 
   if (!isDuringGame) {
     spanStyle = css`
-      background: ${gameColor}47;
       padding: 1px 5px;
       border-radius: 15px;
       margin-right: 3px;
@@ -82,7 +79,12 @@ const QuestionList: FC<{
     >
       {questions.map((question, index) =>
         index < current || !isDuringGame ? (
-          <span css={spanStyle}>{question} </span>
+          <span
+            css={spanStyle}
+            style={!isDuringGame ? { background: `${generateColor()}37` } : {}}
+          >
+            {question}{' '}
+          </span>
         ) : (
           <span
             css={css`

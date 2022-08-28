@@ -28,38 +28,39 @@ const OnlineUsers: FC<{
 
   return (
     <div
-      css={css(`
-    border: 4px solid var(--primary-color);
-    border-radius: 20px;
-    padding: 15px 20px;
-    backdrop-filter: blur(30px);
-    width: 340px;
-    max-width: 95%;
-    max-width: calc(100vw - 60px);
-    transition: 0.2s;
-    background-image: url(${spbg});
-    background-size: 180%;
-    background-position: -50px -50px;
+      css={css`
+        border: 4px solid var(--primary-color);
+        border-radius: 20px;
+        padding: 15px 20px;
+        backdrop-filter: blur(30px);
+        width: 340px;
+        max-width: 95%;
+        max-width: calc(100vw - 60px);
+        transition: 0.2s;
+        background-image: url(${spbg});
+        background-size: 180%;
+        background-position: -50px -50px;
 
-    @media (min-width: 768px) {
-      width: auto;
-      min-width: 350px;
-    }
-    `)}
+        @media (min-width: 768px) {
+          width: auto;
+          min-width: 350px;
+        }
+      `}
     >
       <div
-        css={css(`
+        css={css`
           font-size: 13px;
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           align-items: center;
           font-weight: 700;
+          padding-bottom: 7px;
 
           @media (min-width: 768px) {
             font-size: 15px;
           }
-          `)}
+        `}
       >
         {usersLength === 0 && <span>接続中…</span>}
         {usersLength !== 0 && (
@@ -82,7 +83,7 @@ const OnlineUsers: FC<{
         )}
       </div>
       <ul
-        css={css(`
+        css={css`
           margin: 0;
           padding: 10px 17px 2px;
           min-height: 50px;
@@ -97,7 +98,8 @@ const OnlineUsers: FC<{
             padding: 25px 23px 21px;
             min-height: 110px;
             max-height: 270px;
-          }`)}
+          }
+        `}
       >
         {users &&
           Object.keys(users).map(
@@ -105,51 +107,66 @@ const OnlineUsers: FC<{
               Date.now() - users[key].pingStamp < 3500 && (
                 <li
                   key={key}
-                  css={css(`
-                  margin: 4px 0;
-                  --user-color: ${users[key].color};
-                  display: flex;
-                  flex-direction: row;
-                  align-items: center;
-                  font-weight: 700;
-                  line-height: 1;
-                  flex-wrap: wrap;
+                  css={css`
+                    margin: 4px 0;
+                    --user-color: ${users[key].color};
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    font-weight: 700;
+                    line-height: 1;
+                    flex-wrap: wrap;
 
-                  @media (min-width: 768px) {
-                    margin: 7px 0;
-                  }
+                    @media (min-width: 768px) {
+                      margin: 7px 0;
+                    }
 
-                  &:before {
-                    content: '';
-                    width: 10px;
-                    height: 10px;
-                    display: block;
-                    background: var(--user-color);
-                    border-radius: 10px;
-                    margin-right: 7px;
-                  }
-                  `)}
+                    &:before {
+                      content: '';
+                      width: 10px;
+                      height: 10px;
+                      display: block;
+                      background: var(--user-color);
+                      border-radius: 10px;
+                      margin-right: 7px;
+                    }
+                  `}
                 >
                   <span>{users[key].userName}</span>
                   <span
-                    css={css(`
+                    css={css`
                       margin: 0 7px;
                       font-size: 13px;
                       font-weight: 600;
                       opacity: 0.6;
-                  `)}
+                    `}
                   >
                     スコア{users[key].score || '0'}
                   </span>
-                  <span
-                    css={css(`
-                    font-size: 13px;
-                    font-weight: 600;
-                    color: var(--red);
-                  `)}
-                  >
-                    {key === me && 'この端末'}
-                  </span>
+                  {key === me && (
+                    <span
+                      css={css`
+                        font-size: 13px;
+                        font-weight: 600;
+                        color: var(--red);
+
+                        @media (max-width: 400px) {
+                          width: 130px;
+                          padding-left: 18px;
+                          margin-top: 6px;
+                          margin-bottom: 4px;
+                          &:before {
+                            content: '(';
+                          }
+                          &:after {
+                            content: ')';
+                          }
+                        }
+                      `}
+                    >
+                      この端末
+                    </span>
+                  )}
                 </li>
               ),
           )}
