@@ -10,7 +10,7 @@ import { pushMessage } from 'utils/database';
 import { initialRemain } from 'data/types';
 import canonicalizePref from 'utils/canonicalizepref';
 
-import { FaHeart, FaTimes, FaTwitter } from 'react-icons/fa';
+import { FaHeart, FaTimes } from 'react-icons/fa';
 
 const AnswerInput: FC<{
   setHome: () => void;
@@ -139,7 +139,7 @@ const AnswerInput: FC<{
         </form>
       ) : (
         <>
-          <button
+          {/* <button
             type="button"
             onClick={() => alert('まだ')}
             className="bordercomp"
@@ -150,17 +150,17 @@ const AnswerInput: FC<{
                 margin-left: 3px;
               `}
             />
-          </button>
+      </button> */}
           <button
             type="button"
             onClick={() => setHome()}
             className="button-hinomaru"
             css={css`
-              margin: 10px 0 10px 20px;
+              margin: 10px 0 /*10px 20px*/;
 
-              @media (min-width: 768px) {
+              /*@media (min-width: 768px) {
                 margin-left: 80px;
-              }
+              }*/
             `}
           >
             おわる
