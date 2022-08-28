@@ -29,9 +29,19 @@ const Chat: FC = () => {
     listenMessage(gameKey, (message) => {
       console.log('listen Message on Chat Component');
       console.log(message);
+      if (message.type === 'answer' && message.matched) {
+        document.body.classList.add('matched');
+        setTimeout(() => {
+          document.body.style.backgroundColor = gameColor;
+        }, 10);
+        setTimeout(() => {
+          document.body.classList.remove('matched');
+          document.body.style.backgroundColor = 'var(--bg-color)';
+        }, 800);
+      }
       dispatch(pullMessage(message));
     });
-  }, [gameKey, dispatch, pullMessage]);
+  }, [gameKey, gameColor, dispatch, pullMessage]);
 
   useEffect(() => {
     if (chatView.current)
@@ -43,45 +53,64 @@ const Chat: FC = () => {
 
   const bg = isDuringGame ? gameColor : 'var(--bg-color)';
 
+  const matchedName = messages.find(
+    (msg) => msg.type === 'answer' && msg.matched,
+  );
+
   return (
-    <div
-      ref={chatView}
-      css={css`
-        grid-area: chat;
-        overflow-y: auto;
-        margin-bottom: 18px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        flex-flow: column nowrap;
-        padding-top: 80px;
+    <>
+      <div className="matchedtext">
+        <span
+          css={css`
+            font-size: 0.7em;
+            letter-spacing: 0;
+          `}
+        >
+          {matchedName?.type === 'answer' && matchedName.name}
+        </span>
+        <br />
+        あたり！
+      </div>
+      <div
+        ref={chatView}
+        className="chat"
+        css={css`
+          grid-area: chat;
+          overflow-y: auto;
+          margin-bottom: 18px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          flex-flow: column nowrap;
+          padding-top: 80px;
 
-        &::-webkit-scrollbar {
-          display: none;
-        }
+          &::-webkit-scrollbar {
+            display: none;
+          }
 
-        &::before {
-          content: '';
-          position: absolute;
-          /* top: 0; */
-          background: linear-gradient(0deg, transparent, ${bg});
-          height: 80px;
-          display: block;
-          width: 140px;
-          transform: translateY(-80px);
-          transition: 0.2s;
-          animation: 1s ease 0s 1 normal fadein;
-        }
+          &::before {
+            content: '';
+            position: absolute;
+            /* top: 0; */
+            background: linear-gradient(0deg, transparent, ${bg});
+            height: 80px;
+            display: block;
+            width: 140px;
+            transform: translateY(-80px);
+            transition: 0.2s;
+            animation: 1s ease 0s 1 normal fadein;
+          }
 
-        & > :first-child {
-          margin-top: auto !important;
-        }
-      `}
-    >
-      {messages.map((message: MessageObject) => (
-        <Message message={message} />
-      ))}
-    </div>
+          & > :first-child {
+            margin-top: auto !important;
+          }
+        `}
+      >
+        {messages.map((message: MessageObject) => (
+          <Message message={message} />
+        ))}
+      </div>
+    </>
   );
 };
 

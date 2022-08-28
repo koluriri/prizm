@@ -49,6 +49,7 @@ const AnswerInput: FC<{
 
   return (
     <div
+      className="answerinput"
       css={css`
         grid-area: answerinput;
         position: relative;

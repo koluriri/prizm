@@ -30,12 +30,14 @@ const Message: FC<{
     <div
       className="message"
       data-type={message.type}
+      data-matched={message.type === 'answer' && message.matched}
       css={css`
         display: flex;
         justify-content: center;
         align-items: end;
         flex-direction: column;
         margin: 8px 0;
+        transition: 0.2s, visibility 0s;
       `}
     >
       {name && (
@@ -49,11 +51,7 @@ const Message: FC<{
           {name}
         </span>
       )}
-      <div
-        className="bordercomp"
-        data-matched={message.type === 'answer' && message.matched}
-        key={message.key}
-      >
+      <div className="bordercomp" key={message.key}>
         {message.type === 'hint' && (
           <span
             css={css`

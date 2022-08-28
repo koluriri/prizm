@@ -70,6 +70,7 @@ const Questioner: FC<{
 
   return (
     <div
+      className="questioner"
       css={css`
         grid-area: questioner;
         width: 100%;

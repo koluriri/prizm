@@ -235,3 +235,82 @@ input[type='submit'].bordercomp {
 input:focus {
   outline: none;
 }
+
+.matched .questioner,
+.matched .answerinput,
+.matched .message[data-matched='false'],
+.matched .chat::before {
+  visibility: hidden;
+}
+
+.matched .chat::before {
+  opacity: 0;
+}
+
+body.matched {
+  overflow: hidden;
+}
+
+.matchedtext {
+  display: none;
+}
+
+.matched .matchedtext {
+  position: fixed;
+  top: 20vh;
+  left: 0;
+  z-index: 30;
+  display: block;
+  width: 100vw;
+  font-size: 58px;
+  font-weight: 900;
+  color: var(--primary-color);
+  text-align: center;
+  letter-spacing: -6px;
+  content: 'あたり!';
+}
+
+.matched .message[data-matched='true'] {
+  position: absolute;
+  bottom: 27vh;
+  transform: scale(1.6);
+  transform-origin: right;
+}
+
+.message[data-matched='true']::before {
+  position: absolute;
+  top: -50px;
+  left: -20px;
+  z-index: -1;
+  width: 160px;
+  height: 160px;
+  pointer-events: none;
+  content: '';
+  background: var(--bg-color);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.matched .message[data-matched='true']::before {
+  opacity: 1;
+  animation: 1s ease 0s 1 both matched-bg;
+}
+
+@keyframes matched-bg {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(8);
+  }
+}
