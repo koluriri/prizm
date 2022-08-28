@@ -404,3 +404,30 @@ body.matched {
     opacity: 1;
   }
 }
+
+@keyframes redblink {
+  0% {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  49% {
+    color: var(--red);
+    border-color: var(--red);
+  }
+
+  50% {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  99% {
+    color: var(--red);
+    border-color: var(--red);
+  }
+
+  100% {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+}

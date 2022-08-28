@@ -60,7 +60,15 @@ const Message: FC<{
           {name}
         </span>
       )}
-      <div className="bordercomp" key={message.key}>
+      <div
+        className="bordercomp"
+        key={message.key}
+        css={css`
+          ${message.type === 'answer' &&
+          !message.matched &&
+          'animation: 0.4s ease 0s 1 normal redblink;'}
+        `}
+      >
         {message.type === 'hint' && (
           <span
             css={css`
