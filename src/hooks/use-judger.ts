@@ -50,7 +50,7 @@ const useJudger = (): [(inputValue: string) => boolean] => {
     if (end)
       pushMessage(gameKey, {
         type: 'end',
-        value: '誰も答えられませんでした。',
+        value: '誰も答えられませんでした',
       });
 
     if (gameObj && gameAnswer === inputValue) {

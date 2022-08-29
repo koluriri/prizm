@@ -54,7 +54,7 @@ const Questioner: FC<{
     ) {
       pushMessage(gameKey, {
         type: 'end',
-        value: '誰も答えられませんでした。',
+        value: '誰も答えられませんでした',
       });
       finishGame();
       clearTimer();
