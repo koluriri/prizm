@@ -36,7 +36,7 @@ const AnswerInput: FC<{
         setErrorMessage('残機がありません');
       } else {
         setRemain((state) => state - 1);
-        judge(canonicalized);
+        if (!judge(canonicalized)) setErrorMessage(`残り${remain - 1}回`);
         setAnswerInputValue('');
         setCanonicalized([false, suggest]);
       }
@@ -72,8 +72,8 @@ const AnswerInput: FC<{
               css={css`
                 pointer-events: none;
                 position: absolute;
-                top: -29px;
-                left: 10px;
+                top: -24px;
+                right: 10px;
                 width: fit-content;
                 background: var(--red);
                 color: var(--bg-color);
@@ -81,6 +81,7 @@ const AnswerInput: FC<{
                 line-height: 1;
                 padding: 4px 8px;
                 margin: 0;
+                text-align: right;
               `}
             >
               {errorMessage}

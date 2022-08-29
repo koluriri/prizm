@@ -6,7 +6,7 @@ import { modesScore, localScoreKey, localUserNameKey } from 'data/types';
 import getHint from 'utils/gethint';
 import { initialUserName } from 'ducks/user';
 
-const useJudger = (): [(inputValue: string) => void] => {
+const useJudger = (): [(inputValue: string) => boolean] => {
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;
 
   const gameKey = useSelector((state: RootState) => state.game.key);
@@ -72,6 +72,8 @@ const useJudger = (): [(inputValue: string) => void] => {
       });
       deleteGame(gameKey);
     }
+
+    return gameAnswer === inputValue;
   };
 
   return [judge];

@@ -219,6 +219,24 @@ input[type='submit'].bordercomp {
   }
 }
 
+@keyframes dynamicclicked {
+  0% {
+    transform: scale(0);
+  }
+
+  60% {
+    transform: scale(1.06);
+  }
+
+  80% {
+    transform: scale(0.87);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 .loading {
   display: flex;
   align-items: center;

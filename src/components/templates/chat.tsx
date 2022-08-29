@@ -71,6 +71,14 @@ const Chat: FC = () => {
     }, 150);
   }, [messages, scrollChat]);
 
+  useEffect(() => {
+    if (!isDuringGame) {
+      setTimeout(() => {
+        scrollChat();
+      }, 400);
+    }
+  }, [isDuringGame, scrollChat]);
+
   const bg = isDuringGame ? gameColor : 'var(--bg-color)';
 
   const matchedName = messages.find(
