@@ -22,11 +22,19 @@ export const gameSlice = createSlice({
   name: 'game',
   initialState,
   reducers: {
-    setGameEntity: (state, action: PayloadAction<GameObj>) => ({
-      ...state,
-      entity: action.payload,
-      allRemains: action.payload.users.length * initialRemain,
-    }),
+    setGameEntity: (state, action: PayloadAction<GameObj>) => {
+      if (state.entity !== null) {
+        alert('エラー：複数のゲームが同時に開始されました。やり直してください');
+
+        return { ...state, key: '', entity: null };
+      }
+
+      return {
+        ...state,
+        entity: action.payload,
+        allRemains: action.payload.users.length * initialRemain,
+      };
+    },
     setGameKey: (state, action: PayloadAction<string>) => ({
       ...state,
       isDuringGame: true,
