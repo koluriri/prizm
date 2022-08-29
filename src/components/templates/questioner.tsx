@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import { css, keyframes } from '@emotion/react';
 import { FC, useRef, useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,6 +11,9 @@ import QuestionList from 'components/organisms/questionlist';
 import { modesConvert, modesDetail } from 'data/types';
 import { pushMessage } from 'utils/database';
 import { prefectureABC } from 'data/prefecture';
+
+import Prefsvg from 'components/molecules/prefsvg';
+import Ztext from 'react-ztext';
 
 const Questioner: FC<{
   finishGame: () => void;
@@ -131,15 +134,92 @@ const Questioner: FC<{
               {!!gameObj?.answer && prefectureABC[gameObj.answer]}
             </span>
           </h3>
-          <img
-            src={gameObj?.answer && `/pref-svg/${gameObj.answer}.svg`}
-            alt={gameObj?.answer ?? 'Unknown'}
-            css={css`
-              max-height: 26vh;
-              padding: 10px;
-              filter: drop-shadow(3px 10px 16px rgba(50, 8, 10, 0.1));
-            `}
-          />
+          {!!gameObj?.answer && (
+            <div
+              css={css`
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                & > div > span {
+                  animation: 8s linear 0s infinite alternate ${keyframes`
+                    0% {
+                      transform: rotateY(-50deg);
+                    }
+                    100% {
+                      transform: rotateY(50deg);
+                    }
+                  `};
+                }
+
+                & > div > span > span:last-of-type {
+                  filter: drop-shadow(3px 10px 16px rgba(50, 8, 10, 0.1));
+                }
+
+                & > div > span > span:not(:first-of-type) {
+                  filter: brightness(0.72);
+                }
+
+                & svg {
+                  max-height: 26vh;
+                  width: 100%;
+                  padding: 10px;
+
+                  & > *:not(defs) {
+                    animation: 1s ease 1s 1 both ${keyframes`
+                      0% {
+                        opacity:0;
+                        transform: translateY(220px);
+                      }
+                      1% {
+                        opacity:1;
+                      }
+                      45% {
+                        transform: translateY(-70px);
+                      }
+                      55% {
+                        transform: translateY(0);
+                      }
+                      75% {
+                        transform: translateY(-25px);
+                      }
+                      85% {
+                        transform: translateY(0);
+                      }
+                      93% {
+                        transform: translateY(-10px);
+                      }
+                      100% {
+                        transform: translateY(0);
+                      }
+                    `};
+
+                    &:nth-child(2n) {
+                      animation-delay: 1.1s;
+                      transform: translateZ(2000px);
+                    }
+                    &:nth-child(5n) {
+                      animation-delay: 1.2s;
+                    }
+                  }
+                }
+              `}
+            >
+              <Ztext
+                depth="70px"
+                direction="both"
+                event="none"
+                eventRotation="30deg"
+                eventDirection="default"
+                fade={false}
+                perspective="270px"
+                layers={20}
+              >
+                <Prefsvg name={gameObj.answer} />
+              </Ztext>
+            </div>
+          )}
         </>
       )}
 
