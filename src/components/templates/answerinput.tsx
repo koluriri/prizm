@@ -106,6 +106,11 @@ const AnswerInput: FC<{
               left: 0;
               right: 0;
               bottom: 0;
+              width: 100%;
+              /*width: calc(100% - 53px);*/
+              overflow: hidden;
+              border-radius: 23px;
+              padding-right: 53px;
             `}
           >
             {canonicalized && (
@@ -118,7 +123,14 @@ const AnswerInput: FC<{
                 >
                   {answerInputValue}
                 </span>{' '}
-                {suggest.slice(answerInputValue.length)} (改行で送信)
+                {suggest.slice(answerInputValue.length)}{' '}
+                <span
+                  css={css`
+                    font-size: 18px;
+                  `}
+                >
+                  (改行で送信)
+                </span>
               </>
             )}
           </p>
