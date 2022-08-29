@@ -19,7 +19,7 @@ const OnlineUsers: FC<{
     if (users) {
       setUsersLength(
         Object.keys(users).filter(
-          (key) => Date.now() - users[key].pingStamp < 3500,
+          (key) => Date.now() - users[key].pingStamp < 4700,
         ).length,
       );
     } else {
@@ -117,7 +117,7 @@ const OnlineUsers: FC<{
         {users &&
           Object.keys(users).map(
             (key) =>
-              Date.now() - users[key].pingStamp < 3500 && (
+              Date.now() - users[key].pingStamp < 4700 && (
                 <li
                   key={key}
                   css={css`
