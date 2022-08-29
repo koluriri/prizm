@@ -19,10 +19,10 @@ export const modesCaption: { [key in Mode]: string } = {
   station: '駅が出題されます',
 };
 export const modesDetail: { [key in Mode]: string } = {
-  easy: '初級（市町村）',
-  normal: '中級（市町村の冒頭2文字）',
-  hard: '上級（市町村の頭文字）',
-  hell: 'ゲキムズ（市町村の2文字目）',
+  easy: '初級:市町村',
+  normal: '中級:市町村の冒頭2文字',
+  hard: '上級:市町村の頭文字',
+  hell: 'ゲキムズ:市町村の2文字目',
   station: '駅モード',
 };
 export const modesConvert: { [key in Mode]: (t: string) => string } = {

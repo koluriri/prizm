@@ -167,7 +167,7 @@ const Questioner: FC<{
                   padding: 10px;
 
                   & > *:not(defs) {
-                    animation: 1s ease 1s 1 both ${keyframes`
+                    animation: 1s ease 0.7s 1 both ${keyframes`
                       0% {
                         opacity:0;
                         transform: translateY(220px);
@@ -195,12 +195,12 @@ const Questioner: FC<{
                       }
                     `};
 
-                    &:nth-child(2n) {
-                      animation-delay: 1.1s;
+                    &:nth-of-type(2n) {
+                      animation-delay: 0.8s;
                       transform: translateZ(2000px);
                     }
-                    &:nth-child(5n) {
-                      animation-delay: 1.2s;
+                    &:nth-of-type(5n) {
+                      animation-delay: 0.9s;
                     }
                   }
                 }
