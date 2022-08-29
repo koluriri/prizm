@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
 import spbg from 'assets/sp-bg.svg';
-import { FaUserAlt } from 'react-icons/fa';
+import { FaDesktop, FaMobileAlt, FaTabletAlt } from 'react-icons/fa';
 
 const OnlineUsers: FC<{
   users: Users | undefined;
@@ -72,10 +72,6 @@ const OnlineUsers: FC<{
           >
             現在
             <em>
-              <FaUserAlt
-                size="0.9em"
-                style={{ marginRight: 3, marginLeft: 3 }}
-              />
               <span>{usersLength}</span>人
             </em>
             が接続中
@@ -133,18 +129,29 @@ const OnlineUsers: FC<{
                     @media (min-width: 768px) {
                       margin: 7px 0;
                     }
-
-                    &:before {
-                      content: '';
-                      width: 10px;
-                      height: 10px;
-                      display: block;
-                      background: var(--user-color);
-                      border-radius: 10px;
-                      margin-right: 7px;
-                    }
                   `}
                 >
+                  <span
+                    css={css`
+                      width: 16px;
+                      height: 16px;
+                      display: block;
+                      /*
+                      width: 10px;
+                      background: var(--user-color);
+                      border-radius: 10px;
+                      margin-right: 7px;*/
+                      margin-right: 4px;
+                      color: var(--user-color);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                    `}
+                  >
+                    {users[key].device === 'desktop' && <FaDesktop />}
+                    {users[key].device === 'tablet' && <FaTabletAlt />}
+                    {users[key].device === 'mobile' && <FaMobileAlt />}
+                  </span>
                   <span>{users[key].userName}</span>
                   <span
                     css={css`
@@ -166,10 +173,11 @@ const OnlineUsers: FC<{
                         font-size: 13px;
                         font-weight: 600;
                         color: var(--red);
+                        margin: 3px 0;
 
                         @media (max-width: 400px) {
                           width: 130px;
-                          padding-left: 18px;
+                          padding-left: 23px;
                           margin-top: 3px;
                           margin-bottom: 4px;
                           &:before {
