@@ -65,7 +65,7 @@ const Game: FC<{
     return () => {
       window.visualViewport.removeEventListener('resize', onWindowResize);
     };
-  });
+  }, []);
 
   return (
     <div

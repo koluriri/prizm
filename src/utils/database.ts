@@ -45,7 +45,7 @@ export const listenMessage = (
   callback: (data: MessageObject) => any,
 ) => {
   const gamesRef = ref(database, `Games/${gameKey}/messages`);
-  onChildAdded(gamesRef, (data) => {
+  const unSubscribe = onChildAdded(gamesRef, (data) => {
     console.log('Listen Message on database.ts');
     let message;
     if (isAnswerMessage(data.val())) {
@@ -54,6 +54,7 @@ export const listenMessage = (
     } else {
       console.log('Message Type is Game');
       message = data.val() as GameMessage;
+      if (message.type === 'end') unSubscribe();
     }
     callback({
       ...message,

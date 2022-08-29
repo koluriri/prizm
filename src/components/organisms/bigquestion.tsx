@@ -2,18 +2,12 @@
 import { css, keyframes } from '@emotion/react';
 import { FC, useRef } from 'react';
 
-import { useSelector } from 'react-redux';
-import { RootState } from 'ducks/rootReducer';
 import Ztext from 'react-ztext';
 
 const BigQuestion: FC<{
   // eslint-disable-next-line react/require-default-props
   displayQuestion: string;
 }> = ({ displayQuestion = 'Unknown' }) => {
-  const gameColor = useSelector(
-    (state: RootState) => state.game.entity?.color ?? 'var(--bg-color)',
-  );
-
   const fontSize = (width: number, text: string, letterSpacing = 1): string => {
     const wrapper = width / window.innerWidth;
     const textLength = text.length > 2 ? text.length : 2;
@@ -63,31 +57,31 @@ const BigQuestion: FC<{
           transform: scale(1.05);
           animation: 1.5s linear 0s infinite normal ${keyframes`
             0% {
-              background-image: conic-gradient(#D94550 0deg, ${gameColor} 0deg);
+              background-image: conic-gradient(var(--primary-color) 0deg, #D94550 0deg);
             }
             12.5% {
-              background-image: conic-gradient(#D94550 45deg, ${gameColor} 45deg);
+              background-image: conic-gradient(var(--primary-color) 45deg, #D94550 45deg);
             }
             25% {
-              background-image: conic-gradient(#D94550 90deg, ${gameColor} 90deg);
+              background-image: conic-gradient(var(--primary-color) 90deg, #D94550 90deg);
             }
             37.5% {
-              background-image: conic-gradient(#D94550 135deg, ${gameColor} 135deg);
+              background-image: conic-gradient(var(--primary-color) 135deg, #D94550 135deg);
             }
             50% {
-              background-image: conic-gradient(#D94550 180deg, ${gameColor} 180deg);
+              background-image: conic-gradient(var(--primary-color) 180deg, #D94550 180deg);
             }
             62.5% {
-              background-image: conic-gradient(#D94550 225deg, ${gameColor} 225deg);
+              background-image: conic-gradient(var(--primary-color) 225deg, #D94550 225deg);
             }
             75% {
-              background-image: conic-gradient(#D94550 270deg, ${gameColor} 270deg);
+              background-image: conic-gradient(var(--primary-color) 270deg, #D94550 270deg);
             }
             87.5% {
-              background-image: conic-gradient(#D94550 315deg, ${gameColor} 315deg);
+              background-image: conic-gradient(var(--primary-color) 315deg, #D94550 315deg);
             }
             100% {
-              background-image: conic-gradient(#D94550 360deg, ${gameColor} 360deg);
+              background-image: conic-gradient(var(--primary-color) 360deg, #D94550 360deg);
             }
           `};
         `}
