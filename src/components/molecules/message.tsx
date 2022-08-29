@@ -85,7 +85,10 @@ const Message: FC<{
           ) : (
             <FaTimes css={matchIconStyle} />
           ))}
-        {message.value.split(/(\n)/g).map((t) => (t === '\n' ? <br /> : t))}
+        {message.value
+          .split(/(\n)/g)
+          // eslint-disable-next-line react/no-array-index-key
+          .map((t, index) => (t === '\n' ? <br key={`${t}.${index}`} /> : t))}
       </div>
     </div>
   );

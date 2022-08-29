@@ -136,7 +136,7 @@ const Chat: FC = () => {
         `}
       >
         {messages.map((message: MessageObject) => (
-          <Message message={message} />
+          <Message message={message} key={message.key ?? message.value} />
         ))}
       </div>
     </>

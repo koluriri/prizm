@@ -81,6 +81,8 @@ const QuestionList: FC<{
       {questions.map((question, index) =>
         index < current || !isDuringGame ? (
           <span
+            // eslint-disable-next-line react/no-array-index-key
+            key={`${question}.${index}`}
             css={spanStyle}
             style={
               !isDuringGame
@@ -95,6 +97,8 @@ const QuestionList: FC<{
           </span>
         ) : (
           <span
+            // eslint-disable-next-line react/no-array-index-key
+            key={`${question}.${index}`}
             css={css`
               width: 2px;
               height: 1em;
