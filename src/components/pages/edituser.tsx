@@ -91,7 +91,7 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
             max-width: 120px;
           `}
         >
-          {inputName.replace(/(?<=^.{7})./, '…').slice(0, 8)}
+          {inputName.slice(0, 7)}
         </span>
         <span
           css={css`
@@ -127,6 +127,7 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
             font-size: 13px;
             color: var(--red);
             text-decoration: underline;
+            font-weight: 900;
           `}
         >
           {inputNameMsg}

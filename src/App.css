@@ -133,6 +133,11 @@ button:active {
   appearance: none;
 }
 
+.bordercomp[disabled] {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
 .bordercomp.simple {
   border: 0;
 }
@@ -160,6 +165,11 @@ input[type='submit'].bordercomp {
   text-align: right;
   background-color: var(--bg-color);
   border: 0;
+}
+
+.message[data-type='hint'] {
+  animation-delay: 0.25s;
+  animation-fill-mode: both;
 }
 
 .message[data-type='answer'] .bordercomp {
@@ -202,6 +212,24 @@ input[type='submit'].bordercomp {
 
   80% {
     transform: scale(0.9);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes dynamicclicked {
+  0% {
+    transform: scale(0);
+  }
+
+  60% {
+    transform: scale(1.06);
+  }
+
+  80% {
+    transform: scale(0.87);
   }
 
   100% {
@@ -256,7 +284,8 @@ input:focus {
 .matched .questioner,
 .matched .answerinput,
 .matched .message[data-matched='false'],
-.matched .chat::before {
+.matched .chat::before,
+.matched footer {
   visibility: hidden;
 }
 
@@ -291,7 +320,6 @@ body.matched {
   position: absolute;
   top: 55%;
   transform: scale(1.6);
-  transform-origin: right;
 }
 
 .message[data-matched='true']::before {
@@ -338,4 +366,133 @@ body.matched {
 
 .matched .gamewrapper {
   height: 100vh !important;
+}
+
+@keyframes message-added {
+  0% {
+    height: 0;
+    transform: scale(0);
+  }
+
+  60% {
+    transform: scale(1.03);
+  }
+
+  80% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    height: auto;
+    transform: scale(1);
+  }
+}
+
+@keyframes message-added-matched {
+  0% {
+    transform: scale(0.3);
+  }
+
+  60% {
+    transform: scale(2);
+  }
+
+  80% {
+    transform: scale(1.5);
+  }
+
+  100% {
+    transform: scale(1.6);
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  49% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  99% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes redblink {
+  0% {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  49% {
+    color: var(--red);
+    border-color: var(--red);
+  }
+
+  50% {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  99% {
+    color: var(--red);
+    border-color: var(--red);
+  }
+
+  100% {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+}
+
+div[data-innertext] > div > span > span > span::before {
+  content: attr(data-innertext);
+}
+
+.bigquestion-spans div > span {
+  animation: 1.5s linear 0s infinite normal rotate-horizontal;
+}
+
+.bigquestion-spans div > span > span:not(:first-of-type) {
+  color: var(--primary-color);
+}
+
+@keyframes rotate-horizontal {
+  0% {
+    transform: rotateX(0deg) rotateY(-82deg);
+  }
+
+  10% {
+    transform: rotateX(0deg) rotateY(6deg);
+  }
+
+  15% {
+    transform: rotateX(0deg) rotateY(1deg);
+  }
+
+  50% {
+    transform: rotateX(0deg) rotateY(-1deg);
+  }
+
+  90% {
+    transform: rotateX(0deg) rotateY(1deg);
+  }
+
+  95% {
+    transform: rotateX(0deg) rotateY(-6deg);
+  }
+
+  100% {
+    transform: rotateX(0deg) rotateY(82deg);
+  }
 }

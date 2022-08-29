@@ -32,6 +32,7 @@ const QuestionList: FC<{
     transition: 0.4s ease;
     line-height: 1;
     height: 1em;
+    animation: 0.4s ease 0s 1 normal dynamicclicked;
   `;
 
   let duringStyle = css`
@@ -81,7 +82,14 @@ const QuestionList: FC<{
         index < current || !isDuringGame ? (
           <span
             css={spanStyle}
-            style={!isDuringGame ? { background: `${generateColor()}37` } : {}}
+            style={
+              !isDuringGame
+                ? {
+                    background: `${generateColor()}37`,
+                    animation: `0.4s ease ${index / 12}s 1 both dynamicclicked`,
+                  }
+                : {}
+            }
           >
             {question}{' '}
           </span>

@@ -1,12 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, FormEvent, useState } from 'react';
+import { FC, FormEvent, useEffect, useState } from 'react';
 
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
 import useJudger from 'hooks/use-judger';
-import { pushMessage } from 'utils/database';
 import { initialRemain } from 'data/types';
 import canonicalizePref from 'utils/canonicalizepref';
 
@@ -19,8 +18,6 @@ const AnswerInput: FC<{
     (state: RootState) => state.game.isDuringGame,
   );
 
-  const gameKey = useSelector((state: RootState) => state.game.key);
-
   const [answerInputValue, setAnswerInputValue] = useState('');
   const [judge] = useJudger();
 
@@ -30,22 +27,31 @@ const AnswerInput: FC<{
     [string | false, string]
   >([false, '']);
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const answerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (canonicalized && canonicalized !== '') {
       if (remain <= 0) {
-        pushMessage(gameKey, {
-          type: 'remain',
-          value: `もう残機がありません`,
-        });
+        setErrorMessage('残機がありません');
       } else {
         setRemain((state) => state - 1);
-        judge(canonicalized);
+        if (!judge(canonicalized)) setErrorMessage(`残り${remain - 1}回`);
         setAnswerInputValue('');
         setCanonicalized([false, suggest]);
       }
+    } else {
+      setErrorMessage('都道府県を入力してください');
     }
   };
+
+  useEffect(() => {
+    if (errorMessage !== '') {
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 1500);
+    }
+  }, [errorMessage]);
 
   return (
     <div
@@ -56,10 +62,31 @@ const AnswerInput: FC<{
         display: flex;
         align-items: center;
         justify-content: center;
+        ${errorMessage !== '' && 'animation: 0.4s ease 0s 1 normal blink;'}
       `}
     >
       {isDuringGame ? (
         <form onSubmit={(e) => answerSubmit(e)}>
+          {!!errorMessage && (
+            <p
+              css={css`
+                pointer-events: none;
+                position: absolute;
+                top: -24px;
+                right: 10px;
+                width: fit-content;
+                background: var(--red);
+                color: var(--bg-color);
+                border-radius: 20px;
+                line-height: 1;
+                padding: 4px 8px;
+                margin: 0;
+                text-align: right;
+              `}
+            >
+              {errorMessage}
+            </p>
+          )}
           <p
             css={css`
               position: absolute;

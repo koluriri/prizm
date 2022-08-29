@@ -44,6 +44,9 @@ const Message: FC<{
         flex-direction: column;
         margin: 8px 0;
         transition: 0.2s, visibility 0s;
+        ${message.type === 'answer' && message.matched
+          ? 'transform-origin: center right;animation: 0.3s ease 0s 1 normal message-added-matched;'
+          : 'transform-origin: bottom right;animation: 0.2s ease 0s 1 normal message-added;'}
       `}
     >
       {name && (
@@ -57,7 +60,15 @@ const Message: FC<{
           {name}
         </span>
       )}
-      <div className="bordercomp" key={message.key}>
+      <div
+        className="bordercomp"
+        key={message.key}
+        css={css`
+          ${message.type === 'answer' &&
+          !message.matched &&
+          'animation: 0.4s ease 0s 1 normal redblink;'}
+        `}
+      >
         {message.type === 'hint' && (
           <span
             css={css`
