@@ -40,7 +40,7 @@ const Chat: FC = () => {
       if (message.type === 'hint') {
         setTimeout(() => {
           scrollChat();
-        }, 400);
+        }, 500);
       }
       if (message.type === 'answer' && message.matched) {
         document.body.classList.add('matched');
