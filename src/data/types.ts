@@ -98,10 +98,12 @@ export type GameObj = {
 };
 
 /* User */
+export type UserDevice = 'mobile' | 'tablet' | 'desktop';
 export type UserObj = {
   userName: string;
   pingStamp: number;
   color: string;
+  device: UserDevice;
   score?: number;
   remain?: number;
   joiningGame?: string;

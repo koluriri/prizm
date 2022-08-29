@@ -10,6 +10,7 @@ import {
   localScoreKey,
   localUserColorKey,
   localUserNameKey,
+  UserDevice,
 } from 'data/types';
 import { listenGame, deleteUser, newOnlineUser } from 'utils/database';
 import useUserName from 'hooks/use-username';
@@ -34,12 +35,25 @@ const App: FC = () => {
 
   useEffect(() => {
     if (userKey === '' && gameKey === '' && !editUserMode) {
+      const ua = navigator.userAgent;
+
+      let device: UserDevice = 'desktop';
+      if (
+        ua.indexOf('iPhone') > 0 ||
+        ua.indexOf('iPod') > 0 ||
+        (ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0)
+      ) {
+        device = 'mobile';
+      } else if (ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0) {
+        device = 'tablet';
+      }
       dispatch(
         setUserKey(
           newOnlineUser({
             userName: localStorage.getItem(localUserNameKey) || initialUserName,
             color: localStorage.getItem(localUserColorKey) || '',
             pingStamp: Date.now(),
+            device,
             score:
               parseInt(String(localStorage.getItem(localScoreKey)), 10) || 0,
           }),
