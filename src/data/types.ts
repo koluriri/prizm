@@ -42,6 +42,12 @@ export const modesScore: { [key in Mode]: (score: number) => number } = {
 
 /* message */
 export type MessageTypes = 'answer' | 'hint' | 'start' | 'score';
+export type MessageNotice =
+  | 'a_score'
+  | 'b_update_fastest'
+  | 'c_update_streak'
+  | 'd_update_max_streak';
+export type MessageNoticeObj = { [key in MessageNotice]?: number };
 export type AnswerMessage = {
   key?: string | null;
   name: string;
@@ -53,6 +59,7 @@ export type GameMessage = {
   key?: string | null;
   type: 'hint' | 'start' | 'score' | 'remain' | 'end';
   value: string;
+  notice?: MessageNoticeObj;
 };
 export type MessageObject = AnswerMessage | GameMessage;
 export type Messages = MessageObject[];

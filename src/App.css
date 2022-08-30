@@ -192,6 +192,25 @@ input[type='submit'].bordercomp {
   background: transparent;
 }
 
+.message-notice {
+  display: block;
+  padding: 3px 12px;
+  margin-top: 2px;
+  margin-right: -10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-align: right;
+  white-space: nowrap;
+  background: var(--palepink);
+  border-radius: 15px;
+  animation: 0.4s ease 0.8s 1 normal blink;
+}
+
+.message-notice + .message-notice {
+  margin-top: 3px;
+}
+
 .icon-circle {
   width: 1em;
   height: 1em;

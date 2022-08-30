@@ -2,7 +2,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
 import { deleteGame, pushMessage } from 'utils/database';
-import { modesScore, localScoreKey, localUserNameKey } from 'data/types';
+import {
+  modesScore,
+  localScoreKey,
+  localUserNameKey,
+  MessageNoticeObj,
+} from 'data/types';
 import getHint from 'utils/gethint';
 import { initialUserName } from 'ducks/user';
 import { getSummary, updateSummary } from 'utils/summary';
@@ -67,11 +72,16 @@ const useJudger = (): [(inputValue: string) => boolean] => {
       );
       localStorage.setItem(localScoreKey, setValue);
 
+      const notice: MessageNoticeObj = { a_score: score };
+
       const summary = getSummary();
       if (summary) {
         const currentStreak = summary.currentStreak + 1;
         const maxStreak =
           currentStreak > summary.maxStreak ? currentStreak : summary.maxStreak;
+        if (currentStreak > 1) notice.c_update_streak = currentStreak;
+        if (currentStreak > summary.maxStreak)
+          notice.d_update_max_streak = currentStreak;
 
         const speed =
           Math.round(((Date.now() - gameObj.created) / 1000) * 10) / 10;
@@ -87,6 +97,8 @@ const useJudger = (): [(inputValue: string) => boolean] => {
           speed < summary.fastestSpeed || summary.fastestSpeed === 0
             ? speed
             : summary.fastestSpeed;
+        if (speed < summary.fastestSpeed || summary.fastestSpeed === 0)
+          notice.b_update_fastest = speed;
 
         updateSummary({
           wonCount: summary.wonCount + 1,
@@ -100,7 +112,8 @@ const useJudger = (): [(inputValue: string) => boolean] => {
 
       pushMessage(gameKey, {
         type: 'score',
-        value: `${userName}\nスコア+${score}`,
+        value: `${userName}:`,
+        notice,
       });
       deleteGame(gameKey);
     }
