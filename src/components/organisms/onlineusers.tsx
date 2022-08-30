@@ -70,7 +70,7 @@ const OnlineUsers: FC<{
               display: inline-flex;
             `}
           >
-            現在
+            現在、
             <em>
               <span>{usersLength}</span>人
             </em>

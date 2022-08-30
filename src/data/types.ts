@@ -115,3 +115,14 @@ export const localScoreKey = 'prizm-score';
 export const localUserNameKey = 'prizm-username';
 export const localUserColorKey = 'prizm-usercolor';
 export const initialRemain = 3;
+
+export type UserSummary = {
+  playCount: number;
+  wonCount: number;
+  lastPlay: number;
+  lastWon: number;
+  currentStreak: number;
+  maxStreak: number;
+  averageSpeed: number;
+  fastestSpeed: number;
+};
