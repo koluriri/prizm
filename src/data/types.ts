@@ -115,7 +115,7 @@ export const localUserColorKey = 'prizm-usercolor';
 export const localUserSummary = 'prizm-summary';
 export const initialRemain = 3;
 
-export type UserSummary = {
+export type UserSummaryObj = {
   playCount: number;
   wonCount: number;
   lastPlay: number;
@@ -125,8 +125,8 @@ export type UserSummary = {
   averageSpeed: number;
   fastestSpeed: number;
 };
-export const isUserSummary = (arg: unknown): arg is UserSummary => {
-  const m = arg as UserSummary;
+export const isUserSummaryObj = (arg: unknown): arg is UserSummaryObj => {
+  const m = arg as UserSummaryObj;
 
   return (
     typeof m?.playCount === 'number' &&

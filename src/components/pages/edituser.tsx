@@ -7,6 +7,7 @@ import { initialUserName } from 'ducks/user';
 import { colors } from 'utils/generateuser';
 import ColorSelector from 'components/molecules/colorselector';
 import UserSummary from 'components/templates/usersummary';
+import { getSummary } from 'utils/summary';
 
 const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;
@@ -15,6 +16,8 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
 
   const userColor = localStorage.getItem(localUserColorKey) || '#000000';
   const [selected, setSelected] = useState(userColor);
+
+  const [summary] = useState(getSummary());
 
   useEffect(() => {
     setInputNameMsg('');
@@ -171,7 +174,7 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
           </button>
         </div>
       </div>
-      <UserSummary />
+      {summary && <UserSummary summary={summary} />}
     </>
   );
 };

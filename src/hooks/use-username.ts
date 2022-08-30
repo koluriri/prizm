@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 import { userSlice, initialUserName } from 'ducks/user';
 import {
-  isUserSummary,
+  isUserSummaryObj,
   localUserColorKey,
   localUserNameKey,
   localUserSummary,
@@ -21,7 +21,7 @@ const useUserName = (): string => {
 
   if (
     !localStorage.getItem(localUserSummary) ||
-    !isUserSummary(JSON.parse(localStorage.getItem(localUserSummary) ?? ''))
+    !isUserSummaryObj(JSON.parse(localStorage.getItem(localUserSummary) ?? ''))
   )
     localStorage.setItem(
       localUserSummary,

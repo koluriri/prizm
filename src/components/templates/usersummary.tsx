@@ -1,19 +1,21 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { UserSummaryObj } from 'data/types';
 import { FC, useState } from 'react';
 
-const UserSummary: FC = () => {
-  const summary = css`
+const UserSummary: FC<{ summary: UserSummaryObj }> = ({ summary }) => {
+  const summaryStyle = css`
     display: grid;
     text-align: center;
     font-weight: bold;
     font-size: 13px;
   `;
-  const bignum = css`
+  const bignumStyle = css`
     font-size: 40px;
     margin: 2px 0px;
+    white-space: nowrap;
   `;
-  const unit = css`
+  const unitStyle = css`
     font-size: 18px;
   `;
 
@@ -35,30 +37,35 @@ const UserSummary: FC = () => {
         background-color: var(--${bgColor});
       `}
     >
-      <div css={summary}>
-        <span css={bignum}>127</span>プレイ
+      <div css={summaryStyle}>
+        <span css={bignumStyle}>{summary.playCount}</span>プレイ
       </div>
-      <div css={summary}>
-        <span css={bignum}>4</span>連勝中
+      <div css={summaryStyle}>
+        <span css={bignumStyle}>{summary.currentStreak}</span>連勝中
       </div>
-      <div css={summary}>
-        <span css={bignum}>6</span>最大連勝
+      <div css={summaryStyle}>
+        <span css={bignumStyle}>{summary.maxStreak}</span>最多連勝
       </div>
-      <div css={summary}>
-        <span css={bignum}>
-          63<small css={unit}>%</small>
+      <div css={summaryStyle}>
+        <span css={bignumStyle}>
+          {summary.wonCount === 0
+            ? '-'
+            : Math.round((summary.wonCount / summary.playCount) * 100)}
+          <small css={unitStyle}>%</small>
         </span>
         勝率
       </div>
-      <div css={summary}>
-        <span css={bignum}>
-          7.2<small css={unit}>秒</small>
+      <div css={summaryStyle}>
+        <span css={bignumStyle}>
+          {summary.averageSpeed === 0 ? '-' : summary.averageSpeed}
+          <small css={unitStyle}>秒</small>
         </span>
         回答速度平均
       </div>
-      <div css={summary}>
-        <span css={bignum}>
-          1.2<small css={unit}>秒</small>
+      <div css={summaryStyle}>
+        <span css={bignumStyle}>
+          {summary.fastestSpeed === 0 ? '-' : summary.fastestSpeed}
+          <small css={unitStyle}>秒</small>
         </span>
         最速回答
       </div>

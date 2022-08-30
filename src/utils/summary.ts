@@ -1,10 +1,10 @@
-import { isUserSummary, localUserSummary, UserSummary } from 'data/types';
+import { isUserSummaryObj, localUserSummary, UserSummaryObj } from 'data/types';
 
-export const getSummary = (): false | UserSummary => {
+export const getSummary = (): false | UserSummaryObj => {
   const summary = JSON.parse(
     localStorage.getItem(localUserSummary) ?? '',
   ) as unknown;
-  if (!isUserSummary(summary)) {
+  if (!isUserSummaryObj(summary)) {
     alert('エラー: 勝敗を記録できません');
 
     return false;
@@ -24,7 +24,7 @@ export const updateSummary = (newSummary: { [key: string]: number }) => {
 };
 
 export const updateSummaryFromKey = (
-  key: keyof UserSummary,
+  key: keyof UserSummaryObj,
   value: number | ((number: number) => number),
 ) => {
   const summary = getSummary();
