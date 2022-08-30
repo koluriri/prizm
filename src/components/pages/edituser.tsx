@@ -6,6 +6,7 @@ import { localScoreKey, localUserColorKey, localUserNameKey } from 'data/types';
 import { initialUserName } from 'ducks/user';
 import { colors } from 'utils/generateuser';
 import ColorSelector from 'components/molecules/colorselector';
+import UserSummary from 'components/templates/usersummary';
 
 const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;
@@ -40,141 +41,138 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
   `;
 
   return (
-    <div
-      css={css`
-        border: 4px solid var(--primary-color);
-        border-radius: 20px;
-        padding: 15px 20px;
-        width: 340px;
-        max-width: 95%;
-        max-width: calc(100vw - 60px);
-        transition: 0.2s;
-        margin: 120px auto 180px;
-        animation: 0.4s ease 0s 1 normal clicked;
-      `}
-    >
-      <h2
-        css={css`
-          font-size: 20px;
-          font-weight: 900;
-          text-align: center;
-          margin-bottom: 12px;
-        `}
-      >
-        prizmプロフィールの編集
-      </h2>
+    <>
       <div
+        className="prizm-card"
         css={css`
-          margin: 0 auto 40px;
-          padding: 5px 11px;
-          border-radius: 20px;
-          width: fit-content;
-          background-color: ${selected}33;
-          font-weight: 700;
-          font-size: 15px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          margin: 60px auto 40px;
+          animation: 0.4s ease 0s 1 normal clicked;
         `}
       >
-        <span
+        <h2
           css={css`
-            width: 7px;
-            height: 7px;
-            background: ${selected};
-            border-radius: 5px;
-            margin-right: 5px;
-          `}
-        />
-        <span
-          css={css`
-            max-width: 120px;
+            font-size: 20px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 12px;
           `}
         >
-          {inputName.slice(0, 7)}
-        </span>
-        <span
+          prizmプロフィールの編集
+        </h2>
+        <div
           css={css`
-            font-size: 13px;
-            font-weight: 500;
-            margin-left: 8px;
+            margin: 0 auto 40px;
+            padding: 5px 11px;
+            border-radius: 20px;
+            width: fit-content;
+            background-color: ${selected}33;
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
           `}
         >
-          スコア
-          {parseInt(String(localStorage.getItem(localScoreKey)), 10) || 0}
-        </span>
-      </div>
-      <div>
-        <label css={formGrid} htmlFor="inputName">
-          名前
-          <input
-            className="bordercomp"
-            type="text"
-            id="inputName"
-            value={inputName}
-            onChange={(e) => setInputName(e.target.value)}
+          <span
             css={css`
-              font-size: 18px;
-              width: 100%;
-              text-align: left;
+              width: 7px;
+              height: 7px;
+              background: ${selected};
+              border-radius: 5px;
+              margin-right: 5px;
             `}
           />
-        </label>
-        <p
-          css={css`
-            padding-left: calc(2.2em + 42px);
-            margin: 5px 0 0;
-            font-size: 13px;
-            color: var(--red);
-            text-decoration: underline;
-            font-weight: 900;
-          `}
-        >
-          {inputNameMsg}
-        </p>
-        <div css={formGrid}>
-          色
-          <div
+          <span
             css={css`
-              display: grid;
-              gap: 8px;
-              grid-template-columns: repeat(auto-fill, 20px);
+              max-width: 120px;
             `}
           >
-            {colors.map((color) => (
-              <ColorSelector
-                color={color}
-                selected={selected}
-                onClick={() => setSelected(color)}
-              />
-            ))}
+            {inputName.slice(0, 7)}
+          </span>
+          <span
+            css={css`
+              font-size: 13px;
+              font-weight: 500;
+              margin-left: 8px;
+            `}
+          >
+            スコア
+            {parseInt(String(localStorage.getItem(localScoreKey)), 10) || 0}
+          </span>
+        </div>
+        <div>
+          <label css={formGrid} htmlFor="inputName">
+            名前
+            <input
+              className="bordercomp"
+              type="text"
+              id="inputName"
+              value={inputName}
+              onChange={(e) => setInputName(e.target.value)}
+              css={css`
+                font-size: 18px;
+                width: 100%;
+                text-align: left;
+              `}
+            />
+          </label>
+          <p
+            css={css`
+              padding-left: calc(2.2em + 42px);
+              margin: 5px 0 0;
+              font-size: 13px;
+              color: var(--red);
+              text-decoration: underline;
+              font-weight: 900;
+            `}
+          >
+            {inputNameMsg}
+          </p>
+          <div css={formGrid}>
+            色
+            <div
+              css={css`
+                display: grid;
+                gap: 8px;
+                grid-template-columns: repeat(auto-fill, 20px);
+              `}
+            >
+              {colors.map((color) => (
+                <ColorSelector
+                  color={color}
+                  selected={selected}
+                  onClick={() => setSelected(color)}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        css={css`
-          display: flex;
-          justify-content: space-between;
-          margin-top: 36px;
-        `}
-      >
-        <button
-          type="button"
-          className="bordercomp simple"
-          onClick={() => toHome()}
+        <div
+          css={css`
+            display: flex;
+            justify-content: space-between;
+            margin-top: 36px;
+          `}
         >
-          キャンセル
-        </button>
-        <button
-          type="button"
-          className="bordercomp"
-          onClick={() => submit()}
-          disabled={!!inputNameMsg}
-        >
-          変更
-        </button>
+          <button
+            type="button"
+            className="bordercomp simple"
+            onClick={() => toHome()}
+          >
+            やめる
+          </button>
+          <button
+            type="button"
+            className="bordercomp"
+            onClick={() => submit()}
+            disabled={!!inputNameMsg}
+          >
+            変更する
+          </button>
+        </div>
       </div>
-    </div>
+      <UserSummary />
+    </>
   );
 };
 

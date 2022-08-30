@@ -496,3 +496,13 @@ div[data-innertext] > div > span > span > span::before {
     transform: rotateX(0deg) rotateY(82deg);
   }
 }
+
+.prizm-card {
+  width: 340px;
+  max-width: 95%;
+  max-width: calc(100vw - 60px);
+  padding: 15px 20px;
+  border: 4px solid var(--primary-color);
+  border-radius: 20px;
+  transition: 0.2s;
+}
