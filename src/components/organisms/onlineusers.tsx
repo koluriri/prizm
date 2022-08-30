@@ -70,7 +70,7 @@ const OnlineUsers: FC<{
               display: inline-flex;
             `}
           >
-            現在
+            現在、
             <em>
               <span>{usersLength}</span>人
             </em>
@@ -125,6 +125,7 @@ const OnlineUsers: FC<{
                     font-weight: 700;
                     line-height: 1;
                     flex-wrap: wrap;
+                    animation: 0.2s ease 0s 1 normal clicked;
 
                     @media (min-width: 768px) {
                       margin: 7px 0;

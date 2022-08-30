@@ -1,7 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 import { userSlice, initialUserName } from 'ducks/user';
-import { localUserColorKey, localUserNameKey } from 'data/types';
+import {
+  isUserSummaryObj,
+  localUserColorKey,
+  localUserNameKey,
+  localUserSummary,
+} from 'data/types';
 import { generateColor, generateName } from 'utils/generateuser';
 
 const useUserName = (): string => {
@@ -13,6 +18,24 @@ const useUserName = (): string => {
 
   if (!localStorage.getItem(localUserColorKey))
     localStorage.setItem(localUserColorKey, generateColor());
+
+  if (
+    !localStorage.getItem(localUserSummary) ||
+    !isUserSummaryObj(JSON.parse(localStorage.getItem(localUserSummary) ?? ''))
+  )
+    localStorage.setItem(
+      localUserSummary,
+      JSON.stringify({
+        playCount: 0,
+        wonCount: 0,
+        lastPlay: 0,
+        lastWon: 0,
+        currentStreak: 0,
+        maxStreak: 0,
+        averageSpeed: 0,
+        fastestSpeed: 0,
+      }),
+    );
 
   const localUserName = localStorage.getItem(localUserNameKey);
   if (

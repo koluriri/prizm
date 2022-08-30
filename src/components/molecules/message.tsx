@@ -89,6 +89,72 @@ const Message: FC<{
           .split(/(\n)/g)
           // eslint-disable-next-line react/no-array-index-key
           .map((t, index) => (t === '\n' ? <br key={`${t}.${index}`} /> : t))}
+        {message.type === 'score' &&
+          message.notice &&
+          Object.keys(message.notice).map((noticeType) => {
+            switch (noticeType) {
+              case 'a_score':
+                return (
+                  <span className="message-notice">
+                    スコア+{message.notice && message.notice[noticeType]}
+                  </span>
+                );
+                break;
+              case 'b_update_fastest':
+                return (
+                  <span
+                    className="message-notice"
+                    css={css`
+                      animation-delay: 1s;
+                      background-color: var(--teal);
+                    `}
+                  >
+                    {message.notice && message.notice[noticeType]}
+                    秒で回答
+                    <br />
+                    最速記録更新
+                  </span>
+                );
+                break;
+
+              case 'c_update_streak':
+                return (
+                  <span
+                    className="message-notice"
+                    css={css`
+                      animation-delay: 1.2s;
+                      background-color: var(--tea);
+                    `}
+                  >
+                    {message.notice && message.notice[noticeType]}連勝中
+                  </span>
+                );
+                break;
+
+              case 'd_update_max_streak':
+                return (
+                  message.notice &&
+                  message.notice.d_update_max_streak &&
+                  message.notice.d_update_max_streak !== 1 && (
+                    <span
+                      className="message-notice"
+                      css={css`
+                        animation-delay: 1.4s;
+                        background-color: var(--orange);
+                      `}
+                    >
+                      連勝記録更新
+                    </span>
+                  )
+                );
+                break;
+
+              default:
+                break;
+            }
+
+            return true;
+          })}
       </div>
     </div>
   );

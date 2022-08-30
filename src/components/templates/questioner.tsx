@@ -14,6 +14,7 @@ import { prefectureABC } from 'data/prefecture';
 
 import Prefsvg from 'components/molecules/prefsvg';
 import Ztext from 'react-ztext';
+import { getSummary, updateSummaryFromKey } from 'utils/summary';
 
 const Questioner: FC<{
   finishGame: () => void;
@@ -47,6 +48,13 @@ const Questioner: FC<{
 
   // currentQuesIndexが変わるたびに実行。全部回したら負け処理
   useEffect(() => {
+    if (currentQuesIndex === 2) {
+      const summary = getSummary();
+      if (summary && summary.lastPlay !== gameObj?.created) {
+        updateSummaryFromKey('playCount', (count) => count + 1);
+        updateSummaryFromKey('lastPlay', gameObj?.created ?? Date.now());
+      }
+    }
     if (
       gameObj &&
       currentQuesIndex === gameObj.questions.length &&

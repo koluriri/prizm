@@ -42,6 +42,12 @@ export const modesScore: { [key in Mode]: (score: number) => number } = {
 
 /* message */
 export type MessageTypes = 'answer' | 'hint' | 'start' | 'score';
+export type MessageNotice =
+  | 'a_score'
+  | 'b_update_fastest'
+  | 'c_update_streak'
+  | 'd_update_max_streak';
+export type MessageNoticeObj = { [key in MessageNotice]?: number };
 export type AnswerMessage = {
   key?: string | null;
   name: string;
@@ -53,6 +59,7 @@ export type GameMessage = {
   key?: string | null;
   type: 'hint' | 'start' | 'score' | 'remain' | 'end';
   value: string;
+  notice?: MessageNoticeObj;
 };
 export type MessageObject = AnswerMessage | GameMessage;
 export type Messages = MessageObject[];
@@ -82,8 +89,6 @@ export type DefinedQuestions = {
 };
 
 /* Game */
-// export type DateTime = `${number}-${number}-${number} ${number}:${number}:${number}`;
-export type DateTime = string;
 export type Questions = string[];
 export type GameStatus = 'active' | 'systemWon' | 'userWon' | 'finished';
 export type GameObj = {
@@ -94,7 +99,7 @@ export type GameObj = {
   users: string[];
   startBy: string;
   color: string;
-  created: DateTime;
+  created: number;
 };
 
 /* User */
@@ -114,4 +119,30 @@ export type Users = {
 export const localScoreKey = 'prizm-score';
 export const localUserNameKey = 'prizm-username';
 export const localUserColorKey = 'prizm-usercolor';
+export const localUserSummary = 'prizm-summary';
 export const initialRemain = 3;
+
+export type UserSummaryObj = {
+  playCount: number;
+  wonCount: number;
+  lastPlay: number;
+  lastWon: number;
+  currentStreak: number;
+  maxStreak: number;
+  averageSpeed: number;
+  fastestSpeed: number;
+};
+export const isUserSummaryObj = (arg: unknown): arg is UserSummaryObj => {
+  const m = arg as UserSummaryObj;
+
+  return (
+    typeof m?.playCount === 'number' &&
+    typeof m?.wonCount === 'number' &&
+    typeof m?.lastPlay === 'number' &&
+    typeof m?.lastWon === 'number' &&
+    typeof m?.currentStreak === 'number' &&
+    typeof m?.maxStreak === 'number' &&
+    typeof m?.averageSpeed === 'number' &&
+    typeof m?.fastestSpeed === 'number'
+  );
+};
