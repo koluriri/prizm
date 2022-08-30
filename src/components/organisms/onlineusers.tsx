@@ -125,6 +125,7 @@ const OnlineUsers: FC<{
                     font-weight: 700;
                     line-height: 1;
                     flex-wrap: wrap;
+                    animation: 0.2s ease 0s 1 normal clicked;
 
                     @media (min-width: 768px) {
                       margin: 7px 0;

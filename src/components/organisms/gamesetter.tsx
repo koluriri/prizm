@@ -42,7 +42,6 @@ const GameSetter: FC<{
   }, [mode]);
 
   const setGame = (gameUsers: string[]) => {
-    const created = new Date();
     const randomPref: PrefectureStr = shuffle(prefecture)[0];
 
     const write = (questions: Questions) =>
@@ -54,11 +53,7 @@ const GameSetter: FC<{
         messages: [],
         color: colors[Math.floor(Math.random() * colors.length)],
         users: gameUsers,
-        created: `${created.getFullYear()}-${
-          created.getMonth() + 1
-        }-${created.getDate()} ${created.getHours()}:${
-          created.getMinutes() + 1
-        }:${created.getSeconds()}`.replace(/\n|\r/g, ''),
+        created: Date.now(),
       });
 
     const importPath = mode === 'station' ? 'stations' : 'cities';

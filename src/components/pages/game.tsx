@@ -11,6 +11,7 @@ import { listenGameDeleted, deleteGame } from 'utils/database';
 import Questioner from 'components/templates/questioner';
 import Chat from 'components/templates/chat';
 import AnswerInput from 'components/templates/answerinput';
+import { getSummary, updateSummaryFromKey } from 'utils/summary';
 
 const Game: FC<{
   setHome: () => void;
@@ -36,7 +37,13 @@ const Game: FC<{
   );
 
   useEffect(() => {
-    listenGameDeleted(gameKey, () => finishGame(true));
+    listenGameDeleted(gameKey, () => {
+      const summary = getSummary();
+      if (summary && summary.lastPlay !== summary.lastWon) {
+        updateSummaryFromKey('currentStreak', 0);
+      }
+      finishGame(true);
+    });
 
     document.body.style.backgroundColor = gameObj?.color ?? 'var(--bg-color)';
     document

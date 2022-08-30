@@ -5,6 +5,7 @@ import { deleteGame, pushMessage } from 'utils/database';
 import { modesScore, localScoreKey, localUserNameKey } from 'data/types';
 import getHint from 'utils/gethint';
 import { initialUserName } from 'ducks/user';
+import { getSummary, updateSummary } from 'utils/summary';
 
 const useJudger = (): [(inputValue: string) => boolean] => {
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;
@@ -65,6 +66,37 @@ const useJudger = (): [(inputValue: string) => boolean] => {
         localScore ? parseInt(localScore, 10) + score : score,
       );
       localStorage.setItem(localScoreKey, setValue);
+
+      const summary = getSummary();
+      if (summary) {
+        const currentStreak = summary.currentStreak + 1;
+        const maxStreak =
+          currentStreak > summary.maxStreak ? currentStreak : summary.maxStreak;
+
+        const speed =
+          Math.round(((Date.now() - gameObj.created) / 1000) * 10) / 10;
+        const averageSpeed =
+          summary.averageSpeed === 0
+            ? speed
+            : Math.round(
+                ((summary.averageSpeed * (summary.playCount - 1) + speed) /
+                  summary.playCount) *
+                  10,
+              ) / 10;
+        const fastestSpeed =
+          speed < summary.fastestSpeed || summary.fastestSpeed === 0
+            ? speed
+            : summary.fastestSpeed;
+
+        updateSummary({
+          wonCount: summary.wonCount + 1,
+          lastWon: gameObj.created,
+          currentStreak,
+          maxStreak,
+          averageSpeed,
+          fastestSpeed,
+        });
+      }
 
       pushMessage(gameKey, {
         type: 'score',

@@ -82,8 +82,6 @@ export type DefinedQuestions = {
 };
 
 /* Game */
-// export type DateTime = `${number}-${number}-${number} ${number}:${number}:${number}`;
-export type DateTime = string;
 export type Questions = string[];
 export type GameStatus = 'active' | 'systemWon' | 'userWon' | 'finished';
 export type GameObj = {
@@ -94,7 +92,7 @@ export type GameObj = {
   users: string[];
   startBy: string;
   color: string;
-  created: DateTime;
+  created: number;
 };
 
 /* User */
@@ -114,6 +112,7 @@ export type Users = {
 export const localScoreKey = 'prizm-score';
 export const localUserNameKey = 'prizm-username';
 export const localUserColorKey = 'prizm-usercolor';
+export const localUserSummary = 'prizm-summary';
 export const initialRemain = 3;
 
 export type UserSummary = {
@@ -125,4 +124,18 @@ export type UserSummary = {
   maxStreak: number;
   averageSpeed: number;
   fastestSpeed: number;
+};
+export const isUserSummary = (arg: unknown): arg is UserSummary => {
+  const m = arg as UserSummary;
+
+  return (
+    typeof m?.playCount === 'number' &&
+    typeof m?.wonCount === 'number' &&
+    typeof m?.lastPlay === 'number' &&
+    typeof m?.lastWon === 'number' &&
+    typeof m?.currentStreak === 'number' &&
+    typeof m?.maxStreak === 'number' &&
+    typeof m?.averageSpeed === 'number' &&
+    typeof m?.fastestSpeed === 'number'
+  );
 };

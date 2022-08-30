@@ -45,7 +45,7 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
       <div
         className="prizm-card"
         css={css`
-          margin: 60px auto 40px;
+          margin: 60px auto 28px;
           animation: 0.4s ease 0s 1 normal clicked;
         `}
       >

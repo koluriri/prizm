@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
 const UserSummary: FC = () => {
   const summary = css`
@@ -18,7 +18,7 @@ const UserSummary: FC = () => {
   `;
 
   const colors = ['orange', 'lightbeige', 'palepink', 'pink', 'tea', 'teal'];
-  const bgColor = colors[Math.floor(Math.random() * colors.length)];
+  const [bgColor] = useState(colors[Math.floor(Math.random() * colors.length)]);
 
   return (
     <div
