@@ -68,7 +68,10 @@ export const getNoticesWhenMatched = (lastWon: number): MessageNoticeObj => {
         ? speed
         : summary.fastestSpeed;
 
-    if (speed < summary.fastestSpeed || summary.fastestSpeed === 0)
+    if (
+      speed < summary.fastestSpeed ||
+      (summary.fastestSpeed === 0 && summary.playCount > 1)
+    )
       notice.b_update_fastest = speed;
 
     updateSummary({
