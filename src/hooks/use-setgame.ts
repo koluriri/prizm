@@ -18,7 +18,8 @@ const colors = [
 ];
 
 const useSetGame = () => (mode: Mode, startBy: string, gameUsers: string[]) => {
-  const randomPref: PrefectureStr = shuffle(prefecture)[0];
+  const randomPref: PrefectureStr =
+    prefecture[Math.floor(Math.random() * prefecture.length)];
 
   const write = (questions: Questions) =>
     writeNewGame({

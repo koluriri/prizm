@@ -1,12 +1,24 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Mode, modesDisplay } from 'data/types';
-import { FC } from 'react';
+import { Mode, modesCaption, modesDisplay } from 'data/types';
+import { FC, useEffect, useState } from 'react';
 
 const ModeSelector: FC<{
   mode: Mode;
   setMode: (mode: Mode) => void;
 }> = ({ mode, setMode }) => {
+  const [modeCaption, setModeCaption] = useState('');
+  useEffect(() => {
+    setModeCaption(modesCaption[mode]);
+  }, [mode]);
+
+  const modeCaptionStyle = css`
+    font-weight: 700;
+    font-size: 16px;
+    text-align: center;
+    color: #7a5154;
+  `;
+
   const selectorContainer = css`
     margin: 0 auto;
     width: 340px;
@@ -78,21 +90,24 @@ const ModeSelector: FC<{
   `;
 
   return (
-    <div css={selectorContainer}>
-      <div css={selectorInner}>
-        {Object.keys(modesDisplay).map((key) => (
-          <button
-            type="button"
-            key={key}
-            onClick={() => setMode(key as Mode)}
-            className="bordercomp"
-            data-active={key === mode}
-          >
-            {modesDisplay[key as Mode]}
-          </button>
-        ))}
+    <>
+      <div css={selectorContainer}>
+        <div css={selectorInner}>
+          {Object.keys(modesDisplay).map((key) => (
+            <button
+              type="button"
+              key={key}
+              onClick={() => setMode(key as Mode)}
+              className="bordercomp"
+              data-active={key === mode}
+            >
+              {modesDisplay[key as Mode]}
+            </button>
+          ))}
+        </div>
       </div>
-    </div>
+      <p css={modeCaptionStyle}>{modeCaption}</p>
+    </>
   );
 };
 
