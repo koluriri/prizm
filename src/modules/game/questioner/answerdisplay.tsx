@@ -4,7 +4,7 @@ import { prefectureABC } from 'assets/data/prefecture';
 import { PrefectureStr } from 'utils/types';
 import { FC } from 'react';
 
-import Pref3D from 'components/molecules/pref3d';
+import Pref3D from 'modules/game/questioner/answerdisplay.pref3d';
 
 const AnswerDisplay: FC<{
   answer: PrefectureStr;

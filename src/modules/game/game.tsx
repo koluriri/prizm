@@ -5,9 +5,9 @@ import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
-import Questioner from 'components/templates/questioner';
-import Chat from 'components/templates/chatcontainer';
-import AnswerInput from 'components/templates/answerinput';
+import Questioner from 'modules/game/questioner/questioner';
+import Chat from 'modules/game/chat/chatcontainer';
+import AnswerInput from 'modules/game/answerinput/answerinput';
 import useFitScreenHeight from 'hooks/use-fitScreenHeight';
 import useGameStarted from 'hooks/use-gamestarted';
 

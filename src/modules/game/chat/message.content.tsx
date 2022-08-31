@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
 import { FaTimes } from 'react-icons/fa';
-import MessageScores from 'components/molecules/messagescores';
+import MessageScores from 'modules/game/chat/message.content.scores';
 
 const MessageContent: FC<{
   message: MessageObject;

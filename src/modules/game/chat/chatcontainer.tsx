@@ -7,8 +7,8 @@ import { gameSlice } from 'ducks/game';
 import { listenMessage } from 'utils/database';
 import useScrollDiv from 'hooks/use-scrolldiv';
 import useMatchedAnimation from 'hooks/use-matchedanimation';
-import MatchedText from 'components/molecules/matchedtext';
-import Chat from './chat';
+import MatchedText from 'modules/game/chat/chatcontainer.matchedtext';
+import Chat from './chatcontainer.chat';
 
 const ChatContainer: FC = () => {
   const dispatch = useDispatch();

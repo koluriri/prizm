@@ -8,8 +8,8 @@ import useUserName from 'hooks/use-username';
 import { useToOnline, useToOffline } from 'hooks/use-toonline';
 import useListenGameAndDeleteUser from 'hooks/use-listengameanddeleteuser';
 
-import Game from 'components/pages/game';
-import Home from 'components/pages/home';
+import Game from 'modules/game/game';
+import Home from 'modules/home/home';
 import EditUser from 'modules/edituser/edituser';
 import PrizmFooter from 'components/templates/prizmfooter';
 import './App.css';

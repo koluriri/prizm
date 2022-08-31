@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { FC } from 'react';
 
 import { MessageObject } from 'utils/types';
-import MessageContent from 'components/molecules/messagecontent';
+import MessageContent from 'modules/game/chat/message.content';
 
 const Message: FC<{
   message: MessageObject;

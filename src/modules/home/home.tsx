@@ -2,11 +2,10 @@
 import { css } from '@emotion/react';
 import { FC } from 'react';
 
-import OnlineUsers from 'components/organisms/onlineusers';
-import GameSetter from 'components/organisms/gamesetter';
-
+import OnlineUsers from 'modules/home/onlineusers';
+import GameSetter from 'modules/home/gamesetter';
+import HomeLogo from 'modules/home/home.logo';
 import bg from 'assets/svg/home-bg.svg';
-import HomeLogo from 'components/molecules/homelogo';
 import useUserMounted from 'hooks/use-usermounted';
 
 const Home: FC<{ editMode: () => void }> = ({ editMode }) => {

@@ -6,9 +6,9 @@ import { RootState } from 'ducks/rootReducer';
 import { FinishGameFunction, modesConvert, modesDetail } from 'utils/types';
 import useQuestionTimer from 'hooks/use-questiontimer';
 
-import BigQuestion from 'components/organisms/bigquestion';
-import QuestionList from 'components/organisms/questionlistcontainer';
-import AnswerDisplay from 'components/organisms/answerdisplay';
+import BigQuestion from 'modules/game/questioner/bigquestion';
+import QuestionList from 'modules/game/questioner/questionlistcontainer';
+import AnswerDisplay from 'modules/game/questioner/answerdisplay';
 
 const Questioner: FC<{
   finishGame: FinishGameFunction;

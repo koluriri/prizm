@@ -5,7 +5,7 @@ import { FC, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
-import QuestionList from 'components/atoms/questionlist';
+import QuestionList from 'modules/game/questioner/questionlist';
 
 const QuestionListContainer: FC<{
   questions: string[];

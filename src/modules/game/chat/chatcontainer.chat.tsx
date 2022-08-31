@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
 import { MessageObject } from 'utils/types';
-import Message from 'components/organisms/message';
+import Message from 'modules/game/chat/message';
 
 const Chat: FC<{
   chatView: RefObject<HTMLDivElement>;

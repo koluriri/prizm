@@ -4,8 +4,8 @@ import { Users } from 'utils/types';
 import { FC, useEffect, useState } from 'react';
 
 import backgroundImage from 'assets/svg/sp-bg.svg';
-import OnlineUsersHeader from 'components/molecules/onlineusersheader';
-import UserList from 'components/molecules/userlist';
+import OnlineUsersHeader from 'modules/home/onlineusers.header';
+import UserList from 'modules/home/onlineusers.userlist';
 
 const OnlineUsers: FC<{
   users: Users | undefined;

@@ -10,9 +10,9 @@ import { initialRemain } from 'utils/types';
 import useCanonicalizePref, {
   canonicalizerReturn,
 } from 'hooks/use-canonicalizepref';
-import UserRemain from 'components/atoms/userremain';
-import InputSuggest from 'components/molecules/inputsuggest';
-import InputErrorMessage from 'components/molecules/inputerrormessage';
+import UserRemain from 'modules/game/answerinput/userremain';
+import InputSuggest from 'modules/game/answerinput/inputsuggest';
+import InputErrorMessage from 'modules/game/answerinput/inputerrormessage';
 import useErrorMessage from 'hooks/use-inputerrormessage';
 
 const AnswerInput: FC<{

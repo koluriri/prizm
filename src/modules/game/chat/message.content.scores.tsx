@@ -1,4 +1,4 @@
-import MessageNotice from 'components/atoms/messagenotice';
+import MessageNotice from 'modules/game/chat/message.content.scores.notice';
 import { MessageNoticeObj } from 'utils/types';
 import { FC } from 'react';
 

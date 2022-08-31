@@ -4,7 +4,7 @@ import useFitFontSizeToWidth from 'hooks/use-fitfontsizetowidth';
 import { FC, useEffect, useRef, useState } from 'react';
 import Ztext from 'react-ztext';
 
-import BigQuestionCircle from 'components/atoms/bigquestioncircle';
+import BigQuestionCircle from 'modules/game/questioner/bigquestion.circle';
 
 const BigQuestion: FC<{
   displayQuestion: string;

@@ -3,7 +3,7 @@ import { css, keyframes } from '@emotion/react';
 import { PrefectureStr } from 'utils/types';
 import { FC } from 'react';
 
-import Prefsvg from 'components/atoms/prefsvg';
+import Prefsvg from 'modules/game/questioner/answerdisplay.pref3d.svg';
 import Ztext from 'react-ztext';
 
 const Pref3D: FC<{
