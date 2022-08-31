@@ -11,6 +11,7 @@ const useQuestionTimer = (finishGame: FinishGameFunction) => {
   const { proceedQuesIndex } = gameSlice.actions;
   const gameObj = useSelector((state: RootState) => state.game.entity);
   const gameKey = useSelector((state: RootState) => state.game.key);
+  const messages = useSelector((state: RootState) => state.game.messages);
   const isDuringGame = useSelector(
     (state: RootState) => state.game.isDuringGame,
   );
@@ -45,7 +46,8 @@ const useQuestionTimer = (finishGame: FinishGameFunction) => {
     if (
       gameObj &&
       currentQuesIndex === gameObj.questions.length &&
-      gameObj.questions.length !== 0
+      gameObj.questions.length !== 0 &&
+      messages.find((msg) => msg.type === 'end') === undefined
     ) {
       pushMessage(gameKey, {
         type: 'end',
@@ -54,7 +56,7 @@ const useQuestionTimer = (finishGame: FinishGameFunction) => {
       finishGame();
       clearTimer();
     }
-  }, [currentQuesIndex, gameObj, gameKey, finishGame, clearTimer]);
+  }, [currentQuesIndex, gameObj, gameKey, messages, finishGame, clearTimer]);
 
   return clearTimer;
 };
