@@ -32,6 +32,7 @@ storybook-static/
 .idea
 **/.firebaserc
 .firebaserc
+database.rules.json
 
 ### Firebase Patch ###
 .runtimeconfig.json

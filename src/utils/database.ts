@@ -51,7 +51,7 @@ export const listenMessage = (
       message = data.val() as AnswerMessage;
     } else {
       message = data.val() as GameMessage;
-      if (message.type === 'end') unSubscribe();
+      if (message.type === 'end' && unSubscribe) unSubscribe();
     }
     callback({
       ...message,
