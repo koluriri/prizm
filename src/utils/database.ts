@@ -23,7 +23,7 @@ import {
   MessageObject,
   UserObj,
   Users,
-} from 'data/types';
+} from 'utils/types';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,

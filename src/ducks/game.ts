@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GameObj, initialRemain, MessageObject, Messages } from 'data/types';
+import { GameObj, initialRemain, MessageObject, Messages } from 'utils/types';
 
 export type GameState = {
   key: string;

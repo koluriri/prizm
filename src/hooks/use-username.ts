@@ -6,7 +6,7 @@ import {
   localUserColorKey,
   localUserNameKey,
   localUserSummary,
-} from 'data/types';
+} from 'utils/types';
 import { useGenerateColor, useGenerateName } from 'hooks/use-generates';
 
 const useUserName = (): string => {

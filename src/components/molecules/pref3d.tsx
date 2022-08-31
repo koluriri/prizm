@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css, keyframes } from '@emotion/react';
-import { PrefectureStr } from 'data/types';
+import { PrefectureStr } from 'utils/types';
 import { FC } from 'react';
 
 import Prefsvg from 'components/atoms/prefsvg';

@@ -3,7 +3,7 @@ import {
   localUserSummary,
   MessageNoticeObj,
   UserSummaryObj,
-} from 'data/types';
+} from 'utils/types';
 
 export const getSummary = (): false | UserSummaryObj => {
   const summary = JSON.parse(

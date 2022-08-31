@@ -4,7 +4,7 @@ import { RootState } from 'ducks/rootReducer';
 import { gameSlice } from 'ducks/game';
 import { getSummary, updateSummaryFromKey } from 'utils/summary';
 import { pushMessage } from 'utils/database';
-import { FinishGameFunction } from 'data/types';
+import { FinishGameFunction } from 'utils/types';
 
 const useQuestionTimer = (finishGame: FinishGameFunction) => {
   const dispatch = useDispatch();

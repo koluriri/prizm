@@ -1,4 +1,4 @@
-import { PrefectureStr } from 'data/types';
+import { PrefectureStr } from 'utils/types';
 import { FC } from 'react';
 
 const prefsvg = {
