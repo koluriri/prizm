@@ -7,7 +7,7 @@ import { RootState } from 'ducks/rootReducer';
 import { gameSlice } from 'ducks/game';
 
 import BigQuestion from 'components/organisms/bigquestion';
-import QuestionList from 'components/organisms/questionlist';
+import QuestionList from 'components/organisms/questionlistcontainer';
 import Prefsvg from 'components/atoms/prefsvg';
 import { modesConvert, modesDetail } from 'data/types';
 import { pushMessage } from 'utils/database';
