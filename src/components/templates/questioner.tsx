@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
-import { modesConvert, modesDetail } from 'data/types';
+import { FinishGameFunction, modesConvert, modesDetail } from 'data/types';
 import useQuestionTimer from 'hooks/use-questiontimer';
 
 import BigQuestion from 'components/organisms/bigquestion';
@@ -11,7 +11,7 @@ import QuestionList from 'components/organisms/questionlistcontainer';
 import AnswerDisplay from 'components/organisms/answerdisplay';
 
 const Questioner: FC<{
-  finishGame: () => void;
+  finishGame: FinishGameFunction;
 }> = ({ finishGame }) => {
   const gameObj = useSelector((state: RootState) => state.game.entity);
   const isDuringGame = useSelector(

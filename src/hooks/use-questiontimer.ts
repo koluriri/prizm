@@ -4,8 +4,9 @@ import { RootState } from 'ducks/rootReducer';
 import { gameSlice } from 'ducks/game';
 import { getSummary, updateSummaryFromKey } from 'utils/summary';
 import { pushMessage } from 'utils/database';
+import { FinishGameFunction } from 'data/types';
 
-const useQuestionTimer = (finishGame: () => void) => {
+const useQuestionTimer = (finishGame: FinishGameFunction) => {
   const dispatch = useDispatch();
   const { proceedQuesIndex } = gameSlice.actions;
   const gameObj = useSelector((state: RootState) => state.game.entity);

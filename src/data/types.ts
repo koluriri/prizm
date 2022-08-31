@@ -40,6 +40,21 @@ export const modesScore: { [key in Mode]: (score: number) => number } = {
   station: (score) => score * 0.9,
 };
 
+/* Game */
+export type Questions = string[];
+export type GameStatus = 'active' | 'systemWon' | 'userWon' | 'finished';
+export type GameObj = {
+  answer: PrefectureStr;
+  questions: Questions;
+  mode: Mode;
+  messages: Messages;
+  users: string[];
+  startBy: string;
+  color: string;
+  created: number;
+};
+export type FinishGameFunction = (isDeleted?: boolean) => void;
+
 /* message */
 export type MessageTypes = 'answer' | 'hint' | 'start' | 'score';
 export type MessageNotice =
@@ -86,20 +101,6 @@ export type HintObj = {
 };
 export type DefinedQuestions = {
   [prefecture: string]: string[];
-};
-
-/* Game */
-export type Questions = string[];
-export type GameStatus = 'active' | 'systemWon' | 'userWon' | 'finished';
-export type GameObj = {
-  answer: PrefectureStr;
-  questions: Questions;
-  mode: Mode;
-  messages: Messages;
-  users: string[];
-  startBy: string;
-  color: string;
-  created: number;
 };
 
 /* User */
