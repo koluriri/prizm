@@ -9,7 +9,7 @@ import { gameSlice } from 'ducks/game';
 import { listenGameDeleted, deleteGame } from 'utils/database';
 
 import Questioner from 'components/templates/questioner';
-import Chat from 'components/templates/chat';
+import Chat from 'components/templates/chatcontainer';
 import AnswerInput from 'components/templates/answerinput';
 import { getSummary, updateSummaryFromKey } from 'utils/summary';
 
