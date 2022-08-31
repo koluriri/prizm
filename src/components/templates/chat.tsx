@@ -7,7 +7,7 @@ import { RootState } from 'ducks/rootReducer';
 import { gameSlice } from 'ducks/game';
 
 import { MessageObject } from 'data/types';
-import Message from 'components/molecules/message';
+import Message from 'components/organisms/message';
 import { listenMessage } from 'utils/database';
 
 const Chat: FC = () => {

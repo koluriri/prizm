@@ -202,7 +202,6 @@ input[type='submit'].bordercomp {
   color: var(--primary-color);
   text-align: right;
   white-space: nowrap;
-  background: var(--palepink);
   border-radius: 15px;
   animation: 0.4s ease 0.8s 1 normal blink;
 }
