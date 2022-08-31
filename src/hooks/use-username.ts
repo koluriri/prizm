@@ -6,13 +6,16 @@ import {
   localUserColorKey,
   localUserNameKey,
   localUserSummary,
-} from 'data/types';
-import { generateColor, generateName } from 'utils/generateuser';
+} from 'utils/types';
+import { useGenerateColor, useGenerateName } from 'hooks/use-generates';
 
 const useUserName = (): string => {
   const userName = useSelector((state: RootState) => state.user.name);
   const dispatch = useDispatch();
   const { setUserName } = userSlice.actions;
+
+  const generateColor = useGenerateColor();
+  const generateName = useGenerateName();
 
   if (userName !== initialUserName) return userName;
 

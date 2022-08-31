@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { FC } from 'react';
 
-import { ReactComponent as Logo } from 'assets/logo-horizontal.svg';
+import { ReactComponent as Logo } from 'assets/svg/logo-horizontal.svg';
 import { FaTwitter } from 'react-icons/fa';
 
 const PrizmFooter: FC = () => (

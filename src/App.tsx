@@ -2,99 +2,44 @@ import { FC, useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
-import { initialUserName, userSlice } from 'ducks/user';
 import { gameSlice } from 'ducks/game';
 
-import {
-  GameObj,
-  localScoreKey,
-  localUserColorKey,
-  localUserNameKey,
-  UserDevice,
-} from 'data/types';
-import { listenGame, deleteUser, newOnlineUser } from 'utils/database';
 import useUserName from 'hooks/use-username';
+import { useToOnline, useToOffline } from 'hooks/use-toonline';
+import useListenGameAndDeleteUser from 'hooks/use-listengameanddeleteuser';
 
-import Game from 'components/pages/game';
-import Home from 'components/pages/home';
-import EditUser from 'components/pages/edituser';
+import Game from 'modules/game/game';
+import Home from 'modules/home/home';
+import EditUser from 'modules/edituser/edituser';
 import PrizmFooter from 'components/templates/prizmfooter';
 import './App.css';
 
 const App: FC = () => {
-  const userName = useUserName();
-  const userKey = useSelector((state: RootState) => state.user.key);
   const dispatch = useDispatch();
-  const { setUserKey, unsetUserKey } = userSlice.actions;
-  const { setGameKey, setGameEntity, unsetGame } = gameSlice.actions;
+
+  const userKey = useSelector((state: RootState) => state.user.key);
 
   const gameKey = useSelector((state: RootState) => state.game.key);
   const gameObj = useSelector((state: RootState) => state.game.entity);
+  const { unsetGame } = gameSlice.actions;
+
+  const toOnline = useToOnline();
+  const toOffline = useToOffline();
 
   const [editUserMode, setEditUserMode] = useState(false);
 
-  useEffect(() => {
-    if (userKey === '' && gameKey === '' && !editUserMode) {
-      const ua = navigator.userAgent;
-
-      let device: UserDevice = 'desktop';
-      if (
-        ua.indexOf('iPhone') > 0 ||
-        ua.indexOf('iPod') > 0 ||
-        (ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0)
-      ) {
-        device = 'mobile';
-      } else if (ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0) {
-        device = 'tablet';
-      }
-      dispatch(
-        setUserKey(
-          newOnlineUser({
-            userName: localStorage.getItem(localUserNameKey) || initialUserName,
-            color: localStorage.getItem(localUserColorKey) || '',
-            pingStamp: Date.now(),
-            device,
-            score:
-              parseInt(String(localStorage.getItem(localScoreKey)), 10) || 0,
-          }),
-        ),
-      );
-      console.log('dispatch setUserKey & newOnlineUser');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userKey, gameKey, userName, editUserMode]);
+  useUserName();
 
   useEffect(() => {
-    if (userKey !== '') {
-      // eslint-disable-next-line consistent-return
-      listenGame(userKey, (data) => {
-        if (!data.key) return false;
+    if (userKey === '' && gameKey === '' && !editUserMode) toOnline();
+  }, [userKey, gameKey, editUserMode, toOnline]);
 
-        deleteUser(userKey);
-        dispatch(unsetUserKey());
-        dispatch(setGameKey(data.key));
-        dispatch(setGameEntity(data.val() as GameObj));
-
-        console.log(`new game: ${data.key}`);
-      });
-    }
-
-    const callback = () => {
-      if (userKey !== '') deleteUser(userKey);
-    };
-    window.addEventListener('beforeunload', callback);
-
-    return () => window.removeEventListener('beforeunload', callback);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userKey]);
+  useListenGameAndDeleteUser();
 
   useEffect(() => {
-    if (userKey !== '' && editUserMode) {
-      deleteUser(userKey);
-      dispatch(unsetUserKey());
-    }
+    if (userKey !== '' && editUserMode) toOffline();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editUserMode]);
+  }, [editUserMode, userKey]);
 
   return (
     <>
