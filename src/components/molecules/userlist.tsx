@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Users } from 'data/types';
+import { Users } from 'utils/types';
 import { FC } from 'react';
 
 import { useSelector } from 'react-redux';

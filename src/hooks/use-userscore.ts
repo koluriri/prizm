@@ -1,4 +1,4 @@
-import { localScoreKey, Mode, modesScore } from 'data/types';
+import { localScoreKey, Mode, modesScore } from 'utils/types';
 
 type UpdateScoreFunction = (
   mode: Mode,

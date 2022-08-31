@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { FC } from 'react';
 
-import { MessageObject } from 'data/types';
+import { MessageObject } from 'utils/types';
 import MessageContent from 'components/molecules/messagecontent';
 
 const Message: FC<{

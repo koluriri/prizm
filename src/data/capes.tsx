@@ -1,4 +1,4 @@
-import { DefinedQuestions } from 'data/types';
+import { DefinedQuestions } from 'utils/types';
 
 const capes = (): DefinedQuestions => ({
   京都府: ['天橋立', '経ケ岬', '久美浜湾', '夕日ケ浦', '金ヶ岬', '犬ヶ岬'],

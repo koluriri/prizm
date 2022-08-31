@@ -5,7 +5,7 @@ import { RootState } from 'ducks/rootReducer';
 import { userSlice } from 'ducks/user';
 import { gameSlice } from 'ducks/game';
 
-import { GameObj } from 'data/types';
+import { GameObj } from 'utils/types';
 import { deleteUser, listenGame } from 'utils/database';
 
 const useListenGameAndDeleteUser = () => {

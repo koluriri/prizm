@@ -1,5 +1,5 @@
 import MessageNotice from 'components/atoms/messagenotice';
-import { MessageNoticeObj } from 'data/types';
+import { MessageNoticeObj } from 'utils/types';
 import { FC } from 'react';
 
 const MessageScores: FC<{

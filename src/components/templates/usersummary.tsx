@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { UserSummaryObj } from 'data/types';
+import { UserSummaryObj } from 'utils/types';
 import { FC, useState } from 'react';
 import UserSummaryItem from 'components/organisms/usersummaryitem';
 

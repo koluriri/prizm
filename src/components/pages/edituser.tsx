@@ -2,7 +2,11 @@
 import { css } from '@emotion/react';
 import { FC, useEffect, useState } from 'react';
 
-import { localScoreKey, localUserColorKey, localUserNameKey } from 'data/types';
+import {
+  localScoreKey,
+  localUserColorKey,
+  localUserNameKey,
+} from 'utils/types';
 import { initialUserName } from 'ducks/user';
 import { colors } from 'hooks/use-generates';
 import { getSummary } from 'utils/summary';

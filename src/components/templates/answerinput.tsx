@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
 import useJudger from 'hooks/use-judger';
-import { initialRemain } from 'data/types';
+import { initialRemain } from 'utils/types';
 import useCanonicalizePref, {
   canonicalizerReturn,
 } from 'hooks/use-canonicalizepref';

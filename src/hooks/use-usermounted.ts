@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
-import { Users } from 'data/types';
+import { Users } from 'utils/types';
 import { listenUsers, updatePingStamp } from 'utils/database';
 
 const useUserMounted = () => {

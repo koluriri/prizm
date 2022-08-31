@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { prefectureABC } from 'data/prefecture';
-import { PrefectureStr } from 'data/types';
+import { PrefectureStr } from 'utils/types';
 import { FC } from 'react';
 
 import Pref3D from 'components/molecules/pref3d';

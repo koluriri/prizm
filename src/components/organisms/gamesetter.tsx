@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 
-import { localUserNameKey, Mode, Users } from 'data/types';
+import { localUserNameKey, Mode, Users } from 'utils/types';
 import { initialUserName } from 'ducks/user';
 import useSetGame from 'hooks/use-setgame';
 import ModeSelector from 'components/molecules/modeselector';

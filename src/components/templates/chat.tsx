@@ -5,7 +5,7 @@ import { FC, RefObject } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
-import { MessageObject } from 'data/types';
+import { MessageObject } from 'utils/types';
 import Message from 'components/organisms/message';
 
 const Chat: FC<{

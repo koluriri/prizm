@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Mode, modesCaption, modesDisplay } from 'data/types';
+import { Mode, modesCaption, modesDisplay } from 'utils/types';
 import { FC, useEffect, useState } from 'react';
 
 const ModeSelector: FC<{

@@ -3,7 +3,11 @@ import { RootState } from 'ducks/rootReducer';
 
 import { initialUserName, userSlice } from 'ducks/user';
 import { deleteUser, newOnlineUser } from 'utils/database';
-import { localScoreKey, localUserColorKey, localUserNameKey } from 'data/types';
+import {
+  localScoreKey,
+  localUserColorKey,
+  localUserNameKey,
+} from 'utils/types';
 import useGetDevice from 'hooks/use-getdevice';
 
 export const useToOnline = () => {

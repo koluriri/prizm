@@ -1,4 +1,4 @@
-import { DefinedQuestions } from 'data/types';
+import { DefinedQuestions } from 'utils/types';
 
 const cities = (): DefinedQuestions => ({
   神奈川県: [

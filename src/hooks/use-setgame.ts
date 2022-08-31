@@ -1,7 +1,7 @@
 import shuffle from 'lodash/shuffle';
 import { prefecture } from 'data/prefecture';
 import { writeNewGame } from 'utils/database';
-import { Mode, PrefectureStr, Questions } from 'data/types';
+import { Mode, PrefectureStr, Questions } from 'utils/types';
 
 const colors = [
   '#51B1C9',

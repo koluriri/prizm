@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
 import { deleteGame, pushMessage } from 'utils/database';
-import { localUserNameKey } from 'data/types';
+import { localUserNameKey } from 'utils/types';
 import getHint from 'utils/gethint';
 import { initialUserName } from 'ducks/user';
 import { getNoticesWhenMatched } from 'utils/summary';

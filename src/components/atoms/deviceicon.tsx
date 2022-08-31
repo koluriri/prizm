@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { UserDevice } from 'data/types';
+import { UserDevice } from 'utils/types';
 import { FC } from 'react';
 
 import { FaDesktop, FaMobileAlt, FaTabletAlt } from 'react-icons/fa';

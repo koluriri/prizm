@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Messages } from 'data/types';
+import { Messages } from 'utils/types';
 import { FC } from 'react';
 
 const MatchedText: FC<{

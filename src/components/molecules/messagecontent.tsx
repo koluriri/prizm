@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-import { MessageObject } from 'data/types';
+import { MessageObject } from 'utils/types';
 import { FC, ReactNode } from 'react';
 
 import { useSelector } from 'react-redux';

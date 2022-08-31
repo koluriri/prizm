@@ -1,4 +1,4 @@
-import { UserDevice } from 'data/types';
+import { UserDevice } from 'utils/types';
 
 type getDeviceFunction = () => UserDevice;
 

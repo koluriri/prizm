@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Users } from 'data/types';
+import { Users } from 'utils/types';
 import { FC, useEffect, useState } from 'react';
 
 import backgroundImage from 'assets/sp-bg.svg';

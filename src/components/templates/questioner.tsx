@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
-import { FinishGameFunction, modesConvert, modesDetail } from 'data/types';
+import { FinishGameFunction, modesConvert, modesDetail } from 'utils/types';
 import useQuestionTimer from 'hooks/use-questiontimer';
 
 import BigQuestion from 'components/organisms/bigquestion';
