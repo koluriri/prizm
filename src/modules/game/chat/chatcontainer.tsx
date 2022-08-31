@@ -3,12 +3,13 @@ import { FC, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 import { gameSlice } from 'ducks/game';
-
 import { listenMessage } from 'utils/database';
+
 import useScrollDiv from 'hooks/use-scrolldiv';
-import useMatchedAnimation from 'hooks/use-matchedanimation';
+import useMatchedAnimation from 'modules/game/chat/use-matchedanimation';
+
 import MatchedText from 'modules/game/chat/chatcontainer.matchedtext';
-import Chat from './chatcontainer.chat';
+import Chat from 'modules/game/chat/chatcontainer.chat';
 
 const ChatContainer: FC = () => {
   const dispatch = useDispatch();

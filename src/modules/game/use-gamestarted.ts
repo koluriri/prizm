@@ -4,7 +4,7 @@ import { getSummary, updateSummaryFromKey } from 'utils/summary';
 
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
-import useFinishGame from './use-finishgame';
+import useFinishGame from 'modules/game/use-finishgame';
 
 const useGameStarted = () => {
   const gameKey = useSelector((state: RootState) => state.game.key);

@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { UserSummaryObj } from 'utils/types';
 import { FC, useState } from 'react';
-import UserSummaryItem from 'modules/edituser/usersummaryitem';
+import UserSummaryItem from 'modules/edituser/usersummary.item';
 
 const UserSummary: FC<{ summary: UserSummaryObj }> = ({ summary }) => {
   const colors = ['orange', 'lightbeige', 'palepink', 'pink', 'tea', 'teal'];

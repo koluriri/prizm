@@ -2,11 +2,12 @@
 import { css } from '@emotion/react';
 import { FC } from 'react';
 
+import useUserMounted from 'modules/home/use-usermounted';
+
 import OnlineUsers from 'modules/home/onlineusers';
 import GameSetter from 'modules/home/gamesetter';
 import HomeLogo from 'modules/home/home.logo';
 import bg from 'assets/svg/home-bg.svg';
-import useUserMounted from 'hooks/use-usermounted';
 
 const Home: FC<{ editMode: () => void }> = ({ editMode }) => {
   const users = useUserMounted();

@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 
 import { localUserNameKey, Mode, Users } from 'utils/types';
 import { initialUserName } from 'ducks/user';
-import usePushGame from 'hooks/use-pushgame';
+import usePushGame from 'modules/home/use-pushgame';
 import ModeSelector from 'modules/home/gamesetter.modeselector';
 
 const GameSetter: FC<{

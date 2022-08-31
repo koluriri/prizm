@@ -5,15 +5,16 @@ import { FC, FormEvent, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
-import useJudger from 'hooks/use-judger';
+import useJudger from 'modules/game/answerinput/use-judger';
 import { initialRemain } from 'utils/types';
 import useCanonicalizePref, {
   canonicalizerReturn,
-} from 'hooks/use-canonicalizepref';
+} from 'modules/game/answerinput/use-canonicalizepref';
+import useErrorMessage from 'modules/game/answerinput/use-inputerrormessage';
+
 import UserRemain from 'modules/game/answerinput/userremain';
 import InputSuggest from 'modules/game/answerinput/inputsuggest';
 import InputErrorMessage from 'modules/game/answerinput/inputerrormessage';
-import useErrorMessage from 'hooks/use-inputerrormessage';
 
 const AnswerInput: FC<{
   setHome: () => void;

@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 import { FinishGameFunction, modesConvert, modesDetail } from 'utils/types';
-import useQuestionTimer from 'hooks/use-questiontimer';
+import useQuestionTimer from 'modules/game/questioner/use-questiontimer';
 
 import BigQuestion from 'modules/game/questioner/bigquestion';
 import QuestionList from 'modules/game/questioner/questionlistcontainer';

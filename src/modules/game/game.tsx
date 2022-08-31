@@ -8,8 +8,9 @@ import { RootState } from 'ducks/rootReducer';
 import Questioner from 'modules/game/questioner/questioner';
 import Chat from 'modules/game/chat/chatcontainer';
 import AnswerInput from 'modules/game/answerinput/answerinput';
-import useFitScreenHeight from 'hooks/use-fitScreenHeight';
-import useGameStarted from 'hooks/use-gamestarted';
+
+import useFitScreenHeight from 'modules/game/use-fitScreenHeight';
+import useGameStarted from 'modules/game/use-gamestarted';
 
 const Game: FC<{
   setHome: () => void;

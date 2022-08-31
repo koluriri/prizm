@@ -6,7 +6,7 @@ import { localUserNameKey } from 'utils/types';
 import getHint from 'utils/gethint';
 import { initialUserName } from 'ducks/user';
 import { getNoticesWhenMatched } from 'utils/summary';
-import useUserScore from './use-userscore';
+import useUserScore from 'modules/game/answerinput/use-userscore';
 
 const useJudger = (): ((inputValue: string) => boolean) => {
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;

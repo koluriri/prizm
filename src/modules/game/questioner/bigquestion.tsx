@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import useFitFontSizeToWidth from 'hooks/use-fitfontsizetowidth';
 import { FC, useEffect, useRef, useState } from 'react';
 import Ztext from 'react-ztext';
+
+import useFitFontSizeToWidth from 'modules/game/questioner/use-fitfontsizetowidth';
 
 import BigQuestionCircle from 'modules/game/questioner/bigquestion.circle';
 
