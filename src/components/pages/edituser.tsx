@@ -5,9 +5,9 @@ import { FC, useEffect, useState } from 'react';
 import { localScoreKey, localUserColorKey, localUserNameKey } from 'data/types';
 import { initialUserName } from 'ducks/user';
 import { colors } from 'utils/generateuser';
-import ColorSelector from 'components/molecules/colorselector';
-import UserSummary from 'components/templates/usersummary';
 import { getSummary } from 'utils/summary';
+import ColorSelector from 'components/atoms/colorselector';
+import UserSummary from 'components/templates/usersummary';
 
 const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;
