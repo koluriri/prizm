@@ -525,3 +525,16 @@ div[data-innertext] > div > span > span > span::before {
   border-radius: 20px;
   transition: 0.2s;
 }
+
+.colorselector {
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin: 0;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 0;
+  border-radius: 20px;
+  appearance: none;
+}
