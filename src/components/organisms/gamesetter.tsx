@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 
 import { localUserNameKey, Mode, Users } from 'utils/types';
 import { initialUserName } from 'ducks/user';
-import useSetGame from 'hooks/use-setgame';
+import usePushGame from 'hooks/use-pushgame';
 import ModeSelector from 'components/molecules/modeselector';
 
 const GameSetter: FC<{
@@ -12,7 +12,7 @@ const GameSetter: FC<{
 
   const [mode, setMode] = useState<Mode>('hard');
 
-  const setGame = useSetGame();
+  const pushGame = usePushGame();
 
   return (
     <>
@@ -22,7 +22,7 @@ const GameSetter: FC<{
 
           <button
             type="button"
-            onClick={() => setGame(mode, userName, Object.keys(users))}
+            onClick={() => pushGame(mode, userName, Object.keys(users))}
             className="button-hinomaru"
           >
             ゲーム開始
