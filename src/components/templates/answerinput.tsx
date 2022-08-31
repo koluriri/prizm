@@ -30,7 +30,7 @@ const AnswerInput: FC<{
 
   const [errorMessage, setErrorMessage] = useErrorMessage();
 
-  const judge = useJudger();
+  const judgeAndPush = useJudger();
 
   const [remain, setRemain] = useState(initialRemain);
   const [[canonicalized, suggest], setCanonicalized] = useState<
@@ -44,7 +44,8 @@ const AnswerInput: FC<{
         setErrorMessage('残機がありません');
       } else {
         setRemain((state) => state - 1);
-        if (!judge(canonicalized)) setErrorMessage(`残り${remain - 1}回`);
+        if (!judgeAndPush(canonicalized))
+          setErrorMessage(`残り${remain - 1}回`);
         setAnswerInputValue('');
         setCanonicalized([false, suggest]);
       }

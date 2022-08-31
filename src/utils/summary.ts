@@ -1,4 +1,9 @@
-import { isUserSummaryObj, localUserSummary, UserSummaryObj } from 'data/types';
+import {
+  isUserSummaryObj,
+  localUserSummary,
+  MessageNoticeObj,
+  UserSummaryObj,
+} from 'data/types';
 
 export const getSummary = (): false | UserSummaryObj => {
   const summary = JSON.parse(
@@ -34,4 +39,47 @@ export const updateSummaryFromKey = (
   localStorage.setItem(localUserSummary, JSON.stringify(summary));
 
   return true;
+};
+
+export const getNoticesWhenMatched = (lastWon: number): MessageNoticeObj => {
+  const notice: MessageNoticeObj = {};
+
+  const summary = getSummary();
+  if (summary) {
+    const currentStreak = summary.currentStreak + 1;
+    const maxStreak =
+      currentStreak > summary.maxStreak ? currentStreak : summary.maxStreak;
+
+    if (currentStreak > 1) notice.c_update_streak = currentStreak;
+    if (currentStreak > summary.maxStreak)
+      notice.d_update_max_streak = currentStreak;
+
+    const speed = Math.round(((Date.now() - lastWon) / 1000) * 10) / 10;
+    const averageSpeed =
+      summary.averageSpeed === 0
+        ? speed
+        : Math.round(
+            ((summary.averageSpeed * (summary.playCount - 1) + speed) /
+              summary.playCount) *
+              10,
+          ) / 10;
+    const fastestSpeed =
+      speed < summary.fastestSpeed || summary.fastestSpeed === 0
+        ? speed
+        : summary.fastestSpeed;
+
+    if (speed < summary.fastestSpeed || summary.fastestSpeed === 0)
+      notice.b_update_fastest = speed;
+
+    updateSummary({
+      wonCount: summary.wonCount + 1,
+      lastWon,
+      currentStreak,
+      maxStreak,
+      averageSpeed,
+      fastestSpeed,
+    });
+  }
+
+  return notice;
 };

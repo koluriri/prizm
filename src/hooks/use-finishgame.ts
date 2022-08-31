@@ -14,7 +14,9 @@ const useFinishGame = (): FinishGameFunction => {
   return useCallback(
     (isDeleted = false) => {
       if (!isDeleted) deleteGame(gameKey);
+
       dispatch(stopGame());
+
       document.body.style.backgroundColor = 'var(--bg-color)';
       document
         .querySelector("meta[name='theme-color']")
