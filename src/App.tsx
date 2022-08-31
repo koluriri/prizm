@@ -5,14 +5,14 @@ import { RootState } from 'ducks/rootReducer';
 import { gameSlice } from 'ducks/game';
 
 import useUserName from 'hooks/use-username';
+import { useToOnline, useToOffline } from 'hooks/use-toonline';
+import useListenGameAndDeleteUser from 'hooks/use-listengameanddeleteuser';
 
 import Game from 'components/pages/game';
 import Home from 'components/pages/home';
 import EditUser from 'components/pages/edituser';
 import PrizmFooter from 'components/templates/prizmfooter';
 import './App.css';
-import { useToOnline, useToOffline } from 'hooks/use-toonline';
-import useListenGameAndDeleteUser from 'hooks/use-listengameanddeleteuser';
 
 const App: FC = () => {
   const dispatch = useDispatch();
