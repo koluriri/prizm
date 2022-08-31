@@ -10,9 +10,9 @@ import {
 import { initialUserName } from 'ducks/user';
 import { colors } from 'hooks/use-generates';
 import { getSummary } from 'utils/summary';
-import ColorSelector from 'components/atoms/colorselector';
-import UserSummary from 'components/templates/usersummary';
-import UserPreview from 'components/molecules/userpreview';
+import UserSummary from 'modules/edituser/usersummary';
+import UserPreview from 'modules/edituser/edituser.userpreview';
+import ColorSelector from 'modules/edituser/edituser.colorselector';
 
 const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;

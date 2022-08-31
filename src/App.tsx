@@ -10,7 +10,7 @@ import useListenGameAndDeleteUser from 'hooks/use-listengameanddeleteuser';
 
 import Game from 'components/pages/game';
 import Home from 'components/pages/home';
-import EditUser from 'components/pages/edituser';
+import EditUser from 'modules/edituser/edituser';
 import PrizmFooter from 'components/templates/prizmfooter';
 import './App.css';
 
