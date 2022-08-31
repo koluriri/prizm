@@ -8,6 +8,7 @@ import { colors } from 'utils/generateuser';
 import { getSummary } from 'utils/summary';
 import ColorSelector from 'components/atoms/colorselector';
 import UserSummary from 'components/templates/usersummary';
+import UserPreview from 'components/molecules/userpreview';
 
 const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;
@@ -15,7 +16,7 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
   const [inputNameMsg, setInputNameMsg] = useState('');
 
   const userColor = localStorage.getItem(localUserColorKey) || '#000000';
-  const [selected, setSelected] = useState(userColor);
+  const [selectedColor, setSelectedColor] = useState(userColor);
 
   const [summary] = useState(getSummary());
 
@@ -28,7 +29,7 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
   const submit = () => {
     if (!inputNameMsg) {
       localStorage.setItem(localUserNameKey, inputName);
-      localStorage.setItem(localUserColorKey, selected);
+      localStorage.setItem(localUserColorKey, selectedColor);
       toHome();
     }
   };
@@ -43,66 +44,50 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
     font-weight: 900;
   `;
 
+  const edituserComponent = css`
+    margin: 60px auto 28px;
+    animation: 0.4s ease 0s 1 normal clicked;
+  `;
+  const edituserHeading = css`
+    font-size: 20px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 12px;
+  `;
+
+  const nameInput = css`
+    font-size: 18px;
+    width: 100%;
+    text-align: left;
+  `;
+  const inputNameMsgStyle = css`
+    padding-left: calc(2.2em + 42px);
+    margin: 5px 0 0;
+    font-size: 13px;
+    color: var(--red);
+    text-decoration: underline;
+    font-weight: 900;
+  `;
+  const colorSelectorContainer = css`
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(auto-fill, 20px);
+  `;
+  const buttons = css`
+    display: flex;
+    justify-content: space-between;
+    margin-top: 36px;
+  `;
+
   return (
     <>
-      <div
-        className="prizm-card"
-        css={css`
-          margin: 60px auto 28px;
-          animation: 0.4s ease 0s 1 normal clicked;
-        `}
-      >
-        <h2
-          css={css`
-            font-size: 20px;
-            font-weight: 900;
-            text-align: center;
-            margin-bottom: 12px;
-          `}
-        >
-          prizmプロフィールの編集
-        </h2>
-        <div
-          css={css`
-            margin: 0 auto 40px;
-            padding: 5px 11px;
-            border-radius: 20px;
-            width: fit-content;
-            background-color: ${selected}33;
-            font-weight: 700;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          `}
-        >
-          <span
-            css={css`
-              width: 7px;
-              height: 7px;
-              background: ${selected};
-              border-radius: 5px;
-              margin-right: 5px;
-            `}
-          />
-          <span
-            css={css`
-              max-width: 120px;
-            `}
-          >
-            {inputName.slice(0, 7)}
-          </span>
-          <span
-            css={css`
-              font-size: 13px;
-              font-weight: 500;
-              margin-left: 8px;
-            `}
-          >
-            スコア
-            {parseInt(String(localStorage.getItem(localScoreKey)), 10) || 0}
-          </span>
-        </div>
+      <div className="prizm-card" css={edituserComponent}>
+        <h2 css={edituserHeading}>prizmプロフィールの編集</h2>
+        <UserPreview
+          name={inputName}
+          score={parseInt(String(localStorage.getItem(localScoreKey)), 10) || 0}
+          color={selectedColor}
+        />
         <div>
           <label css={formGrid} htmlFor="inputName">
             名前
@@ -112,51 +97,24 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
               id="inputName"
               value={inputName}
               onChange={(e) => setInputName(e.target.value)}
-              css={css`
-                font-size: 18px;
-                width: 100%;
-                text-align: left;
-              `}
+              css={nameInput}
             />
           </label>
-          <p
-            css={css`
-              padding-left: calc(2.2em + 42px);
-              margin: 5px 0 0;
-              font-size: 13px;
-              color: var(--red);
-              text-decoration: underline;
-              font-weight: 900;
-            `}
-          >
-            {inputNameMsg}
-          </p>
+          <p css={inputNameMsgStyle}>{inputNameMsg}</p>
           <div css={formGrid}>
             色
-            <div
-              css={css`
-                display: grid;
-                gap: 8px;
-                grid-template-columns: repeat(auto-fill, 20px);
-              `}
-            >
+            <div css={colorSelectorContainer}>
               {colors.map((color) => (
                 <ColorSelector
                   color={color}
-                  selected={selected}
-                  onClick={() => setSelected(color)}
+                  selected={selectedColor}
+                  onClick={() => setSelectedColor(color)}
                 />
               ))}
             </div>
           </div>
         </div>
-        <div
-          css={css`
-            display: flex;
-            justify-content: space-between;
-            margin-top: 36px;
-          `}
-        >
+        <div css={buttons}>
           <button
             type="button"
             className="bordercomp simple"
