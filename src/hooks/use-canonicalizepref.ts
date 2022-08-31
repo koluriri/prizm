@@ -57,29 +57,37 @@ const variationPref: {
   沖縄県: ['沖縄県', 'おきなわ', 'okinawa'],
 };
 
-const canonicalizePref = (input: string): [string | false, string] => {
-  let canonicalizedInput: string = input
-    .replace(/[！-～]/g, (s) => String.fromCharCode(s.charCodeAt(0) - 0xfee0))
-    .toLowerCase();
-  if (/^[\u3040-\u309F]/gu.test(canonicalizedInput)) {
-    canonicalizedInput = canonicalizedInput.replace(/[a-zA-z]/g, '');
-  }
-  let suggest = '';
+export type canonicalizerReturn = [
+  canonicalized: string | false,
+  suggest: string,
+];
+export type canonicalizerFunction = (input: string) => canonicalizerReturn;
 
-  const filtered = Object.keys(variationPref).filter((pref) =>
-    variationPref[pref].find((various: string) => {
-      if (various.startsWith(canonicalizedInput)) {
-        suggest = various;
+const useCanonicalizePref =
+  (): canonicalizerFunction =>
+  (input: string): canonicalizerReturn => {
+    let canonicalizedInput: string = input
+      .replace(/[！-～]/g, (s) => String.fromCharCode(s.charCodeAt(0) - 0xfee0))
+      .toLowerCase();
+    if (/^[\u3040-\u309F]/gu.test(canonicalizedInput)) {
+      canonicalizedInput = canonicalizedInput.replace(/[a-zA-z]/g, '');
+    }
+    let suggest = '';
 
-        return true;
-      }
+    const filtered = Object.keys(variationPref).filter((pref) =>
+      variationPref[pref].find((various: string) => {
+        if (various.startsWith(canonicalizedInput)) {
+          suggest = various;
 
-      return false;
-    }),
-  );
-  if (filtered.length === 1) return [filtered[0], suggest];
+          return true;
+        }
 
-  return [false, suggest];
-};
+        return false;
+      }),
+    );
+    if (filtered.length === 1) return [filtered[0], suggest];
 
-export default canonicalizePref;
+    return [false, suggest];
+  };
+
+export default useCanonicalizePref;

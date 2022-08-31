@@ -88,4 +88,5 @@ const useJudger = (): ((inputValue: string) => boolean) => {
 
   return judgeAndPush;
 };
+
 export default useJudger;

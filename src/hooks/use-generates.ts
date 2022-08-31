@@ -60,9 +60,9 @@ export const colors = [
   '#FFB554',
 ];
 
-export const generateName = () =>
+export const useGenerateName = () => () =>
   names[Math.floor(Math.random() * names.length)] +
   Math.random().toString(16).slice(-2);
 
-export const generateColor = () =>
+export const useGenerateColor = () => () =>
   colors[Math.floor(Math.random() * colors.length)];

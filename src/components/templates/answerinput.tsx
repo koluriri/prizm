@@ -7,7 +7,9 @@ import { RootState } from 'ducks/rootReducer';
 
 import useJudger from 'hooks/use-judger';
 import { initialRemain } from 'data/types';
-import canonicalizePref from 'utils/canonicalizepref';
+import useCanonicalizePref, {
+  canonicalizerReturn,
+} from 'hooks/use-canonicalizepref';
 import UserRemain from 'components/atoms/userremain';
 import InputSuggest from 'components/molecules/inputsuggest';
 import InputErrorMessage from 'components/molecules/inputerrormessage';
@@ -33,9 +35,10 @@ const AnswerInput: FC<{
   const judgeAndPush = useJudger();
 
   const [remain, setRemain] = useState(initialRemain);
-  const [[canonicalized, suggest], setCanonicalized] = useState<
-    [string | false, string]
-  >([false, '']);
+
+  const canonicalizer = useCanonicalizePref();
+  const [[canonicalized, suggest], setCanonicalized] =
+    useState<canonicalizerReturn>([false, '']);
 
   const answerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -97,7 +100,7 @@ const AnswerInput: FC<{
             value={answerInputValue}
             onChange={(e) => {
               setAnswerInputValue(e.target.value);
-              setCanonicalized(canonicalizePref(e.target.value));
+              setCanonicalized(canonicalizer(e.target.value));
             }}
           />
         </form>

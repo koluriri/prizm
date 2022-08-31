@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from 'react';
 
 import { localScoreKey, localUserColorKey, localUserNameKey } from 'data/types';
 import { initialUserName } from 'ducks/user';
-import { colors } from 'utils/generateuser';
+import { colors } from 'hooks/use-generates';
 import { getSummary } from 'utils/summary';
 import ColorSelector from 'components/atoms/colorselector';
 import UserSummary from 'components/templates/usersummary';
@@ -106,6 +106,7 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
             <div css={colorSelectorContainer}>
               {colors.map((color) => (
                 <ColorSelector
+                  key={color}
                   color={color}
                   selected={selectedColor}
                   onClick={() => setSelectedColor(color)}

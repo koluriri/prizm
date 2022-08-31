@@ -40,7 +40,7 @@ const useSetGame = () => (mode: Mode, startBy: string, gameUsers: string[]) => {
     })
     .catch((err) => {
       alert('データを読み込めませんでした');
-      console.log(err);
+      console.error(err);
     });
 };
 

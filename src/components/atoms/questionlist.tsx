@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
-import { generateColor } from 'utils/generateuser';
+import { useGenerateColor } from 'hooks/use-generates';
 
 const QuestionList: FC<{
   questions: string[];
@@ -14,6 +14,7 @@ const QuestionList: FC<{
   const isDuringGame = useSelector(
     (state: RootState) => state.game.isDuringGame,
   );
+  const generateColor = useGenerateColor();
 
   const listItem = isDuringGame
     ? css`
