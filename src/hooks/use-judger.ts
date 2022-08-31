@@ -12,7 +12,7 @@ import getHint from 'utils/gethint';
 import { initialUserName } from 'ducks/user';
 import { getSummary, updateSummary } from 'utils/summary';
 
-const useJudger = (): [(inputValue: string) => boolean] => {
+const useJudger = (): ((inputValue: string) => boolean) => {
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;
 
   const gameKey = useSelector((state: RootState) => state.game.key);
@@ -121,6 +121,6 @@ const useJudger = (): [(inputValue: string) => boolean] => {
     return gameAnswer === inputValue;
   };
 
-  return [judge];
+  return judge;
 };
 export default useJudger;
