@@ -1,4 +1,4 @@
-import { hint, area } from 'data/prefecture';
+import { hint, area } from 'assets/data/prefecture';
 import { PrefectureStr } from 'utils/types';
 
 const getHint = (progress: number, pref: PrefectureStr | undefined): string => {

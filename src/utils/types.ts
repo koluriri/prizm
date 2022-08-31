@@ -1,4 +1,4 @@
-import { prefecture } from 'data/prefecture';
+import { prefecture } from 'assets/data/prefecture';
 
 /* GAME mode */
 const modes = ['easy', 'normal', 'hard', 'hell', 'station'] as const;

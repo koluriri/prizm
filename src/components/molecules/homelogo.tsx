@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { FC } from 'react';
-import logo from 'assets/logo-vertical.svg';
+import logo from 'assets/svg/logo-vertical.svg';
 
 const HomeLogo: FC = () => {
   const homeLogoContainer = css`

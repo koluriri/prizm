@@ -5,7 +5,7 @@ import { FC } from 'react';
 import OnlineUsers from 'components/organisms/onlineusers';
 import GameSetter from 'components/organisms/gamesetter';
 
-import bg from 'assets/home-bg.svg';
+import bg from 'assets/svg/home-bg.svg';
 import HomeLogo from 'components/molecules/homelogo';
 import useUserMounted from 'hooks/use-usermounted';
 

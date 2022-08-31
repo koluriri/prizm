@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { Users } from 'utils/types';
 import { FC, useEffect, useState } from 'react';
 
-import backgroundImage from 'assets/sp-bg.svg';
+import backgroundImage from 'assets/svg/sp-bg.svg';
 import OnlineUsersHeader from 'components/molecules/onlineusersheader';
 import UserList from 'components/molecules/userlist';
 

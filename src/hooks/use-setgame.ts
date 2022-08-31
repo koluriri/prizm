@@ -1,5 +1,5 @@
 import shuffle from 'lodash/shuffle';
-import { prefecture } from 'data/prefecture';
+import { prefecture } from 'assets/data/prefecture';
 import { writeNewGame } from 'utils/database';
 import { Mode, PrefectureStr, Questions } from 'utils/types';
 
@@ -35,7 +35,7 @@ const useSetGame = () => (mode: Mode, startBy: string, gameUsers: string[]) => {
 
   const importPath = mode === 'station' ? 'stations' : 'cities';
   import(`data/${importPath}`)
-    .then((data: typeof import('data/cities')) => {
+    .then((data: typeof import('assets/data/cities')) => {
       write(shuffle(data.default()[randomPref]).slice(0, 30));
     })
     .catch((err) => {
