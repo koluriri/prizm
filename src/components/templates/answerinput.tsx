@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, FormEvent, useEffect, useState } from 'react';
+import { FC, FormEvent, useEffect, useRef, useState } from 'react';
 
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
@@ -29,6 +29,8 @@ const AnswerInput: FC<{
 
   const [errorMessage, setErrorMessage] = useState('');
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const answerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (canonicalized && canonicalized !== '') {
@@ -52,6 +54,12 @@ const AnswerInput: FC<{
       }, 1500);
     }
   }, [errorMessage]);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   return (
     <div
@@ -152,6 +160,7 @@ const AnswerInput: FC<{
             {remain}
           </div>
           <input
+            ref={inputRef}
             type="text"
             className="bordercomp"
             css={css`
