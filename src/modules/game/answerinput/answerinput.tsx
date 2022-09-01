@@ -80,6 +80,13 @@ const AnswerInput: FC<{
     left: 0;
     right: 0;
     bottom: 0;
+
+    &::placeholder {
+      opacity: 0.5;
+      color: var(--primary-color);
+      font-weight: 500;
+      font-size: 20px;
+    }
   `;
 
   return (
@@ -96,6 +103,7 @@ const AnswerInput: FC<{
           <input
             ref={inputRef}
             type="text"
+            placeholder="都道府県を入力する"
             className="bordercomp"
             css={inputStyle}
             value={answerInputValue}
