@@ -3,9 +3,8 @@ import { css } from '@emotion/react';
 import { FC } from 'react';
 
 import { ReactComponent as Logo } from 'assets/svg/logo-horizontal.svg';
-import { FaTwitter } from 'react-icons/fa';
 
-const PrizmFooter: FC = () => (
+const PrizmFooter: FC<{ privacyMode: () => void }> = ({ privacyMode }) => (
   <footer
     css={css`
       height: 50px;
@@ -32,11 +31,30 @@ const PrizmFooter: FC = () => (
         font-size: 12px;
       `}
     >
-      © 2022 koluriri.
+      © 2022{' '}
+      <a
+        href="//twitter.com/koluriri"
+        target="_blank"
+        rel="noreferrer"
+        css={css`
+          text-decoration: underline;
+        `}
+      >
+        koluriri
+      </a>
+      .
     </p>
-    <a href="//twitter.com/koluriri" target="_blank" rel="noreferrer">
-      <FaTwitter />
-    </a>
+    <button
+      type="button"
+      className="button-link"
+      onClick={() => privacyMode()}
+      css={css`
+        font-size: 12px;
+        letter-spacing: -1px;
+      `}
+    >
+      プライバシーポリシー
+    </button>
   </footer>
 );
 

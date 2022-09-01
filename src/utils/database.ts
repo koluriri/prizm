@@ -197,3 +197,7 @@ export const logStartGame = (
     startBy,
   });
 };
+
+export const logPageView = (title: string) => {
+  logEvent(analytics, 'page_view', { page_title: title });
+};

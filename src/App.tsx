@@ -12,6 +12,7 @@ import Game from 'modules/game/game';
 import Home from 'modules/home/home';
 import EditUser from 'modules/edituser/edituser';
 import PrizmFooter from 'components/templates/prizmfooter';
+import Privacy from 'components/pages/privacy';
 import './App.css';
 
 const App: FC = () => {
@@ -27,30 +28,35 @@ const App: FC = () => {
   const toOffline = useToOffline();
 
   const [editUserMode, setEditUserMode] = useState(false);
+  const [privacyMode, setPrivacyMode] = useState(false);
 
   useUserName();
 
   useEffect(() => {
-    if (userKey === '' && gameKey === '' && !editUserMode) toOnline();
-  }, [userKey, gameKey, editUserMode, toOnline]);
+    if (userKey === '' && gameKey === '' && !editUserMode && !privacyMode)
+      toOnline();
+  }, [userKey, gameKey, editUserMode, privacyMode, toOnline]);
 
   useListenGameAndDeleteUser();
 
   useEffect(() => {
     if (userKey !== '' && editUserMode) toOffline();
+    if (userKey !== '' && privacyMode) toOffline();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editUserMode, userKey]);
+  }, [editUserMode, privacyMode, userKey]);
 
   return (
     <>
       {!editUserMode &&
+        !privacyMode &&
         (gameKey !== '' && gameObj ? (
           <Game setHome={() => dispatch(unsetGame())} />
         ) : (
           <Home editMode={() => setEditUserMode(true)} />
         ))}
       {editUserMode && <EditUser toHome={() => setEditUserMode(false)} />}
-      <PrizmFooter />
+      {privacyMode && <Privacy toHome={() => setPrivacyMode(false)} />}
+      <PrizmFooter privacyMode={() => setPrivacyMode(true)} />
     </>
   );
 };
