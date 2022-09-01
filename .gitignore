@@ -37,3 +37,6 @@ database.rules.json
 ### Firebase Patch ###
 .runtimeconfig.json
 .firebase/
+
+firebase-hosting-merge.yml
+firebase-hosting-pull-request.yml
