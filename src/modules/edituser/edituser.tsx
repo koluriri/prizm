@@ -13,6 +13,7 @@ import { getSummary } from 'utils/summary';
 import UserSummary from 'modules/edituser/usersummary';
 import UserPreview from 'modules/edituser/edituser.userpreview';
 import ColorSelector from 'modules/edituser/edituser.colorselector';
+import { logUpdateName } from 'utils/database';
 
 const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;
@@ -34,6 +35,7 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
     if (!inputNameMsg) {
       localStorage.setItem(localUserNameKey, inputName);
       localStorage.setItem(localUserColorKey, selectedColor);
+      logUpdateName(inputName, selectedColor);
       toHome();
     }
   };

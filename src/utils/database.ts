@@ -1,3 +1,4 @@
+import { getAnalytics, logEvent } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 import {
   set,
@@ -20,6 +21,7 @@ import {
   GameMessage,
   GameObj,
   isAnswerMessage,
+  MessageNoticeObj,
   MessageObject,
   UserObj,
   Users,
@@ -36,8 +38,10 @@ const firebaseConfig = {
   databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
 };
 
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+
+const analytics = getAnalytics();
 
 /* Message */
 export const listenMessage = (
@@ -69,10 +73,14 @@ export const pushMessage = (
   const updates: { [key: string]: any } = {};
   updates[`Games/${gameKey}/messages/${newMessageKey}`] = message;
 
-  update(ref(database), updates).catch((err) => {
-    alert('エラー：メッセージを書き込みできませんでした');
-    console.error(err);
-  });
+  update(ref(database), updates)
+    .then(() => {
+      logEvent(analytics, 'send_message', { type: message.type });
+    })
+    .catch((err) => {
+      alert('エラー：メッセージを書き込みできませんでした');
+      console.error(err);
+    });
 
   return newMessageKey;
 };
@@ -161,4 +169,31 @@ export const updatePingStamp = (userKey: string): void => {
   updates[`Users/${userKey}/pingStamp`] = Date.now();
 
   void update(ref(database), updates);
+};
+
+/* log */
+
+export const logUpdateName = (name: string, color: string) => {
+  logEvent(analytics, 'update_name', {
+    name,
+    color,
+  });
+};
+
+export const logMatched = (notice: MessageNoticeObj) => {
+  logEvent(analytics, 'post_score', { score: notice.a_score, ...notice });
+};
+
+export const logStartGame = (
+  answer: string,
+  mode: string,
+  usersLength: number,
+  startBy: string,
+) => {
+  logEvent(analytics, 'start_game', {
+    answer,
+    mode,
+    usersLength,
+    startBy,
+  });
 };

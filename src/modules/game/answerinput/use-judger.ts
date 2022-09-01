@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
-import { deleteGame, pushMessage } from 'utils/database';
+import { deleteGame, logMatched, pushMessage } from 'utils/database';
 import { localUserNameKey } from 'utils/types';
 import getHint from 'utils/gethint';
 import { initialUserName } from 'ducks/user';
@@ -68,17 +68,19 @@ const useJudger = (): ((inputValue: string) => boolean) => {
       });
 
     if (gameObj && isMatched) {
+      const notice = {
+        a_score: updateScore(
+          gameObj.mode,
+          gameObj.questions.length,
+          currentQuesIndex,
+        ),
+        ...getNoticesWhenMatched(gameObj.created),
+      };
+      logMatched(notice);
       pushMessage(gameKey, {
         type: 'score',
         value: `${userName}:`,
-        notice: {
-          a_score: updateScore(
-            gameObj.mode,
-            gameObj.questions.length,
-            currentQuesIndex,
-          ),
-          ...getNoticesWhenMatched(gameObj.created),
-        },
+        notice,
       });
       deleteGame(gameKey);
     }

@@ -1,6 +1,6 @@
 import shuffle from 'lodash/shuffle';
 import { prefecture } from 'assets/data/prefecture';
-import { writeNewGame } from 'utils/database';
+import { logStartGame, writeNewGame } from 'utils/database';
 import { Mode, PrefectureStr, Questions } from 'utils/types';
 
 const colors = [
@@ -38,6 +38,7 @@ const usePushGame =
     import(`assets/data/${importPath}`)
       .then((data: typeof import('assets/data/cities')) => {
         write(shuffle(data.default()[randomPref]).slice(0, 30));
+        logStartGame(randomPref, mode, gameUsers.length, startBy);
       })
       .catch((err) => {
         alert('データを読み込めませんでした');
