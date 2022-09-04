@@ -16,12 +16,14 @@ const GameReady: FC<{
     margin: 0;
     color: var(--bg-color);
     font-size: 30px;
+    font-weight: 900;
   `;
   const modeHeading = css`
     text-align: center;
     margin: 10px 0 22px;
     color: var(--primary-color);
     font-size: 30px;
+    font-weight: 900;
   `;
   const modeCaption = css`
     font-size: 16px;

@@ -53,7 +53,10 @@ export type GameObj = {
   color: string;
   created: number;
 };
-export type FinishGameFunction = (isDeleted?: boolean) => void;
+export type FinishGameFunction = (
+  isDeleted?: boolean,
+  isUnset?: boolean,
+) => void;
 export const gameTimerSeconds = 1.5;
 
 /* message */

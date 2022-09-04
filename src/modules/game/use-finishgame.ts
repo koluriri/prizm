@@ -9,13 +9,15 @@ import { FinishGameFunction } from 'utils/types';
 const useFinishGame = (): FinishGameFunction => {
   const gameKey = useSelector((state: RootState) => state.game.key);
   const dispatch = useDispatch();
-  const { stopGame } = gameSlice.actions;
+  const { stopGame, unsetGame } = gameSlice.actions;
 
   return useCallback(
-    (isDeleted = false) => {
+    (isDeleted = false, isUnset = false) => {
       if (!isDeleted) deleteGame(gameKey);
 
       dispatch(stopGame());
+
+      if (isUnset) dispatch(unsetGame());
       document.body.classList.remove('ready');
 
       document.body.style.backgroundColor = 'var(--bg-color)';
@@ -23,7 +25,7 @@ const useFinishGame = (): FinishGameFunction => {
         .querySelector("meta[name='theme-color']")
         ?.setAttribute('content', '#f2efe2');
     },
-    [gameKey, dispatch, stopGame],
+    [gameKey, dispatch, stopGame, unsetGame],
   );
 };
 

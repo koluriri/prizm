@@ -24,8 +24,6 @@ export const gameSlice = createSlice({
   reducers: {
     setGameEntity: (state, action: PayloadAction<GameObj>) => {
       if (state.entity !== null) {
-        alert('エラー：複数のゲームが同時に開始されました。やり直してください');
-
         return { ...state, key: '', entity: null };
       }
 

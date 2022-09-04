@@ -31,7 +31,14 @@ const useGameStarted = () => {
       document.body.classList.remove('ready');
     }, gameTimerSeconds * 3 * 1000);
 
-    return () => finishGame();
+    return () => {
+      if (!!gameObj?.created && Date.now() - gameObj.created < 1000) {
+        finishGame(false, true);
+        alert('エラー：複数のゲームが同時に開始されました。やり直してください');
+      } else {
+        finishGame();
+      }
+    };
   }, [gameKey, gameObj, finishGame]);
 
   return finishGame;
