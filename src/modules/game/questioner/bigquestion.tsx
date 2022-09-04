@@ -25,6 +25,12 @@ const BigQuestion: FC<{
       Object.keys(nodeList).forEach((key) => {
         nodeList[Number(key)].innerHTML = displayQuestion;
       });
+
+      const nodeList2 = spanDom.current.querySelectorAll('div > span');
+      Object.keys(nodeList2).forEach((key) => {
+        nodeList2[Number(key)].classList.remove('bigquestion-animation');
+        nodeList2[Number(key)].classList.add('bigquestion-animation');
+      });
     }
   }, [displayQuestion]);
 
@@ -42,10 +48,20 @@ const BigQuestion: FC<{
     position: relative;
   `;
 
+  const layersStyle = css`
+    /*& div > span {
+      animation: 1.5s linear 0s infinite normal rotate-horizontal;
+    }*/
+
+    & div > span > span:not(:first-of-type) {
+      color: var(--primary-color);
+    }
+  `;
+
   return (
     <div css={bigQuestionContainer}>
       <BigQuestionCircle size={size} />
-      <span className="bigquestion-layers" ref={spanDom}>
+      <span className="bigquestion-layers" css={layersStyle} ref={spanDom}>
         <Ztext
           depth="100px"
           direction="both"

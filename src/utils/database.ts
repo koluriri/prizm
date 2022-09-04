@@ -198,6 +198,10 @@ export const logStartGame = (
   });
 };
 
+export const logGameCanceled = () => {
+  logEvent(analytics, 'game_canceled');
+};
+
 export const logPageView = (title: string) => {
   logEvent(analytics, 'page_view', { page_title: title });
 };

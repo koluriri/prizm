@@ -53,7 +53,7 @@ const Game: FC<{
 
   return (
     <div className="gamewrapper" css={gameWrapper}>
-      <div css={gameContent}>
+      <div className="gamegrid" css={gameContent}>
         <Questioner finishGame={() => finishGame()} />
         <Chat />
         <AnswerInput setHome={setHome} />

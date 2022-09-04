@@ -16,6 +16,7 @@ const useFinishGame = (): FinishGameFunction => {
       if (!isDeleted) deleteGame(gameKey);
 
       dispatch(stopGame());
+      document.body.classList.remove('ready');
 
       document.body.style.backgroundColor = 'var(--bg-color)';
       document

@@ -4,7 +4,7 @@ import { RootState } from 'ducks/rootReducer';
 import { gameSlice } from 'ducks/game';
 import { getSummary, updateSummaryFromKey } from 'utils/summary';
 import { pushMessage } from 'utils/database';
-import { FinishGameFunction } from 'utils/types';
+import { FinishGameFunction, gameTimerSeconds } from 'utils/types';
 
 const useQuestionTimer = (finishGame: FinishGameFunction) => {
   const dispatch = useDispatch();
@@ -24,10 +24,9 @@ const useQuestionTimer = (finishGame: FinishGameFunction) => {
 
   useEffect(() => {
     if (isDuringGame) {
-      const timerSeconds = 1.5;
       timerId.current = setInterval(
         () => dispatch(proceedQuesIndex()),
-        timerSeconds * 1000,
+        gameTimerSeconds * 1000,
       );
     }
 
