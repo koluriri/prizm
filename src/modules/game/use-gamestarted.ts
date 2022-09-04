@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { listenGameDeleted } from 'utils/database';
+import { listenGameDeleted, logPageView } from 'utils/database';
 import { getSummary, updateSummaryFromKey } from 'utils/summary';
 
 import { useSelector } from 'react-redux';
@@ -27,6 +27,7 @@ const useGameStarted = () => {
     });
 
     if (isDuringGame) {
+      logPageView('game');
       document.body.classList.add('ready');
       document.body.style.backgroundColor = gameObj?.color ?? 'var(--bg-color)';
       document
@@ -35,6 +36,8 @@ const useGameStarted = () => {
       setTimeout(() => {
         document.body.classList.remove('ready');
       }, gameTimerSeconds * 3 * 1000);
+    } else {
+      logPageView('game_end');
     }
 
     return () => {
