@@ -11,6 +11,10 @@ const useGameStarted = () => {
   const gameKey = useSelector((state: RootState) => state.game.key);
   const gameObj = useSelector((state: RootState) => state.game.entity);
 
+  const isDuringGame = useSelector(
+    (state: RootState) => state.game.isDuringGame,
+  );
+
   const finishGame = useFinishGame();
 
   useEffect(() => {
@@ -22,14 +26,16 @@ const useGameStarted = () => {
       finishGame(true);
     });
 
-    document.body.classList.add('ready');
-    document.body.style.backgroundColor = gameObj?.color ?? 'var(--bg-color)';
-    document
-      .querySelector("meta[name='theme-color']")
-      ?.setAttribute('content', gameObj?.color ?? '#f2efe2');
-    setTimeout(() => {
-      document.body.classList.remove('ready');
-    }, gameTimerSeconds * 3 * 1000);
+    if (isDuringGame) {
+      document.body.classList.add('ready');
+      document.body.style.backgroundColor = gameObj?.color ?? 'var(--bg-color)';
+      document
+        .querySelector("meta[name='theme-color']")
+        ?.setAttribute('content', gameObj?.color ?? '#f2efe2');
+      setTimeout(() => {
+        document.body.classList.remove('ready');
+      }, gameTimerSeconds * 3 * 1000);
+    }
 
     return () => {
       if (!!gameObj?.created && Date.now() - gameObj.created < 1000) {
@@ -39,7 +45,7 @@ const useGameStarted = () => {
         finishGame();
       }
     };
-  }, [gameKey, gameObj, finishGame]);
+  }, [gameKey, gameObj, finishGame, isDuringGame]);
 
   return finishGame;
 };

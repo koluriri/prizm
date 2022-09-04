@@ -54,7 +54,9 @@ const App: FC = () => {
         ) : (
           <Home editMode={() => setEditUserMode(true)} lastMode={lastMode} />
         ))}
-      {editUserMode && <EditUser toHome={() => setEditUserMode(false)} />}
+      {editUserMode && !privacyMode && (
+        <EditUser toHome={() => setEditUserMode(false)} />
+      )}
       {privacyMode && <Privacy toHome={() => setPrivacyMode(false)} />}
       <PrizmFooter privacyMode={() => setPrivacyMode(true)} />
     </>
