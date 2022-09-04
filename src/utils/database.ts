@@ -133,16 +133,20 @@ export const deleteGame = (gameKey: string): void => {
 /* User */
 
 export const newOnlineUser = (user: UserObj): string => {
-  const newUserKey = push(child(ref(database), 'Users')).key ?? '';
+  let userKey = localStorage.getItem('prizm-userkey');
+  if (!userKey) {
+    userKey = push(child(ref(database), 'Users')).key ?? '';
+    localStorage.setItem('prizm-userkey', userKey);
+  }
   const updates: { [key: string]: any } = {};
-  updates[`Users/${newUserKey}`] = user;
+  updates[`Users/${userKey}`] = user;
 
   update(ref(database), updates).catch((err) => {
     alert('エラー：ユーザーを書き込みできませんでした');
     console.error(err);
   });
 
-  return newUserKey;
+  return userKey;
 };
 
 export const deleteUser = (userKey: string): void => {
