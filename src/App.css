@@ -576,3 +576,7 @@ body.ready .gamecancelonready {
   align-items: center;
   justify-content: center;
 }
+
+body.ready .bigquestioncircle-red {
+  background: transparent;
+}

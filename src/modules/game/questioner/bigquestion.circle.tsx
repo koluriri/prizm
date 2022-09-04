@@ -60,6 +60,7 @@ const BigQuestionCircle: FC<{
         border-radius: 100%;
         background: var(--red);
       `}
+      className="bigquestioncircle-red"
     />
   </>
 );
