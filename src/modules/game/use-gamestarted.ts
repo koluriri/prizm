@@ -5,6 +5,7 @@ import { getSummary, updateSummaryFromKey } from 'utils/summary';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 import useFinishGame from 'modules/game/use-finishgame';
+import { gameTimerSeconds } from 'utils/types';
 
 const useGameStarted = () => {
   const gameKey = useSelector((state: RootState) => state.game.key);
@@ -21,10 +22,14 @@ const useGameStarted = () => {
       finishGame(true);
     });
 
+    document.body.classList.add('ready');
     document.body.style.backgroundColor = gameObj?.color ?? 'var(--bg-color)';
     document
       .querySelector("meta[name='theme-color']")
       ?.setAttribute('content', gameObj?.color ?? '#f2efe2');
+    setTimeout(() => {
+      document.body.classList.remove('ready');
+    }, gameTimerSeconds * 3 * 1000);
 
     return () => finishGame();
   }, [gameKey, gameObj, finishGame]);

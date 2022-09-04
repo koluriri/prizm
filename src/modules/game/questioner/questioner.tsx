@@ -9,6 +9,8 @@ import useQuestionTimer from 'modules/game/questioner/use-questiontimer';
 import BigQuestion from 'modules/game/questioner/bigquestion';
 import QuestionList from 'modules/game/questioner/questionlistcontainer';
 import AnswerDisplay from 'modules/game/questioner/answerdisplay';
+import GameReady from 'modules/game/questioner/gameready';
+import GameCancelOnReady from 'modules/game/questioner/gamecancelonready';
 
 const Questioner: FC<{
   finishGame: FinishGameFunction;
@@ -49,12 +51,30 @@ const Questioner: FC<{
   return (
     <div className="questioner" css={questionerContainer}>
       {isDuringGame && (
-        <div css={modeDisp}>{!!gameObj && modesDetail[gameObj.mode]}</div>
+        <div className="modedisp" css={modeDisp}>
+          {!!gameObj && modesDetail[gameObj.mode]}
+        </div>
+      )}
+
+      {!!gameObj && (
+        <GameReady
+          startBy={gameObj.startBy}
+          mode={gameObj.mode}
+          count={gameObj.users.length}
+        />
       )}
 
       {isDuringGame && !!displayQuestions && (
-        <BigQuestion displayQuestion={displayQuestions[currentQuesIndex - 1]} />
+        <BigQuestion
+          displayQuestion={
+            currentQuesIndex - 1 > 2
+              ? displayQuestions[currentQuesIndex - 1]
+              : gameObj.questions[currentQuesIndex - 1]
+          }
+        />
       )}
+
+      {!!gameObj && <GameCancelOnReady />}
 
       {!isDuringGame && !!gameObj?.answer && (
         <AnswerDisplay answer={gameObj.answer} color={gameObj.color} />

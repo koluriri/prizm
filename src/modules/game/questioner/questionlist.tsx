@@ -47,31 +47,33 @@ const QuestionList: FC<{
 
   return (
     <>
-      {questions.map((question, index) =>
-        index < current || !isDuringGame ? (
-          <span
-            // eslint-disable-next-line react/no-array-index-key
-            key={`${question}.${index}`}
-            css={listItem}
-            style={
-              !isDuringGame
-                ? {
-                    background: `${generateColor()}37`,
-                    animationDelay: `${index / 12}s`,
-                  }
-                : {}
-            }
-          >
-            {question}
-          </span>
-        ) : (
-          <span
-            // eslint-disable-next-line react/no-array-index-key
-            key={`${question}.${index}`}
-            css={listHiddenItem}
-          />
-        ),
-      )}
+      {questions
+        .map((question, index) =>
+          index < current || !isDuringGame ? (
+            <span
+              // eslint-disable-next-line react/no-array-index-key
+              key={`${question}.${index}`}
+              css={listItem}
+              style={
+                !isDuringGame
+                  ? {
+                      background: `${generateColor()}37`,
+                      animationDelay: `${index / 12}s`,
+                    }
+                  : {}
+              }
+            >
+              {question}
+            </span>
+          ) : (
+            <span
+              // eslint-disable-next-line react/no-array-index-key
+              key={`${question}.${index}`}
+              css={listHiddenItem}
+            />
+          ),
+        )
+        .filter((q, index) => index > 2)}
     </>
   );
 };

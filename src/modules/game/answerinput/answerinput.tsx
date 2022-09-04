@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
 import useJudger from 'modules/game/answerinput/use-judger';
-import { initialRemain } from 'utils/types';
+import { gameTimerSeconds, initialRemain } from 'utils/types';
 import useCanonicalizePref, {
   canonicalizerReturn,
 } from 'modules/game/answerinput/use-canonicalizepref';
@@ -26,9 +26,11 @@ const AnswerInput: FC<{
   const [answerInputValue, setAnswerInputValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, (gameTimerSeconds * 3 + 0.1) * 1000);
   }, []);
 
   const [errorMessage, setErrorMessage] = useErrorMessage();

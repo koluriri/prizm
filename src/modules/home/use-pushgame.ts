@@ -37,7 +37,12 @@ const usePushGame =
     const importPath = mode === 'station' ? 'stations' : 'cities';
     import(`assets/data/${importPath}`)
       .then((data: typeof import('assets/data/cities')) => {
-        write(shuffle(data.default()[randomPref]).slice(0, 30));
+        write([
+          '3',
+          '2',
+          '1',
+          ...shuffle(data.default()[randomPref]).slice(0, 30),
+        ]);
         logStartGame(randomPref, mode, gameUsers.length, startBy);
       })
       .catch((err) => {

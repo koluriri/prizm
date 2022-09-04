@@ -54,6 +54,7 @@ export type GameObj = {
   created: number;
 };
 export type FinishGameFunction = (isDeleted?: boolean) => void;
+export const gameTimerSeconds = 1.5;
 
 /* message */
 export type MessageTypes = 'answer' | 'hint' | 'start' | 'score';

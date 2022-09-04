@@ -1,4 +1,5 @@
 import {
+  gameTimerSeconds,
   isUserSummaryObj,
   localUserSummary,
   MessageNoticeObj,
@@ -54,7 +55,9 @@ export const getNoticesWhenMatched = (lastWon: number): MessageNoticeObj => {
     if (currentStreak > summary.maxStreak)
       notice.d_update_max_streak = currentStreak;
 
-    const speed = Math.round(((Date.now() - lastWon) / 1000) * 10) / 10;
+    const speed =
+      Math.round(((Date.now() - lastWon) / 1000 - gameTimerSeconds * 3) * 10) /
+      10;
     const averageSpeed =
       summary.averageSpeed === 0
         ? speed
