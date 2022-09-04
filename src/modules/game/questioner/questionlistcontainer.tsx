@@ -18,12 +18,15 @@ const QuestionListContainer: FC<{
 
   const listDom = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (listDom.current)
+    if (listDom.current) {
+      let top = listDom.current.scrollHeight;
+      if (!isDuringGame) top = 0;
       listDom.current.scrollBy({
-        top: listDom.current.scrollHeight,
+        top,
         behavior: 'smooth',
       });
-  }, [current]);
+    }
+  }, [current, isDuringGame]);
 
   return (
     <div
