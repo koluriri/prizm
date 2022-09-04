@@ -37,7 +37,7 @@ const App: FC = () => {
       toOnline();
   }, [userKey, gameKey, editUserMode, privacyMode, toOnline]);
 
-  useListenGameAndDeleteUser();
+  const lastMode = useListenGameAndDeleteUser();
 
   useEffect(() => {
     if (userKey !== '' && editUserMode) toOffline();
@@ -52,7 +52,7 @@ const App: FC = () => {
         (gameKey !== '' && gameObj ? (
           <Game setHome={() => dispatch(unsetGame())} />
         ) : (
-          <Home editMode={() => setEditUserMode(true)} />
+          <Home editMode={() => setEditUserMode(true)} lastMode={lastMode} />
         ))}
       {editUserMode && <EditUser toHome={() => setEditUserMode(false)} />}
       {privacyMode && <Privacy toHome={() => setPrivacyMode(false)} />}

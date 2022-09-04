@@ -8,8 +8,12 @@ import OnlineUsers from 'modules/home/onlineusers';
 import GameSetter from 'modules/home/gamesetter';
 import HomeLogo from 'modules/home/home.logo';
 import bg from 'assets/svg/home-bg.svg';
+import { Mode } from 'utils/types';
 
-const Home: FC<{ editMode: () => void }> = ({ editMode }) => {
+const Home: FC<{ editMode: () => void; lastMode: Mode }> = ({
+  editMode,
+  lastMode,
+}) => {
   const users = useUserMounted();
 
   const homeContainer = css`
@@ -74,7 +78,7 @@ const Home: FC<{ editMode: () => void }> = ({ editMode }) => {
         <OnlineUsers users={users} editMode={() => editMode()} />
       </div>
       <div css={homeGameSetterContainer}>
-        <GameSetter users={users} />
+        <GameSetter users={users} lastMode={lastMode} />
       </div>
     </div>
   );
