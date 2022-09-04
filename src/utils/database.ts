@@ -157,7 +157,7 @@ export const listenUsers = (callback: (users: Users) => any) => {
   const users = query(
     ref(database, 'Users/'),
     orderByChild('pingStamp'),
-    startAt(Date.now() - 3000),
+    startAt(Date.now() - 7700),
   );
   onValue(users, (data) => {
     callback(data.val() as Users);

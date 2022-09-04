@@ -11,7 +11,7 @@ const OnlineUsers: FC<{
   users: Users | undefined;
   editMode: () => void;
 }> = ({ users, editMode }) => {
-  const pingThreshold = 4700;
+  const pingThreshold = 7700;
 
   const [usersLength, setUsersLength] = useState(0);
   useEffect(() => {
