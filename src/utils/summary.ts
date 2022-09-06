@@ -94,7 +94,7 @@ export const getNoticesWhenMatched = (lastWon: number): MessageNoticeObj => {
   return notice;
 };
 
-export const getTweet = (
+export const generateTweet = (
   gameObj: GameObj,
   summary: Partial<UserSummaryObjOnStore>,
 ) => {

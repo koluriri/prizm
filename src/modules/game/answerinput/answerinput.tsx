@@ -16,7 +16,7 @@ import UserRemain from 'modules/game/answerinput/userremain';
 import InputSuggest from 'modules/game/answerinput/inputsuggest';
 import InputErrorMessage from 'modules/game/answerinput/inputerrormessage';
 import { FaTwitter } from 'react-icons/fa';
-import { getTweet } from 'utils/summary';
+import { generateTweet } from 'utils/summary';
 
 const AnswerInput: FC<{
   setHome: () => void;
@@ -126,7 +126,7 @@ const AnswerInput: FC<{
           {isWon && (
             <a
               href={`http://twitter.com/share?text=${encodeURIComponent(
-                getTweet(gameObj, summary),
+                generateTweet(gameObj, summary),
               )}&related=${encodeURIComponent('@koluriri')}`}
               target="_blank"
               rel="noreferrer"
