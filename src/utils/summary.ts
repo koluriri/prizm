@@ -1,9 +1,12 @@
 import {
+  GameObj,
   gameTimerSeconds,
   isUserSummaryObj,
   localUserSummary,
   MessageNoticeObj,
+  modesDisplayWithEmoji,
   UserSummaryObj,
+  UserSummaryObjOnStore,
 } from 'utils/types';
 
 export const getSummary = (): false | UserSummaryObj => {
@@ -36,7 +39,7 @@ export const updateSummaryFromKey = (
   const summary = getSummary();
   if (!summary) return false;
 
-  summary[key] = typeof value === 'number' ? value : value(summary[key]);
+  summary[key] = typeof value === 'number' ? value : value(summary[key] ?? 0);
   localStorage.setItem(localUserSummary, JSON.stringify(summary));
 
   return true;
@@ -84,8 +87,29 @@ export const getNoticesWhenMatched = (lastWon: number): MessageNoticeObj => {
       maxStreak,
       averageSpeed,
       fastestSpeed,
+      lastSpeed: speed,
     });
   }
 
   return notice;
+};
+
+export const getTweet = (gameObj: GameObj, summary: UserSummaryObjOnStore) => {
+  let tweet = '#prizmgame で勝利!💮\n';
+
+  if (summary.a_score) tweet += `💯  score +${summary.a_score}\n`;
+  tweet += `🗾  ${gameObj.answer}\n`;
+  tweet += `⏩  ${modesDisplayWithEmoji[gameObj.mode]}\n`;
+  tweet += `👥  参加者${gameObj.users.length}人\n`;
+  if (summary.lastSpeed) tweet += `⏱️  ${summary.lastSpeed}秒で回答💨\n`;
+  if (summary.currentStreak && summary.currentStreak > 1)
+    tweet += `👍  ${summary.currentStreak}連勝中❗️\n\n`;
+
+  if (summary.d_update_max_streak && summary.d_update_max_streak > 1)
+    tweet += `🎖️  連勝記録を更新🔺\n`;
+  if (summary.b_update_fastest) tweet += `🎖️  最速記録を更新🔺`;
+
+  // tweet += '\nhttps://prizm.pw';
+
+  return tweet;
 };

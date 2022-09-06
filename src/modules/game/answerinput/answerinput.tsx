@@ -15,6 +15,8 @@ import useErrorMessage from 'modules/game/answerinput/use-inputerrormessage';
 import UserRemain from 'modules/game/answerinput/userremain';
 import InputSuggest from 'modules/game/answerinput/inputsuggest';
 import InputErrorMessage from 'modules/game/answerinput/inputerrormessage';
+import { FaTwitter } from 'react-icons/fa';
+import { getTweet } from 'utils/summary';
 
 const AnswerInput: FC<{
   setHome: () => void;
@@ -22,6 +24,8 @@ const AnswerInput: FC<{
   const isDuringGame = useSelector(
     (state: RootState) => state.game.isDuringGame,
   );
+  const gameObj = useSelector((state: RootState) => state.game.entity);
+  const summary = useSelector((state: RootState) => state.game.summary);
 
   const [answerInputValue, setAnswerInputValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -59,6 +63,8 @@ const AnswerInput: FC<{
       setErrorMessage('都道府県を入力してください');
     }
   };
+
+  const isWon = summary.lastWon && summary.lastWon === gameObj?.created;
 
   const answerInputContainer = css`
     grid-area: answerinput;
@@ -117,23 +123,38 @@ const AnswerInput: FC<{
         </form>
       ) : (
         <>
-          {/* <button
-            type="button"
-            className="bordercomp"
-          >
-            ツイート
-            <FaTwitter css={css`margin-left: 3px;`} />
-          </button> */}
+          {isWon && (
+            <a
+              href={`http://twitter.com/share?text=${encodeURIComponent(
+                getTweet(gameObj, summary),
+              )}&related=${encodeURIComponent('@koluriri')}`}
+              target="_blank"
+              rel="noreferrer"
+              className="bordercomp"
+            >
+              ツイート
+              <FaTwitter
+                css={css`
+                  margin-left: 3px;
+                `}
+              />
+            </a>
+          )}
           <button
             type="button"
             onClick={() => setHome()}
             className="button-hinomaru"
             css={css`
-              margin: 10px 0 /*10px 20px*/;
+              margin: 10px 0;
 
-              /*@media (min-width: 768px) {
-                margin-left: 80px;
-              }*/
+              ${isWon &&
+              css`
+                margin: 10px 0 10px 20px;
+
+                @media (min-width: 768px) {
+                  margin-left: 80px;
+                }
+              `}
             `}
           >
             おわる
