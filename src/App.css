@@ -153,6 +153,7 @@ button.bordercomp,
 input[type='submit'].bordercomp {
   white-space: nowrap;
   cursor: pointer;
+  opacity: 1;
 }
 
 .message .bordercomp {

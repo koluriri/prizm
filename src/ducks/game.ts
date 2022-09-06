@@ -1,5 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GameObj, initialRemain, MessageObject, Messages } from 'utils/types';
+import {
+  GameObj,
+  initialRemain,
+  UserSummaryObjOnStore,
+  MessageObject,
+  Messages,
+} from 'utils/types';
 
 export type GameState = {
   key: string;
@@ -8,6 +14,7 @@ export type GameState = {
   currentQuesIndex: number;
   messages: Messages;
   allRemains: number;
+  summary: UserSummaryObjOnStore;
 };
 const initialState: GameState = {
   key: '',
@@ -16,6 +23,7 @@ const initialState: GameState = {
   currentQuesIndex: 1,
   messages: [],
   allRemains: 1000,
+  summary: {},
 };
 
 export const gameSlice = createSlice({
@@ -56,5 +64,9 @@ export const gameSlice = createSlice({
         messages: [...state.messages, action.payload],
       };
     },
+    updateSummary: (state, action: PayloadAction<UserSummaryObjOnStore>) => ({
+      ...state,
+      summary: { ...state.summary, ...action.payload },
+    }),
   },
 });

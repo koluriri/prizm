@@ -11,6 +11,13 @@ export const modesDisplay: { [key in Mode]: string } = {
   hell: 'ゲキムズ',
   station: '駅',
 };
+export const modesDisplayWithEmoji: { [key in Mode]: string } = {
+  easy: '初級🔰',
+  normal: '中級❤️‍🔥',
+  hard: '上級😈',
+  hell: 'ゲキムズ👹',
+  station: '駅🚉',
+};
 export const modesCaption: { [key in Mode]: string } = {
   easy: '市町村が出題されます',
   normal: '市町村の冒頭2文字が出題されます',
@@ -136,7 +143,10 @@ export type UserSummaryObj = {
   maxStreak: number;
   averageSpeed: number;
   fastestSpeed: number;
+  lastSpeed: number;
 };
+export type UserSummaryObjOnStore = Partial<UserSummaryObj> &
+  Partial<MessageNoticeObj>;
 export const isUserSummaryObj = (arg: unknown): arg is UserSummaryObj => {
   const m = arg as UserSummaryObj;
 

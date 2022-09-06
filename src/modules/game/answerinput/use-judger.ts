@@ -1,11 +1,12 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
+import { gameSlice } from 'ducks/game';
 
 import { deleteGame, logMatched, pushMessage } from 'utils/database';
 import { localUserNameKey } from 'utils/types';
 import getHint from 'utils/gethint';
 import { initialUserName } from 'ducks/user';
-import { getNoticesWhenMatched } from 'utils/summary';
+import { getNoticesWhenMatched, getSummary } from 'utils/summary';
 import useUserScore from 'modules/game/answerinput/use-userscore';
 
 const useJudger = (): ((inputValue: string) => boolean) => {
@@ -17,6 +18,8 @@ const useJudger = (): ((inputValue: string) => boolean) => {
   const currentQuesIndex = useSelector(
     (state: RootState) => state.game.currentQuesIndex,
   );
+  const dispatch = useDispatch();
+  const { updateSummary } = gameSlice.actions;
 
   const messages = useSelector((state: RootState) => state.game.messages);
   const allRemains = useSelector((state: RootState) => state.game.allRemains);
@@ -76,6 +79,10 @@ const useJudger = (): ((inputValue: string) => boolean) => {
         ),
         ...getNoticesWhenMatched(gameObj.created),
       };
+
+      const summary = getSummary();
+      if (summary) dispatch(updateSummary({ ...summary, ...notice }));
+
       logMatched(notice);
       pushMessage(gameKey, {
         type: 'score',
