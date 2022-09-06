@@ -14,7 +14,7 @@ export type GameState = {
   currentQuesIndex: number;
   messages: Messages;
   allRemains: number;
-  summary: UserSummaryObjOnStore;
+  summary: Partial<UserSummaryObjOnStore>;
 };
 const initialState: GameState = {
   key: '',

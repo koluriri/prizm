@@ -94,20 +94,24 @@ export const getNoticesWhenMatched = (lastWon: number): MessageNoticeObj => {
   return notice;
 };
 
-export const getTweet = (gameObj: GameObj, summary: UserSummaryObjOnStore) => {
+export const getTweet = (
+  gameObj: GameObj,
+  summary: Partial<UserSummaryObjOnStore>,
+) => {
   let tweet = '#prizmgame で勝利!💮\n';
 
-  if (summary.a_score) tweet += `💯  score +${summary.a_score}\n`;
+  if (summary && summary.a_score) tweet += `💯  score +${summary.a_score}\n`;
   tweet += `🗾  ${gameObj.answer}\n`;
   tweet += `⏩  ${modesDisplayWithEmoji[gameObj.mode]}\n`;
   tweet += `👥  参加者${gameObj.users.length}人\n`;
-  if (summary.lastSpeed) tweet += `⏱️  ${summary.lastSpeed}秒で回答💨\n`;
-  if (summary.currentStreak && summary.currentStreak > 1)
+  if (summary && summary.lastSpeed)
+    tweet += `⏱️  ${summary.lastSpeed}秒で回答💨\n`;
+  if (summary && summary.currentStreak && summary.currentStreak > 1)
     tweet += `👍  ${summary.currentStreak}連勝中❗️\n\n`;
 
-  if (summary.d_update_max_streak && summary.d_update_max_streak > 1)
+  if (summary && summary.d_update_max_streak && summary.d_update_max_streak > 1)
     tweet += `🎖️  連勝記録を更新🔺\n`;
-  if (summary.b_update_fastest) tweet += `🎖️  最速記録を更新🔺`;
+  if (summary && summary.b_update_fastest) tweet += `🎖️  最速記録を更新🔺`;
 
   // tweet += '\nhttps://prizm.pw';
 
