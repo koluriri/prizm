@@ -1,7 +1,14 @@
 import { prefecture } from 'assets/data/prefecture';
 
 /* GAME mode */
-const modes = ['easy', 'normal', 'hard', 'hell', 'station'] as const;
+const modes = [
+  'easy',
+  'normal',
+  'hard',
+  'hell',
+  'veryhell',
+  'station',
+] as const;
 export type Mode = typeof modes[number];
 
 export const modesDisplay: { [key in Mode]: string } = {
@@ -9,6 +16,7 @@ export const modesDisplay: { [key in Mode]: string } = {
   normal: '中級',
   hard: '上級',
   hell: 'ゲキムズ',
+  veryhell: '超ムズ',
   station: '駅',
 };
 export const modesDisplayWithEmoji: { [key in Mode]: string } = {
@@ -16,6 +24,7 @@ export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   normal: '中級❤️‍🔥',
   hard: '上級😈',
   hell: 'ゲキムズ👹',
+  veryhell: '超ムズ👹👹',
   station: '駅モード🚉',
 };
 export const modesCaption: { [key in Mode]: string } = {
@@ -23,6 +32,7 @@ export const modesCaption: { [key in Mode]: string } = {
   normal: '市町村の冒頭2文字が出題されます',
   hard: '市町村の頭文字が出題されます',
   hell: '市町村の2文字目が出題されます',
+  veryhell: '市町村の最後の字が出題されます',
   station: '駅が出題されます',
 };
 export const modesDetail: { [key in Mode]: string } = {
@@ -30,6 +40,7 @@ export const modesDetail: { [key in Mode]: string } = {
   normal: '中級:市町村の冒頭2文字',
   hard: '上級:市町村の頭文字',
   hell: 'ゲキムズ:市町村の2文字目',
+  veryhell: '超ムズ:市町村の最後の字',
   station: '駅モード',
 };
 export const modesConvert: { [key in Mode]: (t: string) => string } = {
@@ -37,6 +48,11 @@ export const modesConvert: { [key in Mode]: (t: string) => string } = {
   normal: (t) => t.substr(0, 2),
   hard: (t) => t.charAt(0),
   hell: (t) => t.charAt(1),
+  veryhell: (t) => {
+    if (t.length <= 2) return t.charAt(0);
+
+    return t.charAt(t.length - 2);
+  },
   station: (t) => t,
 };
 export const modesScore: { [key in Mode]: (score: number) => number } = {
@@ -44,6 +60,7 @@ export const modesScore: { [key in Mode]: (score: number) => number } = {
   normal: (score) => score,
   hard: (score) => score * 1.3,
   hell: (score) => score * 1.45,
+  veryhell: (score) => score * 3,
   station: (score) => score * 0.9,
 };
 
