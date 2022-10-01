@@ -38,7 +38,7 @@ const UserList: FC<{
   `;
   const userListItem = (color: string) => css`
     margin: 4px 0;
-    --user-color: ${color};
+    --user-color: ${/^[#A-Za-z0-9]+$/.test(color) ? color : 'var(--red)'};
     display: flex;
     flex-direction: row;
     align-items: center;
