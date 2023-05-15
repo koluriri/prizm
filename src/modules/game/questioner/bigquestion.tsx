@@ -29,7 +29,9 @@ const BigQuestion: FC<{
       const nodeList2 = spanDom.current.querySelectorAll('div > span');
       Object.keys(nodeList2).forEach((key) => {
         nodeList2[Number(key)].classList.remove('bigquestion-animation');
-        nodeList2[Number(key)].classList.add('bigquestion-animation');
+        setTimeout(() => {
+          nodeList2[Number(key)].classList.add('bigquestion-animation');
+        }, 30);
       });
     }
   }, [displayQuestion]);

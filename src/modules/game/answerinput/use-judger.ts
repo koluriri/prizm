@@ -8,6 +8,7 @@ import getHint from 'utils/gethint';
 import { initialUserName } from 'ducks/user';
 import { getNoticesWhenMatched, getSummary } from 'utils/summary';
 import useUserScore from 'modules/game/answerinput/use-userscore';
+import useAudio from 'hooks/use-audio';
 
 const useJudger = (): ((inputValue: string) => boolean) => {
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;
@@ -25,6 +26,8 @@ const useJudger = (): ((inputValue: string) => boolean) => {
   const allRemains = useSelector((state: RootState) => state.game.allRemains);
 
   const updateScore = useUserScore();
+
+  const playSE = useAudio();
 
   const judge = (
     inputValue: string,
@@ -64,11 +67,13 @@ const useJudger = (): ((inputValue: string) => boolean) => {
     });
     if (hintMessage !== '')
       pushMessage(gameKey, { type: 'hint', value: hintMessage });
-    if (end)
+    if (end) {
+      playSE('end');
       pushMessage(gameKey, {
         type: 'end',
         value: '誰も答えられませんでした',
       });
+    }
 
     if (gameObj && isMatched) {
       const notice = {

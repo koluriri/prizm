@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 import useFinishGame from 'modules/game/use-finishgame';
 import { gameTimerSeconds } from 'utils/types';
+import useAudio from 'hooks/use-audio';
 
 const useGameStarted = () => {
   const gameKey = useSelector((state: RootState) => state.game.key);
@@ -16,6 +17,8 @@ const useGameStarted = () => {
   );
 
   const finishGame = useFinishGame();
+
+  const playSE = useAudio();
 
   useEffect(() => {
     listenGameDeleted(gameKey, () => {
@@ -42,13 +45,14 @@ const useGameStarted = () => {
 
     return () => {
       if (!!gameObj?.created && Date.now() - gameObj.created < 1000) {
+        playSE('cancel');
         finishGame(false, true);
         alert('エラー：複数のゲームが同時に開始されました。やり直してください');
       } else {
         finishGame();
       }
     };
-  }, [gameKey, gameObj, finishGame, isDuringGame]);
+  }, [gameKey, gameObj, finishGame, isDuringGame, playSE]);
 
   return finishGame;
 };

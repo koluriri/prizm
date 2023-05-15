@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /** @jsxImportSource @emotion/react */
 import { css, keyframes } from '@emotion/react';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
@@ -18,6 +19,42 @@ const BigQuestionCircle: FC<{
   const circleEngaged =
     currentQuesIndex > 3 ? 'var(--primary-color)' : 'var(--red)';
 
+  const animation = useMemo(
+    () => css`
+      animation: 1.5s linear 0s 1 normal ${keyframes`
+    0% {
+      font-size: ${currentQuesIndex};
+      background-image: conic-gradient(${circleEngaged} 0deg, ${circleBg} 0deg);
+    }
+    12.5% {
+      background-image: conic-gradient(${circleEngaged} 45deg, ${circleBg} 45deg);
+    }
+    25% {
+      background-image: conic-gradient(${circleEngaged} 90deg, ${circleBg} 90deg);
+    }
+    37.5% {
+      background-image: conic-gradient(${circleEngaged} 135deg, ${circleBg} 135deg);
+    }
+    50% {
+      background-image: conic-gradient(${circleEngaged} 180deg, ${circleBg} 180deg);
+    }
+    62.5% {
+      background-image: conic-gradient(${circleEngaged} 225deg, ${circleBg} 225deg);
+    }
+    75% {
+      background-image: conic-gradient(${circleEngaged} 270deg, ${circleBg} 270deg);
+    }
+    87.5% {
+      background-image: conic-gradient(${circleEngaged} 315deg, ${circleBg} 315deg);
+    }
+    100% {
+      background-image: conic-gradient(${circleEngaged} 360deg, ${circleBg} 360deg);
+    }
+  `};
+    `,
+    [circleEngaged, circleBg, currentQuesIndex],
+  );
+
   return (
     <>
       <span
@@ -31,35 +68,7 @@ const BigQuestionCircle: FC<{
           height: ${size}px;
           border-radius: 100%;
           transform: scale(1.05);
-          animation: 1.5s linear 0s infinite normal ${keyframes`
-        0% {
-          background-image: conic-gradient(${circleEngaged} 0deg, ${circleBg} 0deg);
-        }
-        12.5% {
-          background-image: conic-gradient(${circleEngaged} 45deg, ${circleBg} 45deg);
-        }
-        25% {
-          background-image: conic-gradient(${circleEngaged} 90deg, ${circleBg} 90deg);
-        }
-        37.5% {
-          background-image: conic-gradient(${circleEngaged} 135deg, ${circleBg} 135deg);
-        }
-        50% {
-          background-image: conic-gradient(${circleEngaged} 180deg, ${circleBg} 180deg);
-        }
-        62.5% {
-          background-image: conic-gradient(${circleEngaged} 225deg, ${circleBg} 225deg);
-        }
-        75% {
-          background-image: conic-gradient(${circleEngaged} 270deg, ${circleBg} 270deg);
-        }
-        87.5% {
-          background-image: conic-gradient(${circleEngaged} 315deg, ${circleBg} 315deg);
-        }
-        100% {
-          background-image: conic-gradient(${circleEngaged} 360deg, ${circleBg} 360deg);
-        }
-      `};
+          ${animation}
         `}
       />
       <span

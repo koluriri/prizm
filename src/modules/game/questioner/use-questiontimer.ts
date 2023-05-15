@@ -5,6 +5,7 @@ import { gameSlice } from 'ducks/game';
 import { getSummary, updateSummaryFromKey } from 'utils/summary';
 import { pushMessage } from 'utils/database';
 import { FinishGameFunction, gameTimerSeconds } from 'utils/types';
+import useAudio from 'hooks/use-audio';
 
 const useQuestionTimer = (finishGame: FinishGameFunction) => {
   const dispatch = useDispatch();
@@ -22,16 +23,18 @@ const useQuestionTimer = (finishGame: FinishGameFunction) => {
   const timerId = useRef<NodeJS.Timeout>();
   const clearTimer = useCallback(() => clearInterval(timerId.current), []);
 
+  const playSE = useAudio();
+
   useEffect(() => {
     if (isDuringGame) {
-      timerId.current = setInterval(
-        () => dispatch(proceedQuesIndex()),
-        gameTimerSeconds * 1000,
-      );
+      timerId.current = setInterval(() => {
+        dispatch(proceedQuesIndex());
+        playSE('question');
+      }, gameTimerSeconds * 1000);
     }
 
     return clearTimer;
-  }, [isDuringGame, dispatch, proceedQuesIndex, clearTimer]);
+  }, [isDuringGame, dispatch, proceedQuesIndex, clearTimer, playSE]);
 
   useEffect(() => {
     if (currentQuesIndex === 2) {
@@ -48,6 +51,7 @@ const useQuestionTimer = (finishGame: FinishGameFunction) => {
       gameObj.questions.length !== 0 &&
       messages.find((msg) => msg.type === 'end') === undefined
     ) {
+      playSE('end');
       pushMessage(gameKey, {
         type: 'end',
         value: '誰も答えられませんでした',
@@ -55,7 +59,15 @@ const useQuestionTimer = (finishGame: FinishGameFunction) => {
       finishGame();
       clearTimer();
     }
-  }, [currentQuesIndex, gameObj, gameKey, messages, finishGame, clearTimer]);
+  }, [
+    currentQuesIndex,
+    gameObj,
+    gameKey,
+    messages,
+    finishGame,
+    clearTimer,
+    playSE,
+  ]);
 
   return clearTimer;
 };

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
@@ -11,6 +11,7 @@ import AnswerInput from 'modules/game/answerinput/answerinput';
 
 import useFitScreenHeight from 'modules/game/use-fitScreenHeight';
 import useGameStarted from 'modules/game/use-gamestarted';
+import useAudio from 'hooks/use-audio';
 
 const Game: FC<{
   setHome: () => void;
@@ -18,6 +19,12 @@ const Game: FC<{
   const isDuringGame = useSelector(
     (state: RootState) => state.game.isDuringGame,
   );
+
+  const playSE = useAudio();
+
+  useEffect(() => {
+    if (isDuringGame) playSE('start');
+  }, [isDuringGame, playSE]);
 
   const finishGame = useGameStarted();
 

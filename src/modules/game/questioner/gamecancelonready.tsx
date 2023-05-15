@@ -6,11 +6,15 @@ import { RootState } from 'ducks/rootReducer';
 import { deleteGame, logGameCanceled, pushMessage } from 'utils/database';
 import { localUserNameKey } from 'utils/types';
 import { initialUserName } from 'ducks/user';
+import useAudio from 'hooks/use-audio';
 
 const GameCancelOnReady: FC = () => {
   const gameKey = useSelector((state: RootState) => state.game.key);
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;
+  const playSE = useAudio();
+
   const cancel = () => {
+    playSE('cancel');
     pushMessage(gameKey, {
       type: 'end',
       value: `${userName}によって\nゲームが\n中止されました`,
