@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC } from 'react';
 
 import useUserMounted from 'modules/home/use-usermounted';
 
@@ -9,34 +9,12 @@ import GameSetter from 'modules/home/gamesetter';
 import HomeLogo from 'modules/home/home.logo';
 import bg from 'assets/svg/home-bg.svg';
 import { Mode } from 'utils/types';
-import useAudio from 'hooks/use-audio';
 
 const Home: FC<{ editMode: () => void; lastMode: Mode }> = ({
   editMode,
   lastMode,
 }) => {
   const users = useUserMounted();
-
-  const [prevUsersLength, setPrevUsersLength] = useState(1);
-  const currentUsersLength = useMemo(
-    () => Object.keys(users ?? {}).length,
-    [users],
-  );
-
-  const playSE = useAudio();
-
-  useEffect(() => {
-    if (currentUsersLength !== prevUsersLength && currentUsersLength !== 0) {
-      console.log(`current: ${currentUsersLength}`);
-      console.log(`prev: ${prevUsersLength}`);
-      if (currentUsersLength > prevUsersLength) {
-        playSE('online');
-      } else {
-        playSE('offline');
-      }
-      setPrevUsersLength(currentUsersLength);
-    }
-  }, [currentUsersLength, prevUsersLength, playSE]);
 
   const homeContainer = css`
     display: grid;
