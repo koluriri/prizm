@@ -1,13 +1,28 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import useAudio from 'hooks/use-audio';
-import { FC } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 
 const OnlineUsersHeader: FC<{
   usersLength: number;
   editMode: () => void;
 }> = ({ usersLength, editMode }) => {
   const playSE = useAudio();
+
+  const [showReload, setShowReload] = useState(false);
+  const timerId = useRef<NodeJS.Timeout>();
+  const clearTimer = () => clearTimeout(timerId.current);
+
+  useEffect(() => {
+    timerId.current = setTimeout(() => {
+      setShowReload(true);
+    }, 2000);
+
+    return () => {
+      setShowReload(false);
+      clearTimer();
+    };
+  }, []);
 
   return (
     <div
@@ -26,7 +41,20 @@ const OnlineUsersHeader: FC<{
       `}
     >
       {usersLength === 0 ? (
-        <span>接続中…</span>
+        <>
+          <span>接続中…</span>
+          {showReload && (
+            <button
+              type="button"
+              className="button-link"
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              接続されない場合はこちら
+            </button>
+          )}
+        </>
       ) : (
         <>
           <span

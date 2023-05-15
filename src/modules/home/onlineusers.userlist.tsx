@@ -81,6 +81,18 @@ const UserList: FC<{
     }
   `;
 
+  const reload = css`
+    ${userListItem('var(--red)')}
+    margin-top: 13px !important;
+    font-size: 14px;
+
+    & button {
+      font-size: 16px;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+  `;
+
   return (
     <ul css={userList}>
       {users &&
@@ -95,6 +107,20 @@ const UserList: FC<{
               </li>
             ),
         )}
+      {users && usersLength > 0 && !Object.keys(users).includes(me) && (
+        <li css={reload}>
+          この端末が表示されていない場合は
+          <button
+            type="button"
+            className="button-link"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            リロードする
+          </button>
+        </li>
+      )}
       {usersLength === 0 && <span className="loading" />}
     </ul>
   );
