@@ -16,22 +16,19 @@ const useListenGameAndDeleteUser = () => {
 
   const [lastMode, setLastMode] = useState<Mode>('easy');
 
-  /* const onFocus = () => {
+  const onFocus = () => {
     window.location.reload();
-  }; */
+  };
   const onBlur = () => {
     if (userKey !== '') {
       deleteUser(userKey);
     }
   };
 
-  const beforeUnloadCallback = () => {
-    onBlur();
-  };
-  /* const visibilitychangeCallback = () => {
+  const visibilitychangeCallback = () => {
     if (document.visibilityState === 'visible') onFocus();
     if (document.visibilityState === 'hidden') onBlur();
-  }; */
+  };
 
   useEffect(() => {
     if (userKey !== '') {
@@ -49,25 +46,23 @@ const useListenGameAndDeleteUser = () => {
       });
     }
 
-    window.addEventListener('beforeunload', beforeUnloadCallback);
-    /* if (navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i)) {
-      document.addEventListener('visibilitychange', visibilitychangeCallback);
-    } else {
-      window.addEventListener('focus', onFocus);
-      window.addEventListener('blur', onBlur);
-    } */
+    window.addEventListener('beforeunload', onBlur);
+    window.addEventListener('unload', onBlur);
+    window.addEventListener('pagehide', onBlur);
+    document.addEventListener('visibilitychange', visibilitychangeCallback);
+    window.addEventListener('focus', onFocus);
+    window.addEventListener('blur', onBlur);
 
     return () => {
-      window.removeEventListener('beforeunload', beforeUnloadCallback);
-      /* if (navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i)) {
-        document.removeEventListener(
-          'visibilitychange',
-          visibilitychangeCallback,
-        );
-      } else {
-        window.removeEventListener('focus', () => onFocus);
-        window.removeEventListener('blur', () => onBlur);
-      } */
+      window.removeEventListener('beforeunload', onBlur);
+      window.removeEventListener('unload', onBlur);
+      window.removeEventListener('pagehide', onBlur);
+      document.removeEventListener(
+        'visibilitychange',
+        visibilitychangeCallback,
+      );
+      window.removeEventListener('focus', onFocus);
+      window.removeEventListener('blur', onBlur);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userKey]);
