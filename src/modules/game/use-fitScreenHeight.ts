@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 
 const useFitScreenHeight = (): number => {
-  const [gameHeight, setGameHeight] = useState(visualViewport.height);
+  const [gameHeight, setGameHeight] = useState(visualViewport?.height ?? 0);
 
   const onWindowResize = () => {
     window.scrollTo(0, 0);
-    setGameHeight(visualViewport.height);
+    setGameHeight(visualViewport?.height ?? 0);
   };
   useEffect(() => {
-    window.visualViewport.addEventListener('resize', onWindowResize);
+    window.visualViewport?.addEventListener('resize', onWindowResize);
 
     return () => {
-      window.visualViewport.removeEventListener('resize', onWindowResize);
+      window.visualViewport?.removeEventListener('resize', onWindowResize);
     };
   }, []);
 

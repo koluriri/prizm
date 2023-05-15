@@ -10,6 +10,7 @@ import { initialUserName } from 'ducks/user';
 const GameCancelOnReady: FC = () => {
   const gameKey = useSelector((state: RootState) => state.game.key);
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;
+
   const cancel = () => {
     pushMessage(gameKey, {
       type: 'end',

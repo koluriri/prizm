@@ -14,6 +14,7 @@ import UserSummary from 'modules/edituser/usersummary';
 import UserPreview from 'modules/edituser/edituser.userpreview';
 import ColorSelector from 'modules/edituser/edituser.colorselector';
 import { logUpdateName } from 'utils/database';
+import useAudio from 'hooks/use-audio';
 
 const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
   const userName = localStorage.getItem(localUserNameKey) || initialUserName;
@@ -85,6 +86,8 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
     margin-top: 36px;
   `;
 
+  const playSE = useAudio();
+
   return (
     <>
       <div className="prizm-card" css={edituserComponent}>
@@ -125,14 +128,20 @@ const EditUser: FC<{ toHome: () => void }> = ({ toHome }) => {
           <button
             type="button"
             className="bordercomp simple"
-            onClick={() => toHome()}
+            onClick={() => {
+              playSE('button');
+              toHome();
+            }}
           >
             やめる
           </button>
           <button
             type="button"
             className="bordercomp"
-            onClick={() => submit()}
+            onClick={() => {
+              playSE('button');
+              submit();
+            }}
             disabled={!!inputNameMsg}
           >
             変更する

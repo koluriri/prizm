@@ -64,11 +64,12 @@ const useJudger = (): ((inputValue: string) => boolean) => {
     });
     if (hintMessage !== '')
       pushMessage(gameKey, { type: 'hint', value: hintMessage });
-    if (end)
+    if (end) {
       pushMessage(gameKey, {
         type: 'end',
         value: '誰も答えられませんでした',
       });
+    }
 
     if (gameObj && isMatched) {
       const notice = {

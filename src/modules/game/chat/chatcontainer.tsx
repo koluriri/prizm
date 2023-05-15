@@ -29,8 +29,12 @@ const ChatContainer: FC = () => {
 
   useEffect(() => {
     listenMessage(gameKey, (message) => {
-      if (message.type === 'hint') setTimeout(() => scrollChat(), 500);
-      if (message.type === 'answer' && message.matched) matchedAnimation();
+      if (message.type === 'hint') {
+        setTimeout(() => scrollChat(), 500);
+      }
+      if (message.type === 'answer' && message.matched) {
+        matchedAnimation();
+      }
 
       dispatch(pullMessage(message));
       setTimeout(() => scrollChat(), 150);

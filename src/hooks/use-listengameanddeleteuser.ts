@@ -16,6 +16,23 @@ const useListenGameAndDeleteUser = () => {
 
   const [lastMode, setLastMode] = useState<Mode>('easy');
 
+  /* const onFocus = () => {
+    window.location.reload();
+  }; */
+  const onBlur = () => {
+    if (userKey !== '') {
+      deleteUser(userKey);
+    }
+  };
+
+  const beforeUnloadCallback = () => {
+    onBlur();
+  };
+  /* const visibilitychangeCallback = () => {
+    if (document.visibilityState === 'visible') onFocus();
+    if (document.visibilityState === 'hidden') onBlur();
+  }; */
+
   useEffect(() => {
     if (userKey !== '') {
       listenGame(userKey, (data) => {
@@ -32,12 +49,26 @@ const useListenGameAndDeleteUser = () => {
       });
     }
 
-    const callback = () => {
-      if (userKey !== '') deleteUser(userKey);
-    };
-    window.addEventListener('beforeunload', callback);
+    window.addEventListener('beforeunload', beforeUnloadCallback);
+    /* if (navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i)) {
+      document.addEventListener('visibilitychange', visibilitychangeCallback);
+    } else {
+      window.addEventListener('focus', onFocus);
+      window.addEventListener('blur', onBlur);
+    } */
 
-    return () => window.removeEventListener('beforeunload', callback);
+    return () => {
+      window.removeEventListener('beforeunload', beforeUnloadCallback);
+      /* if (navigator.userAgent.match(/(iPhone|iPad|iPod|Android)/i)) {
+        document.removeEventListener(
+          'visibilitychange',
+          visibilitychangeCallback,
+        );
+      } else {
+        window.removeEventListener('focus', () => onFocus);
+        window.removeEventListener('blur', () => onBlur);
+      } */
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userKey]);
 

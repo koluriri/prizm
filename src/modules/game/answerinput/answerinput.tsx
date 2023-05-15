@@ -17,6 +17,7 @@ import InputSuggest from 'modules/game/answerinput/inputsuggest';
 import InputErrorMessage from 'modules/game/answerinput/inputerrormessage';
 import { FaTwitter } from 'react-icons/fa';
 import { generateTweet } from 'utils/summary';
+import useAudio from 'hooks/use-audio';
 
 const AnswerInput: FC<{
   setHome: () => void;
@@ -97,6 +98,8 @@ const AnswerInput: FC<{
     }
   `;
 
+  const playSE = useAudio();
+
   return (
     <div className="answerinput" css={answerInputContainer}>
       {isDuringGame ? (
@@ -142,7 +145,10 @@ const AnswerInput: FC<{
           )}
           <button
             type="button"
-            onClick={() => setHome()}
+            onClick={() => {
+              playSE('button');
+              setHome();
+            }}
             className="button-hinomaru"
             css={css`
               margin: 10px 0;

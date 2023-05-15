@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
 import { MessageObject } from 'utils/types';
 import MessageContent from 'modules/game/chat/message.content';
+import useAudio from 'hooks/use-audio';
 
 const Message: FC<{
   message: MessageObject;
@@ -30,6 +31,52 @@ const Message: FC<{
     font-weight: 700;
     margin-right: 23px;
   `;
+
+  const playSE = useAudio();
+  const [isPlayed, setIsPlayed] = useState(false);
+
+  const playSEOnce = useCallback(
+    (path: string) => {
+      if (!isPlayed) {
+        playSE(path);
+        setIsPlayed(true);
+      }
+    },
+    [isPlayed, playSE],
+  );
+
+  useEffect(() => {
+    switch (message.type) {
+      case 'start':
+        playSEOnce('start');
+        break;
+
+      case 'hint':
+        setTimeout(() => {
+          playSEOnce('hint');
+        }, 400);
+        break;
+
+      case 'answer':
+        if (message.matched) {
+          playSEOnce('correct');
+        } else {
+          playSEOnce('incorrect');
+        }
+        break;
+
+      case 'end':
+        if (message.value.indexOf('中止') !== -1) {
+          playSEOnce('cancel');
+        } else {
+          playSEOnce('end');
+        }
+        break;
+
+      default:
+        break;
+    }
+  }, [message, playSEOnce]);
 
   return (
     <div

@@ -2,6 +2,7 @@
 import { css } from '@emotion/react';
 import { Mode, modesCaption, modesDisplay } from 'utils/types';
 import { FC, useEffect, useState } from 'react';
+import useAudio from 'hooks/use-audio';
 
 const ModeSelector: FC<{
   mode: Mode;
@@ -89,6 +90,8 @@ const ModeSelector: FC<{
     }
   `;
 
+  const playSE = useAudio();
+
   return (
     <>
       <div css={selectorContainer}>
@@ -97,7 +100,10 @@ const ModeSelector: FC<{
             <button
               type="button"
               key={key}
-              onClick={() => setMode(key as Mode)}
+              onClick={() => {
+                playSE('button');
+                setMode(key as Mode);
+              }}
               className="bordercomp"
               data-active={key === mode}
             >
