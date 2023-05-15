@@ -51,7 +51,6 @@ const useQuestionTimer = (finishGame: FinishGameFunction) => {
       gameObj.questions.length !== 0 &&
       messages.find((msg) => msg.type === 'end') === undefined
     ) {
-      playSE('end');
       pushMessage(gameKey, {
         type: 'end',
         value: '誰も答えられませんでした',

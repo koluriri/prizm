@@ -27,6 +27,8 @@ const Home: FC<{ editMode: () => void; lastMode: Mode }> = ({
 
   useEffect(() => {
     if (currentUsersLength !== prevUsersLength && currentUsersLength !== 0) {
+      console.log(`current: ${currentUsersLength}`);
+      console.log(`prev: ${prevUsersLength}`);
       if (currentUsersLength > prevUsersLength) {
         playSE('online');
       } else {

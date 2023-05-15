@@ -61,6 +61,14 @@ const Message: FC<{
         }
         break;
 
+      case 'end':
+        if (message.value.indexOf('中止') !== -1) {
+          playSEOnce('cancel');
+        } else {
+          playSEOnce('end');
+        }
+        break;
+
       default:
         break;
     }
