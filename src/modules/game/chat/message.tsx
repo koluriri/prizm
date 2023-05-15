@@ -47,6 +47,10 @@ const Message: FC<{
 
   useEffect(() => {
     switch (message.type) {
+      case 'start':
+        playSEOnce('start');
+        break;
+
       case 'hint':
         setTimeout(() => {
           playSEOnce('hint');

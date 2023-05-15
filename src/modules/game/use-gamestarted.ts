@@ -52,7 +52,8 @@ const useGameStarted = () => {
         finishGame();
       }
     };
-  }, [gameKey, gameObj, finishGame, isDuringGame, playSE]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameKey, gameObj, finishGame, isDuringGame]);
 
   return finishGame;
 };
