@@ -1,4 +1,4 @@
-@import 'https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Zen+Maru+Gothic:wght@500;700;900&display=swap';
+@import 'https://fonts.googleapis.com/css2?family=Aoboshi+One&family=RocknRoll+One&display=swap';
 
 * {
   box-sizing: border-box;
@@ -38,7 +38,7 @@ body {
 
 body {
   position: relative;
-  font-family: Poppins, 'Zen Maru Gothic', sans-serif;
+  font-family: 'Aoboshi One', 'RocknRoll One', sans-serif;
   font-feature-settings: 'palt';
   color: var(--primary-color);
   transition: background-color 0.2s;
