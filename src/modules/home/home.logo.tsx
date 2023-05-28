@@ -10,6 +10,7 @@ const HomeLogo: FC = () => {
     align-items: center;
     flex-direction: column;
     justify-content: end;
+    padding: 30px 0;
   `;
   const homeLogo = css`
     width: 90px;

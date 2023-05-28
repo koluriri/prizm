@@ -1,7 +1,13 @@
 import shuffle from 'lodash/shuffle';
 import { prefecture } from 'assets/data/prefecture';
 import { logStartGame, writeNewGame } from 'utils/database';
-import { Mode, PrefectureStr, Questions, modesCaption } from 'utils/types';
+import {
+  Mode,
+  PrefectureStr,
+  Questions,
+  modesCaption,
+  modesConvert,
+} from 'utils/types';
 
 const colors = [
   '#51B1C9',
@@ -26,6 +32,8 @@ const randomMode = (): Mode => {
   return filteredModes[randomIndex] as Mode;
 };
 
+type ImportData = typeof import('assets/data/cities');
+
 const usePushGame =
   () => (mode: Mode, startBy: string, gameUsers: string[]) => {
     const randomPref: PrefectureStr =
@@ -43,6 +51,9 @@ const usePushGame =
         created: Date.now(),
       });
 
+    const countDown: ('3' | '2' | '1')[] = ['3', '2', '1'];
+    const mixedCityModes: Mode[] = ['easy', 'normal', 'veryveryhell'];
+
     let importPath: 'stations' | 'mountains' | 'cities';
     switch (mode) {
       case 'station':
@@ -58,13 +69,33 @@ const usePushGame =
         break;
     }
     import(`assets/data/${importPath}`)
-      .then((data: typeof import('assets/data/cities')) => {
-        write([
-          '3',
-          '2',
-          '1',
-          ...shuffle(data.default()[randomPref]).slice(0, 30),
-        ]);
+      .then(async (data: ImportData) => {
+        if (mode === 'mixed') {
+          const stations = (
+            (await import(`assets/data/stations`)) as ImportData
+          ).default()[randomPref];
+          const mountains = (
+            (await import(`assets/data/mountains`)) as ImportData
+          ).default()[randomPref];
+          const cities = data
+            .default()
+            [randomPref].map((city) =>
+              modesConvert[
+                mixedCityModes[
+                  Math.floor(Math.random() * mixedCityModes.length)
+                ]
+              ](city),
+            );
+          write([
+            ...countDown,
+            ...shuffle([...cities, ...stations, ...mountains]).slice(0, 30),
+          ]);
+        } else {
+          write([
+            ...countDown,
+            ...shuffle(data.default()[randomPref]).slice(0, 30),
+          ]);
+        }
         logStartGame(randomPref, mode, gameUsers.length, startBy);
       })
       .catch((err) => {
