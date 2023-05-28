@@ -54,7 +54,13 @@ const usePushGame =
     const countDown: ('3' | '2' | '1')[] = ['3', '2', '1'];
     const mixedCityModes: Mode[] = ['easy', 'normal', 'veryveryhell'];
 
-    let importPath: 'stations' | 'mountains' | 'cities';
+    const importPathes = [
+      'stations',
+      'mountains',
+      'cities',
+      'castles',
+    ] as const;
+    let importPath: typeof importPathes[number];
     switch (mode) {
       case 'station':
         importPath = 'stations';
@@ -64,6 +70,10 @@ const usePushGame =
         importPath = 'mountains';
         break;
 
+      case 'castle':
+        importPath = 'castles';
+        break;
+
       default:
         importPath = 'cities';
         break;
@@ -71,12 +81,17 @@ const usePushGame =
     import(`assets/data/${importPath}`)
       .then(async (data: ImportData) => {
         if (mode === 'mixed') {
-          const stations = (
-            (await import(`assets/data/stations`)) as ImportData
-          ).default()[randomPref];
-          const mountains = (
-            (await import(`assets/data/mountains`)) as ImportData
-          ).default()[randomPref];
+          let importedData: string[] = [];
+          await Promise.all(
+            importPathes.map(async (path) => {
+              importedData = [
+                ...importedData,
+                ...(
+                  (await import(`assets/data/${path}`)) as ImportData
+                ).default()[randomPref],
+              ];
+            }),
+          );
           const cities = data
             .default()
             [randomPref].map((city) =>
@@ -88,7 +103,7 @@ const usePushGame =
             );
           write([
             ...countDown,
-            ...shuffle([...cities, ...stations, ...mountains]).slice(0, 30),
+            ...shuffle([...cities, ...importedData]).slice(0, 30),
           ]);
         } else {
           write([

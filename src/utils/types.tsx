@@ -11,6 +11,7 @@ import {
   TbQuestionCircle,
   TbMountain,
   TbArrowsRandom,
+  TbBuildingCastle,
 } from 'react-icons/tb';
 
 /* GAME mode */
@@ -24,6 +25,7 @@ const modes = [
   'veryveryhell',
   'station',
   'mountain',
+  'castle',
   'mixed',
 ] as const;
 export type Mode = typeof modes[number];
@@ -83,6 +85,12 @@ export const modesDisplay: { [key in Mode]: ReactNode } = {
       <span>山</span>
     </span>
   ),
+  castle: (
+    <span className="mode-with-icon">
+      <TbBuildingCastle />
+      <span>城</span>
+    </span>
+  ),
   mixed: (
     <span className="mode-with-icon">
       <TbArrowsRandom />
@@ -100,6 +108,7 @@ export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   veryveryhell: '超激ムズ☠️☠️',
   station: '駅モード🚉',
   mountain: '山モード⛰',
+  castle: '城モード🏯',
   mixed: 'ごちゃまぜ🌀',
 };
 export const modesCaption: { [key in Mode]: string } = {
@@ -111,6 +120,7 @@ export const modesCaption: { [key in Mode]: string } = {
   veryveryhell: '市町村からランダムな1文字を出題: ○○○→●',
   station: '駅が出題されます',
   mountain: '山が出題されます',
+  castle: '城が出題されます',
   random: 'モードがランダムで選択されます',
   mixed: '1問ごとに違うモードになります',
 };
@@ -123,6 +133,7 @@ export const modesDetail: { [key in Mode]: string } = {
   veryveryhell: '超激ムズ:市町村の任意の字',
   station: '駅モード',
   mountain: '山モード',
+  castle: '城モード',
   random: 'おまかせ',
   mixed: 'ごちゃまぜ',
 };
@@ -146,6 +157,7 @@ export const modesConvert: { [key in Mode]: (t: string) => string } = {
   },
   station: (t) => t,
   mountain: (t) => t,
+  castle: (t) => t,
   random: (t) => t,
   mixed: (t) => t,
 };
@@ -158,6 +170,7 @@ export const modesScore: { [key in Mode]: (score: number) => number } = {
   veryveryhell: (score) => score * 4.5,
   station: (score) => score,
   mountain: (score) => score,
+  castle: (score) => score,
   random: (score) => score,
   mixed: (score) => score * 0.75,
 };
