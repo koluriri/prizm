@@ -42,6 +42,7 @@ const QuestionListContainer: FC<{
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        scrollbar-width: none;
         ${isDuringGame
           ? css`
               height: 36px;

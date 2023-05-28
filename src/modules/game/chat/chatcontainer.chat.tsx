@@ -28,6 +28,7 @@ const Chat: FC<{
     align-items: flex-end;
     flex-flow: column nowrap;
     padding-top: 80px;
+    scrollbar-width: none;
 
     &::-webkit-scrollbar {
       display: none;
