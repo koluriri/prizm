@@ -6,6 +6,8 @@
 
 :root {
   --primary-color: #0b141c;
+  --primary-color-subdued: #555348;
+  --secondary-color: #dad6c5;
   --bg-color: #f2efe2;
   --font-size: 16px;
   --indigo: #395298;
@@ -19,6 +21,7 @@
   --tea: #c9c31e;
   --beige: #d6a672;
   --red: #d94550;
+  --red-subdued: #efd1c8;
   --yellow: #e8a21c;
   --scarlet: #eb5c4b;
   --pink: #ed9489;
@@ -146,6 +149,19 @@ button:active {
   color: var(--bg-color);
   background: var(--primary-color);
   animation: 0.4s ease 0s 1 normal clicked;
+}
+
+.bordercomp.mode-more {
+  color: var(--red);
+  background: var(--red-subdued);
+  border-color: var(--red-subdued);
+}
+
+.bordercomp.mode-more[data-active='true'] {
+  color: var(--primary-color-subdued);
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+  animation: none;
 }
 
 a.bordercomp,

@@ -1,17 +1,45 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { BiRightArrowAlt, BiLeftArrowAlt } from 'react-icons/bi';
 import { Mode, modesCaption, modesDisplay } from 'utils/types';
-import { FC, useEffect, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import useAudio from 'hooks/use-audio';
+
+const ModeButton = ({
+  targetMode,
+  currentMode,
+  setMode,
+}: {
+  targetMode: Mode;
+  currentMode: Mode;
+  setMode: (mode: Mode) => void;
+}) => {
+  const playSE = useAudio();
+
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        playSE('button');
+        setMode(targetMode);
+      }}
+      className="bordercomp"
+      data-active={targetMode === currentMode}
+    >
+      {modesDisplay[targetMode]}
+    </button>
+  );
+};
 
 const ModeSelector: FC<{
   mode: Mode;
   setMode: (mode: Mode) => void;
 }> = ({ mode, setMode }) => {
-  const [modeCaption, setModeCaption] = useState('');
-  useEffect(() => {
-    setModeCaption(modesCaption[mode]);
-  }, [mode]);
+  const modeCaption = useMemo(() => modesCaption[mode], [mode]);
+
+  const [isCollapse, setIsCollapse] = useState<boolean>(
+    Object.keys(modesDisplay).indexOf(mode) >= 3,
+  );
 
   const modeCaptionStyle = css`
     font-weight: 700;
@@ -90,26 +118,54 @@ const ModeSelector: FC<{
     }
   `;
 
-  const playSE = useAudio();
-
   return (
     <>
       <div css={selectorContainer}>
         <div css={selectorInner}>
-          {Object.keys(modesDisplay).map((key) => (
-            <button
-              type="button"
-              key={key}
-              onClick={() => {
-                playSE('button');
-                setMode(key as Mode);
-              }}
-              className="bordercomp"
-              data-active={key === mode}
-            >
-              {modesDisplay[key as Mode]}
-            </button>
-          ))}
+          {Object.keys(modesDisplay).map((key, index) => {
+            if (index < 4 || (index > 4 && isCollapse))
+              return (
+                <ModeButton
+                  key={key}
+                  targetMode={key as Mode}
+                  currentMode={mode}
+                  setMode={setMode}
+                />
+              );
+            if (index === 4)
+              return (
+                <div key={key} style={{ display: 'contents' }}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (isCollapse) setMode('easy');
+                      setIsCollapse((c) => !c);
+                    }}
+                    className="bordercomp mode-more"
+                    data-active={isCollapse}
+                  >
+                    {!isCollapse ? (
+                      <>
+                        もっと <BiRightArrowAlt />
+                      </>
+                    ) : (
+                      <>
+                        閉じる <BiLeftArrowAlt />
+                      </>
+                    )}
+                  </button>
+                  {isCollapse && (
+                    <ModeButton
+                      targetMode={key as Mode}
+                      currentMode={mode}
+                      setMode={setMode}
+                    />
+                  )}
+                </div>
+              );
+
+            return true;
+          })}
         </div>
       </div>
       <p css={modeCaptionStyle}>{modeCaption}</p>

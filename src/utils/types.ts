@@ -31,12 +31,12 @@ export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   station: '駅モード🚉',
 };
 export const modesCaption: { [key in Mode]: string } = {
-  easy: '市町村が出題されます',
-  normal: '市町村の冒頭2文字が出題されます',
-  hard: '市町村の頭文字が出題されます',
-  hell: '市町村の2文字目が出題されます',
-  veryhell: '市町村の最後の字が出題されます',
-  veryveryhell: '市町村からランダムな1文字を出題',
+  easy: '市町村が出題されます: ●●●',
+  normal: '市町村の冒頭2文字が出題されます: ●●○',
+  hard: '市町村の頭文字が出題されます: ●○○',
+  hell: '市町村の2文字目が出題されます: ○●○',
+  veryhell: '市町村の最後の字が出題されます: ○○●',
+  veryveryhell: '市町村からランダムな1文字を出題: ○○○→●',
   station: '駅が出題されます',
 };
 export const modesDetail: { [key in Mode]: string } = {
