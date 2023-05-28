@@ -1,4 +1,14 @@
 import { prefecture } from 'assets/data/prefecture';
+import { ReactNode } from 'react';
+import { MdOutlineTrain } from 'react-icons/md';
+import {
+  TbMoodHappy,
+  TbMoodSad,
+  TbMoodSadDizzy,
+  TbMoodWrrr,
+  TbMoodXd,
+  TbSkull,
+} from 'react-icons/tb';
 
 /* GAME mode */
 const modes = [
@@ -12,14 +22,49 @@ const modes = [
 ] as const;
 export type Mode = typeof modes[number];
 
-export const modesDisplay: { [key in Mode]: string } = {
-  easy: '初級',
-  normal: '中級',
-  hard: '上級',
-  station: '駅',
-  hell: 'ゲキムズ',
-  veryhell: '超ムズ',
-  veryveryhell: '超激ムズ',
+export const modesDisplay: { [key in Mode]: ReactNode } = {
+  easy: (
+    <span className="mode-with-icon">
+      <TbMoodXd />
+      <span>初級</span>
+    </span>
+  ),
+  normal: (
+    <span className="mode-with-icon">
+      <TbMoodHappy />
+      <span>中級</span>
+    </span>
+  ),
+  hard: (
+    <span className="mode-with-icon">
+      <TbMoodSad />
+      <span>上級</span>
+    </span>
+  ),
+  station: (
+    <span className="mode-with-icon">
+      <MdOutlineTrain />
+      <span>駅</span>
+    </span>
+  ),
+  hell: (
+    <span className="mode-with-icon">
+      <TbMoodWrrr />
+      <span>ゲキムズ</span>
+    </span>
+  ),
+  veryhell: (
+    <span className="mode-with-icon">
+      <TbMoodSadDizzy />
+      <span>超ムズ</span>
+    </span>
+  ),
+  veryveryhell: (
+    <span className="mode-with-icon">
+      <TbSkull />
+      <span>超激ムズ</span>
+    </span>
+  ),
 };
 export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   easy: '初級🔰',

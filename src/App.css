@@ -123,7 +123,7 @@ button:active {
   align-items: center;
   justify-content: center;
   max-width: 100%;
-  padding: 6px 15px 5px;
+  padding: 4px 15px;
   margin: 3px;
   font-size: 20px;
   font-weight: 900;
@@ -162,6 +162,56 @@ button:active {
   background: var(--secondary-color);
   border-color: var(--secondary-color);
   animation: none;
+}
+
+.mode-with-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mode-with-icon svg {
+  width: 26px;
+  height: 26px;
+  margin: 0 -10px;
+  transition: 0.2s;
+}
+
+.mode-with-icon span {
+  max-width: 0;
+  overflow: hidden;
+  transition: 0.2s;
+}
+
+h4 .mode-with-icon svg {
+  width: 32px;
+  height: 32px;
+  margin-right: 2px;
+  margin-left: -2px;
+}
+
+h4 .mode-with-icon span {
+  max-width: 12em;
+}
+
+[data-active='true'] .mode-with-icon svg {
+  margin-right: 2px;
+  margin-left: -2px;
+}
+
+[data-active='true'] .mode-with-icon span {
+  max-width: 12em;
+}
+
+@media (min-width: 768px) {
+  .mode-with-icon svg {
+    margin-right: 2px;
+    margin-left: -2px;
+  }
+
+  .mode-with-icon span {
+    max-width: 12em;
+  }
 }
 
 a.bordercomp,

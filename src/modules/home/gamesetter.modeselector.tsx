@@ -118,6 +118,8 @@ const ModeSelector: FC<{
     }
   `;
 
+  const playSE = useAudio();
+
   return (
     <>
       <div css={selectorContainer}>
@@ -138,6 +140,7 @@ const ModeSelector: FC<{
                   <button
                     type="button"
                     onClick={() => {
+                      playSE(isCollapse ? 'uncollapse' : 'collapse');
                       if (isCollapse) setMode('easy');
                       setIsCollapse((c) => !c);
                     }}
