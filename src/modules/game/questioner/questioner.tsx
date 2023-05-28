@@ -80,9 +80,17 @@ const Questioner: FC<{
         <AnswerDisplay answer={gameObj.answer} color={gameObj.color} />
       )}
 
-      {!!displayQuestions && (
+      {!!displayQuestions && gameObj.mode !== 'veryveryhell' && (
         <QuestionList questions={displayQuestions} current={currentQuesIndex} />
       )}
+      {!!displayQuestions &&
+        !isDuringGame &&
+        gameObj.mode === 'veryveryhell' && (
+          <QuestionList
+            questions={displayQuestions}
+            current={currentQuesIndex}
+          />
+        )}
     </div>
   );
 };

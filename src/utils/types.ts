@@ -5,9 +5,10 @@ const modes = [
   'easy',
   'normal',
   'hard',
+  'station',
   'hell',
   'veryhell',
-  'station',
+  'veryveryhell',
 ] as const;
 export type Mode = typeof modes[number];
 
@@ -15,9 +16,10 @@ export const modesDisplay: { [key in Mode]: string } = {
   easy: '初級',
   normal: '中級',
   hard: '上級',
+  station: '駅',
   hell: 'ゲキムズ',
   veryhell: '超ムズ',
-  station: '駅',
+  veryveryhell: '超激ムズ',
 };
 export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   easy: '初級🔰',
@@ -25,6 +27,7 @@ export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   hard: '上級😈',
   hell: 'ゲキムズ👹',
   veryhell: '超ムズ👹👹',
+  veryveryhell: '超激ムズ☠️☠️',
   station: '駅モード🚉',
 };
 export const modesCaption: { [key in Mode]: string } = {
@@ -33,6 +36,7 @@ export const modesCaption: { [key in Mode]: string } = {
   hard: '市町村の頭文字が出題されます',
   hell: '市町村の2文字目が出題されます',
   veryhell: '市町村の最後の字が出題されます',
+  veryveryhell: '市町村からランダムな1文字を出題',
   station: '駅が出題されます',
 };
 export const modesDetail: { [key in Mode]: string } = {
@@ -41,6 +45,7 @@ export const modesDetail: { [key in Mode]: string } = {
   hard: '上級:市町村の頭文字',
   hell: 'ゲキムズ:市町村の2文字目',
   veryhell: '超ムズ:市町村の最後の字',
+  veryveryhell: '超激ムズ:市町村の任意の字',
   station: '駅モード',
 };
 export const modesConvert: { [key in Mode]: (t: string) => string } = {
@@ -53,6 +58,14 @@ export const modesConvert: { [key in Mode]: (t: string) => string } = {
 
     return t.charAt(t.length - 2);
   },
+  veryveryhell: (t) => {
+    if (t.length <= 2) return t.charAt(0);
+
+    const slicedString = t.slice(0, -1);
+    const randomIndex = Math.floor(Math.random() * slicedString.length);
+
+    return slicedString.charAt(randomIndex);
+  },
   station: (t) => t,
 };
 export const modesScore: { [key in Mode]: (score: number) => number } = {
@@ -61,6 +74,7 @@ export const modesScore: { [key in Mode]: (score: number) => number } = {
   hard: (score) => score * 1.3,
   hell: (score) => score * 1.45,
   veryhell: (score) => score * 3,
+  veryveryhell: (score) => score * 4.5,
   station: (score) => score * 0.9,
 };
 
