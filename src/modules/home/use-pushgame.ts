@@ -1,7 +1,7 @@
 import shuffle from 'lodash/shuffle';
 import { prefecture } from 'assets/data/prefecture';
 import { logStartGame, writeNewGame } from 'utils/database';
-import { Mode, PrefectureStr, Questions } from 'utils/types';
+import { Mode, PrefectureStr, Questions, modesCaption } from 'utils/types';
 
 const colors = [
   '#51B1C9',
@@ -17,6 +17,15 @@ const colors = [
   '#FFB554',
 ];
 
+const randomMode = (): Mode => {
+  const filteredModes = Object.keys(modesCaption).filter(
+    (mode) => mode !== 'random',
+  );
+  const randomIndex = Math.floor(Math.random() * filteredModes.length);
+
+  return filteredModes[randomIndex] as Mode;
+};
+
 const usePushGame =
   () => (mode: Mode, startBy: string, gameUsers: string[]) => {
     const randomPref: PrefectureStr =
@@ -26,7 +35,7 @@ const usePushGame =
       writeNewGame({
         answer: randomPref,
         questions,
-        mode,
+        mode: mode === 'random' ? randomMode() : mode,
         startBy,
         messages: [],
         color: colors[Math.floor(Math.random() * colors.length)],

@@ -8,6 +8,7 @@ import {
   TbMoodWrrr,
   TbMoodXd,
   TbSkull,
+  TbQuestionCircle,
 } from 'react-icons/tb';
 
 /* GAME mode */
@@ -15,6 +16,7 @@ const modes = [
   'easy',
   'normal',
   'hard',
+  'random',
   'station',
   'hell',
   'veryhell',
@@ -39,6 +41,12 @@ export const modesDisplay: { [key in Mode]: ReactNode } = {
     <span className="mode-with-icon">
       <TbMoodSad />
       <span>上級</span>
+    </span>
+  ),
+  random: (
+    <span className="mode-with-icon">
+      <TbQuestionCircle />
+      <span>おまかせ</span>
     </span>
   ),
   station: (
@@ -70,6 +78,7 @@ export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   easy: '初級🔰',
   normal: '中級❤️‍🔥',
   hard: '上級😈',
+  random: 'おまかせ',
   hell: 'ゲキムズ👹',
   veryhell: '超ムズ👹👹',
   veryveryhell: '超激ムズ☠️☠️',
@@ -83,6 +92,7 @@ export const modesCaption: { [key in Mode]: string } = {
   veryhell: '市町村の最後の字が出題されます: ○○●',
   veryveryhell: '市町村からランダムな1文字を出題: ○○○→●',
   station: '駅が出題されます',
+  random: 'モードがランダムで選択されます',
 };
 export const modesDetail: { [key in Mode]: string } = {
   easy: '初級:市町村',
@@ -92,6 +102,7 @@ export const modesDetail: { [key in Mode]: string } = {
   veryhell: '超ムズ:市町村の最後の字',
   veryveryhell: '超激ムズ:市町村の任意の字',
   station: '駅モード',
+  random: 'おまかせ',
 };
 export const modesConvert: { [key in Mode]: (t: string) => string } = {
   easy: (t) => t,
@@ -112,6 +123,7 @@ export const modesConvert: { [key in Mode]: (t: string) => string } = {
     return slicedString.charAt(randomIndex);
   },
   station: (t) => t,
+  random: (t) => t,
 };
 export const modesScore: { [key in Mode]: (score: number) => number } = {
   easy: (score) => score * 0.75,
@@ -121,6 +133,7 @@ export const modesScore: { [key in Mode]: (score: number) => number } = {
   veryhell: (score) => score * 3,
   veryveryhell: (score) => score * 4.5,
   station: (score) => score * 0.9,
+  random: (score) => score,
 };
 
 /* Game */
