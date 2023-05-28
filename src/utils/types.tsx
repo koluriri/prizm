@@ -13,7 +13,16 @@ import {
   TbArrowsRandom,
   TbBuildingCastle,
   TbCar,
+  TbBulb,
+  TbBuildingBank,
+  TbGrill,
+  TbCookieMan,
+  TbApple,
+  TbSchool,
+  TbConfetti,
+  TbTrees,
 } from 'react-icons/tb';
+import IconSpa from 'assets/icon/spa';
 
 /* GAME mode */
 const modes = [
@@ -28,6 +37,15 @@ const modes = [
   'mountain',
   'castle',
   'reststop',
+  'museum',
+  'festival',
+  'cuisine',
+  'attraction',
+  'powerplant',
+  'spa',
+  'specialty',
+  'goods',
+  'quiz',
   'mixed',
 ] as const;
 export type Mode = typeof modes[number];
@@ -99,6 +117,60 @@ export const modesDisplay: { [key in Mode]: ReactNode } = {
       <span>道の駅</span>
     </span>
   ),
+  goods: (
+    <span className="mode-with-icon">
+      <TbCookieMan />
+      <span>名産品</span>
+    </span>
+  ),
+  specialty: (
+    <span className="mode-with-icon">
+      <TbApple />
+      <span>特産品</span>
+    </span>
+  ),
+  quiz: (
+    <span className="mode-with-icon">
+      <TbSchool />
+      <span>雑学</span>
+    </span>
+  ),
+  cuisine: (
+    <span className="mode-with-icon">
+      <TbGrill />
+      <span>郷土料理</span>
+    </span>
+  ),
+  attraction: (
+    <span className="mode-with-icon">
+      <TbTrees />
+      <span>名所</span>
+    </span>
+  ),
+  museum: (
+    <span className="mode-with-icon">
+      <TbBuildingBank />
+      <span>博物館・美術館</span>
+    </span>
+  ),
+  spa: (
+    <span className="mode-with-icon">
+      <IconSpa />
+      <span>温泉</span>
+    </span>
+  ),
+  festival: (
+    <span className="mode-with-icon">
+      <TbConfetti />
+      <span>お祭り</span>
+    </span>
+  ),
+  powerplant: (
+    <span className="mode-with-icon">
+      <TbBulb />
+      <span>発電所</span>
+    </span>
+  ),
   mixed: (
     <span className="mode-with-icon">
       <TbArrowsRandom />
@@ -117,7 +189,16 @@ export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   station: '駅モード🚉',
   mountain: '山モード⛰',
   castle: '城モード🏯',
-  reststop: '道の駅モード🚗',
+  reststop: '道の駅🚗',
+  museum: '博物館・美術館🖼',
+  festival: 'お祭り👘',
+  cuisine: '郷土料理🥘',
+  attraction: '名所🚠',
+  powerplant: '発電所🔌💡',
+  spa: '温泉♨️',
+  specialty: '特産品🪆',
+  goods: '名産品🍎',
+  quiz: '雑学🎓',
   mixed: 'ごちゃまぜ🌀',
 };
 export const modesCaption: { [key in Mode]: string } = {
@@ -131,6 +212,15 @@ export const modesCaption: { [key in Mode]: string } = {
   mountain: '山が出題されます',
   castle: '城が出題されます',
   reststop: '道の駅(東京,神奈川はPA/SAを含む)',
+  museum: '博物館・美術館が出題されます',
+  festival: 'お祭りが出題されます',
+  cuisine: '郷土料理が出題されます',
+  attraction: '名所が出題されます',
+  powerplant: '発電所が出題されます',
+  spa: '温泉が出題されます',
+  specialty: '特産品が出題されます',
+  goods: '名産品が出題されます',
+  quiz: '雑学が出題されます',
   random: 'モードがランダムで選択されます',
   mixed: '1問ごとに違うモードになります',
 };
@@ -144,7 +234,16 @@ export const modesDetail: { [key in Mode]: string } = {
   station: '駅モード',
   mountain: '山モード',
   castle: '城モード',
-  reststop: '道の駅・PAモード',
+  reststop: '道の駅・PA',
+  museum: '博物館・美術館',
+  festival: 'お祭り',
+  cuisine: '郷土料理',
+  attraction: '名所',
+  powerplant: '発電所',
+  spa: '温泉モード',
+  specialty: '特産品',
+  goods: '名産品',
+  quiz: '雑学モード',
   random: 'おまかせ',
   mixed: 'ごちゃまぜ',
 };
@@ -170,6 +269,15 @@ export const modesConvert: { [key in Mode]: (t: string) => string } = {
   mountain: (t) => t,
   castle: (t) => t,
   reststop: (t) => t,
+  museum: (t) => t,
+  festival: (t) => t,
+  cuisine: (t) => t,
+  attraction: (t) => t,
+  powerplant: (t) => t,
+  spa: (t) => t,
+  specialty: (t) => t,
+  goods: (t) => t,
+  quiz: (t) => t,
   random: (t) => t,
   mixed: (t) => t,
 };
@@ -184,6 +292,15 @@ export const modesScore: { [key in Mode]: (score: number) => number } = {
   mountain: (score) => score,
   castle: (score) => score,
   reststop: (score) => score,
+  museum: (score) => score,
+  festival: (score) => score,
+  cuisine: (score) => score,
+  attraction: (score) => score,
+  powerplant: (score) => score,
+  spa: (score) => score,
+  specialty: (score) => score,
+  goods: (score) => score,
+  quiz: (score) => score,
   random: (score) => score,
   mixed: (score) => score * 0.75,
 };
