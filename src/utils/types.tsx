@@ -8,10 +8,11 @@ import {
   TbMoodWrrr,
   TbMoodXd,
   TbSkull,
-  TbQuestionCircle,
+  TbBolt,
   TbMountain,
   TbArrowsRandom,
   TbBuildingCastle,
+  TbCar,
 } from 'react-icons/tb';
 
 /* GAME mode */
@@ -26,6 +27,7 @@ const modes = [
   'station',
   'mountain',
   'castle',
+  'reststop',
   'mixed',
 ] as const;
 export type Mode = typeof modes[number];
@@ -51,7 +53,7 @@ export const modesDisplay: { [key in Mode]: ReactNode } = {
   ),
   random: (
     <span className="mode-with-icon">
-      <TbQuestionCircle />
+      <TbBolt />
       <span>おまかせ</span>
     </span>
   ),
@@ -91,6 +93,12 @@ export const modesDisplay: { [key in Mode]: ReactNode } = {
       <span>城</span>
     </span>
   ),
+  reststop: (
+    <span className="mode-with-icon">
+      <TbCar />
+      <span>道の駅</span>
+    </span>
+  ),
   mixed: (
     <span className="mode-with-icon">
       <TbArrowsRandom />
@@ -109,6 +117,7 @@ export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   station: '駅モード🚉',
   mountain: '山モード⛰',
   castle: '城モード🏯',
+  reststop: '道の駅モード🚗',
   mixed: 'ごちゃまぜ🌀',
 };
 export const modesCaption: { [key in Mode]: string } = {
@@ -121,6 +130,7 @@ export const modesCaption: { [key in Mode]: string } = {
   station: '駅が出題されます',
   mountain: '山が出題されます',
   castle: '城が出題されます',
+  reststop: '道の駅(東京,神奈川はPA/SAを含む)',
   random: 'モードがランダムで選択されます',
   mixed: '1問ごとに違うモードになります',
 };
@@ -134,6 +144,7 @@ export const modesDetail: { [key in Mode]: string } = {
   station: '駅モード',
   mountain: '山モード',
   castle: '城モード',
+  reststop: '道の駅・PAモード',
   random: 'おまかせ',
   mixed: 'ごちゃまぜ',
 };
@@ -158,6 +169,7 @@ export const modesConvert: { [key in Mode]: (t: string) => string } = {
   station: (t) => t,
   mountain: (t) => t,
   castle: (t) => t,
+  reststop: (t) => t,
   random: (t) => t,
   mixed: (t) => t,
 };
@@ -171,6 +183,7 @@ export const modesScore: { [key in Mode]: (score: number) => number } = {
   station: (score) => score,
   mountain: (score) => score,
   castle: (score) => score,
+  reststop: (score) => score,
   random: (score) => score,
   mixed: (score) => score * 0.75,
 };

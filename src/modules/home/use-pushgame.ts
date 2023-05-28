@@ -39,11 +39,13 @@ const usePushGame =
     const randomPref: PrefectureStr =
       prefecture[Math.floor(Math.random() * prefecture.length)];
 
+    const modeUltimate = mode === 'random' ? randomMode() : mode;
+
     const write = (questions: Questions) =>
       writeNewGame({
         answer: randomPref,
         questions,
-        mode: mode === 'random' ? randomMode() : mode,
+        mode: modeUltimate,
         startBy,
         messages: [],
         color: colors[Math.floor(Math.random() * colors.length)],
@@ -59,9 +61,10 @@ const usePushGame =
       'mountains',
       'cities',
       'castles',
+      'reststops',
     ] as const;
     let importPath: typeof importPathes[number];
-    switch (mode) {
+    switch (modeUltimate) {
       case 'station':
         importPath = 'stations';
         break;
@@ -74,13 +77,17 @@ const usePushGame =
         importPath = 'castles';
         break;
 
+      case 'reststop':
+        importPath = 'reststops';
+        break;
+
       default:
         importPath = 'cities';
         break;
     }
     import(`assets/data/${importPath}`)
       .then(async (data: ImportData) => {
-        if (mode === 'mixed') {
+        if (modeUltimate === 'mixed') {
           let importedData: string[] = [];
           await Promise.all(
             importPathes.map(async (path) => {
