@@ -43,7 +43,20 @@ const usePushGame =
         created: Date.now(),
       });
 
-    const importPath = mode === 'station' ? 'stations' : 'cities';
+    let importPath: 'stations' | 'mountains' | 'cities';
+    switch (mode) {
+      case 'station':
+        importPath = 'stations';
+        break;
+
+      case 'mountain':
+        importPath = 'mountains';
+        break;
+
+      default:
+        importPath = 'cities';
+        break;
+    }
     import(`assets/data/${importPath}`)
       .then((data: typeof import('assets/data/cities')) => {
         write([

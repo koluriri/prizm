@@ -9,6 +9,7 @@ import {
   TbMoodXd,
   TbSkull,
   TbQuestionCircle,
+  TbMountain,
 } from 'react-icons/tb';
 
 /* GAME mode */
@@ -17,10 +18,11 @@ const modes = [
   'normal',
   'hard',
   'random',
-  'station',
   'hell',
   'veryhell',
   'veryveryhell',
+  'station',
+  'mountain',
 ] as const;
 export type Mode = typeof modes[number];
 
@@ -49,12 +51,6 @@ export const modesDisplay: { [key in Mode]: ReactNode } = {
       <span>おまかせ</span>
     </span>
   ),
-  station: (
-    <span className="mode-with-icon">
-      <MdOutlineTrain />
-      <span>駅</span>
-    </span>
-  ),
   hell: (
     <span className="mode-with-icon">
       <TbMoodWrrr />
@@ -73,6 +69,18 @@ export const modesDisplay: { [key in Mode]: ReactNode } = {
       <span>超激ムズ</span>
     </span>
   ),
+  station: (
+    <span className="mode-with-icon">
+      <MdOutlineTrain />
+      <span>駅</span>
+    </span>
+  ),
+  mountain: (
+    <span className="mode-with-icon">
+      <TbMountain />
+      <span>山</span>
+    </span>
+  ),
 };
 export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   easy: '初級🔰',
@@ -83,6 +91,7 @@ export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   veryhell: '超ムズ👹👹',
   veryveryhell: '超激ムズ☠️☠️',
   station: '駅モード🚉',
+  mountain: '山モード⛰',
 };
 export const modesCaption: { [key in Mode]: string } = {
   easy: '市町村が出題されます: ●●●',
@@ -92,6 +101,7 @@ export const modesCaption: { [key in Mode]: string } = {
   veryhell: '市町村の最後の字が出題されます: ○○●',
   veryveryhell: '市町村からランダムな1文字を出題: ○○○→●',
   station: '駅が出題されます',
+  mountain: '山が出題されます',
   random: 'モードがランダムで選択されます',
 };
 export const modesDetail: { [key in Mode]: string } = {
@@ -102,6 +112,7 @@ export const modesDetail: { [key in Mode]: string } = {
   veryhell: '超ムズ:市町村の最後の字',
   veryveryhell: '超激ムズ:市町村の任意の字',
   station: '駅モード',
+  mountain: '山モード',
   random: 'おまかせ',
 };
 export const modesConvert: { [key in Mode]: (t: string) => string } = {
@@ -123,6 +134,7 @@ export const modesConvert: { [key in Mode]: (t: string) => string } = {
     return slicedString.charAt(randomIndex);
   },
   station: (t) => t,
+  mountain: (t) => t,
   random: (t) => t,
 };
 export const modesScore: { [key in Mode]: (score: number) => number } = {
@@ -132,7 +144,8 @@ export const modesScore: { [key in Mode]: (score: number) => number } = {
   hell: (score) => score * 1.45,
   veryhell: (score) => score * 3,
   veryveryhell: (score) => score * 4.5,
-  station: (score) => score * 0.9,
+  station: (score) => score,
+  mountain: (score) => score,
   random: (score) => score,
 };
 
