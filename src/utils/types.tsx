@@ -172,7 +172,7 @@ export const modesDisplay: { [key in Mode]: ReactNode } = {
   museum: (
     <span className="mode-with-icon">
       <TbBuildingBank />
-      <span>博物館・美術館</span>
+      <span>博物館</span>
     </span>
   ),
   spa: (
@@ -207,7 +207,7 @@ export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   mountain: '山モード⛰',
   castle: '城モード🏯',
   reststop: '道の駅🚗',
-  museum: '博物館・美術館🖼',
+  museum: '博物館🖼',
   festival: 'お祭り👘',
   cuisine: '郷土料理🥘',
   attraction: '名所🚠',
@@ -232,7 +232,7 @@ export const modesCaption: { [key in Mode]: string } = {
   castle: '城が出題されます',
   reststop: '道の駅(東京,神奈川はPA/SAを含む)',
   sweets: '銘菓が出題されます',
-  museum: '博物館・美術館が出題されます',
+  museum: '博物館が出題されます',
   festival: 'お祭りが出題されます',
   cuisine: '郷土料理が出題されます',
   attraction: '名所が出題されます',
@@ -256,7 +256,7 @@ export const modesDetail: { [key in Mode]: string } = {
   mountain: '山モード',
   castle: '城モード',
   reststop: '道の駅・PA',
-  museum: '博物館・美術館',
+  museum: '博物館',
   festival: 'お祭り',
   cuisine: '郷土料理',
   attraction: '名所',

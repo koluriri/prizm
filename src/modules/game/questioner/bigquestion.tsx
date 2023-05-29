@@ -7,12 +7,19 @@ import useFitFontSizeToWidth from 'modules/game/questioner/use-fitfontsizetowidt
 
 import BigQuestionCircle from 'modules/game/questioner/bigquestion.circle';
 import { Mode } from 'utils/types';
+import useCensorship from './use-censorship';
 
 const BigQuestion: FC<{
   displayQuestion: string;
   mode: Mode;
 }> = ({ displayQuestion = 'Unknown', mode }) => {
   const fontSize = useFitFontSizeToWidth();
+
+  const censorship = useCensorship();
+  const censoredDisplayQuestion = useMemo(
+    () => censorship(displayQuestion, false),
+    [displayQuestion, censorship],
+  );
 
   const [size, setSize] = useState(118);
   useEffect(() => {
@@ -25,7 +32,7 @@ const BigQuestion: FC<{
     if (spanDom.current) {
       const nodeList = spanDom.current.querySelectorAll('div > span > span');
       Object.keys(nodeList).forEach((key) => {
-        nodeList[Number(key)].innerHTML = displayQuestion;
+        nodeList[Number(key)].innerHTML = censoredDisplayQuestion;
       });
 
       const nodeList2 = spanDom.current.querySelectorAll('div > span');
@@ -36,7 +43,7 @@ const BigQuestion: FC<{
         }, 30);
       });
     }
-  }, [displayQuestion]);
+  }, [censoredDisplayQuestion, censorship]);
 
   const bigQuestionContainer = css`
     width: ${size}px;
@@ -103,10 +110,10 @@ const BigQuestion: FC<{
           perspective="400px"
           layers={10}
           style={{
-            fontSize: fontSize(size, displayQuestion),
+            fontSize: fontSize(size, censoredDisplayQuestion),
           }}
         >
-          {displayQuestion}
+          {censoredDisplayQuestion}
         </Ztext>
       </span>
     </div>
