@@ -21,6 +21,8 @@ import {
   TbSchool,
   TbConfetti,
   TbTrees,
+  TbCookie,
+  TbGhost2,
 } from 'react-icons/tb';
 import IconSpa from 'assets/icon/spa';
 
@@ -33,11 +35,13 @@ const modes = [
   'hell',
   'veryhell',
   'veryveryhell',
+  'veryveryveryhell',
   'mixed',
   'station',
   'mountain',
   'castle',
   'reststop',
+  'sweets',
   'museum',
   'festival',
   'cuisine',
@@ -91,6 +95,12 @@ export const modesDisplay: { [key in Mode]: ReactNode } = {
     <span className="mode-with-icon">
       <TbSkull />
       <span>超激ムズ</span>
+    </span>
+  ),
+  veryveryveryhell: (
+    <span className="mode-with-icon">
+      <TbGhost2 />
+      <span>地獄</span>
     </span>
   ),
   mixed: (
@@ -153,6 +163,12 @@ export const modesDisplay: { [key in Mode]: ReactNode } = {
       <span>名所</span>
     </span>
   ),
+  sweets: (
+    <span className="mode-with-icon">
+      <TbCookie />
+      <span>銘菓</span>
+    </span>
+  ),
   museum: (
     <span className="mode-with-icon">
       <TbBuildingBank />
@@ -186,6 +202,7 @@ export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   hell: 'ゲキムズ👹',
   veryhell: '超ムズ👹👹',
   veryveryhell: '超激ムズ☠️☠️',
+  veryveryveryhell: '地獄👻',
   station: '駅モード🚉',
   mountain: '山モード⛰',
   castle: '城モード🏯',
@@ -197,6 +214,7 @@ export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   powerplant: '発電所🔌💡',
   spa: '温泉♨️',
   specialty: '特産品🍎',
+  sweets: '銘菓🍘',
   goods: '伝統工芸品🪆',
   quiz: '雑学🎓',
   mixed: 'ごちゃまぜ🌀',
@@ -207,11 +225,13 @@ export const modesCaption: { [key in Mode]: string } = {
   hard: '市町村の頭文字が出題されます: ●○○',
   hell: '市町村の2文字目が出題されます: ○●○',
   veryhell: '市町村の最後の字が出題されます: ○○●',
-  veryveryhell: '市町村からランダムな1文字を出題: ○○○→●',
+  veryveryhell: '市町村から任意の1文字を出題: ○○○→●',
+  veryveryveryhell: '市町村から任意の1文字かつ3分の1が隠れた状態',
   station: '駅が出題されます',
   mountain: '山が出題されます',
   castle: '城が出題されます',
   reststop: '道の駅(東京,神奈川はPA/SAを含む)',
+  sweets: '銘菓が出題されます',
   museum: '博物館・美術館が出題されます',
   festival: 'お祭りが出題されます',
   cuisine: '郷土料理が出題されます',
@@ -231,6 +251,7 @@ export const modesDetail: { [key in Mode]: string } = {
   hell: 'ゲキムズ:市町村の2文字目',
   veryhell: '超ムズ:市町村の最後の字',
   veryveryhell: '超激ムズ:市町村の任意の字',
+  veryveryveryhell: '地獄:市町村の任意の字',
   station: '駅モード',
   mountain: '山モード',
   castle: '城モード',
@@ -240,6 +261,7 @@ export const modesDetail: { [key in Mode]: string } = {
   cuisine: '郷土料理',
   attraction: '名所',
   powerplant: '発電所',
+  sweets: '銘菓モード',
   spa: '温泉モード',
   specialty: '特産品',
   goods: '伝統工芸品',
@@ -265,6 +287,14 @@ export const modesConvert: { [key in Mode]: (t: string) => string } = {
 
     return slicedString.charAt(randomIndex);
   },
+  veryveryveryhell: (t) => {
+    if (t.length <= 2) return t.charAt(0);
+
+    const slicedString = t.slice(0, -1);
+    const randomIndex = Math.floor(Math.random() * slicedString.length);
+
+    return slicedString.charAt(randomIndex);
+  },
   station: (t) => t,
   mountain: (t) => t,
   castle: (t) => t,
@@ -278,6 +308,7 @@ export const modesConvert: { [key in Mode]: (t: string) => string } = {
   specialty: (t) => t,
   goods: (t) => t,
   quiz: (t) => t,
+  sweets: (t) => t,
   random: (t) => t,
   mixed: (t) => t,
 };
@@ -288,6 +319,7 @@ export const modesScore: { [key in Mode]: (score: number) => number } = {
   hell: (score) => score * 1.45,
   veryhell: (score) => score * 3,
   veryveryhell: (score) => score * 4.5,
+  veryveryveryhell: (score) => score * 8,
   station: (score) => score,
   mountain: (score) => score,
   castle: (score) => score,
@@ -300,6 +332,7 @@ export const modesScore: { [key in Mode]: (score: number) => number } = {
   spa: (score) => score,
   specialty: (score) => score,
   goods: (score) => score,
+  sweets: (score) => score,
   quiz: (score) => score,
   random: (score) => score,
   mixed: (score) => score * 0.75,

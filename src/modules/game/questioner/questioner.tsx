@@ -66,6 +66,7 @@ const Questioner: FC<{
 
       {isDuringGame && !!displayQuestions && (
         <BigQuestion
+          mode={gameObj.mode}
           displayQuestion={
             currentQuesIndex - 1 > 2
               ? displayQuestions[currentQuesIndex - 1]
@@ -80,12 +81,18 @@ const Questioner: FC<{
         <AnswerDisplay answer={gameObj.answer} color={gameObj.color} />
       )}
 
-      {!!displayQuestions && gameObj.mode !== 'veryveryhell' && (
-        <QuestionList questions={displayQuestions} current={currentQuesIndex} />
-      )}
+      {!!displayQuestions &&
+        gameObj.mode !== 'veryveryhell' &&
+        gameObj.mode !== 'veryveryveryhell' && (
+          <QuestionList
+            questions={displayQuestions}
+            current={currentQuesIndex}
+          />
+        )}
       {!!displayQuestions &&
         !isDuringGame &&
-        gameObj.mode === 'veryveryhell' && (
+        (gameObj.mode === 'veryveryhell' ||
+          gameObj.mode === 'veryveryveryhell') && (
           <QuestionList
             questions={displayQuestions}
             current={currentQuesIndex}

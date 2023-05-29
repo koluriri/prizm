@@ -1,15 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import Ztext from 'react-ztext';
 
 import useFitFontSizeToWidth from 'modules/game/questioner/use-fitfontsizetowidth';
 
 import BigQuestionCircle from 'modules/game/questioner/bigquestion.circle';
+import { Mode } from 'utils/types';
 
 const BigQuestion: FC<{
   displayQuestion: string;
-}> = ({ displayQuestion = 'Unknown' }) => {
+  mode: Mode;
+}> = ({ displayQuestion = 'Unknown', mode }) => {
   const fontSize = useFitFontSizeToWidth();
 
   const [size, setSize] = useState(118);
@@ -50,7 +52,34 @@ const BigQuestion: FC<{
     position: relative;
   `;
 
+  const hiderPositions = ['left', 'top', 'bottom', 'right'];
+  const hiderPos = useMemo(
+    () => hiderPositions[Math.floor(Math.random() * hiderPositions.length)],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [displayQuestion],
+  );
+
+  const hider =
+    mode === 'veryveryveryhell' && !['1', '2', '3'].includes(displayQuestion)
+      ? css`
+          & div > span {
+            position: relative;
+          }
+          & div > span:before {
+            content: '';
+            display: block;
+            background: var(--red);
+            inset: 0;
+            ${hiderPos}: 33%;
+            position: absolute;
+            z-index: 4800;
+            transform: translateZ(6px);
+          }
+        `
+      : css``;
+
   const layersStyle = css`
+    ${hider}
     /*& div > span {
       animation: 1.5s linear 0s infinite normal rotate-horizontal;
     }*/
@@ -65,7 +94,7 @@ const BigQuestion: FC<{
       <BigQuestionCircle size={size} />
       <span className="bigquestion-layers" css={layersStyle} ref={spanDom}>
         <Ztext
-          depth="100px"
+          depth={mode === 'veryveryveryhell' ? '10px' : '100px'}
           direction="both"
           event="none"
           eventRotation="30deg"
