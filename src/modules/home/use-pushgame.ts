@@ -63,6 +63,7 @@ const usePushGame =
       'castles',
       'reststops',
       'goods',
+      'specialties',
     ] as const;
     let importPath: typeof importPathes[number];
     switch (modeUltimate) {
@@ -84,6 +85,10 @@ const usePushGame =
 
       case 'goods':
         importPath = 'goods';
+        break;
+
+      case 'specialty':
+        importPath = 'specialties';
         break;
 
       default:
