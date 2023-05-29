@@ -33,6 +33,7 @@ const modes = [
   'hell',
   'veryhell',
   'veryveryhell',
+  'mixed',
   'station',
   'mountain',
   'castle',
@@ -46,7 +47,6 @@ const modes = [
   'specialty',
   'goods',
   'quiz',
-  'mixed',
 ] as const;
 export type Mode = typeof modes[number];
 
@@ -93,6 +93,12 @@ export const modesDisplay: { [key in Mode]: ReactNode } = {
       <span>超激ムズ</span>
     </span>
   ),
+  mixed: (
+    <span className="mode-with-icon">
+      <TbArrowsRandom />
+      <span>ごちゃまぜ</span>
+    </span>
+  ),
   station: (
     <span className="mode-with-icon">
       <MdOutlineTrain />
@@ -120,7 +126,7 @@ export const modesDisplay: { [key in Mode]: ReactNode } = {
   goods: (
     <span className="mode-with-icon">
       <TbCookieMan />
-      <span>名産品</span>
+      <span>伝統工芸品</span>
     </span>
   ),
   specialty: (
@@ -171,12 +177,6 @@ export const modesDisplay: { [key in Mode]: ReactNode } = {
       <span>発電所</span>
     </span>
   ),
-  mixed: (
-    <span className="mode-with-icon">
-      <TbArrowsRandom />
-      <span>ごちゃまぜ</span>
-    </span>
-  ),
 };
 export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   easy: '初級🔰',
@@ -196,8 +196,8 @@ export const modesDisplayWithEmoji: { [key in Mode]: string } = {
   attraction: '名所🚠',
   powerplant: '発電所🔌💡',
   spa: '温泉♨️',
-  specialty: '特産品🪆',
-  goods: '名産品🍎',
+  specialty: '特産品🍎',
+  goods: '伝統工芸品🪆',
   quiz: '雑学🎓',
   mixed: 'ごちゃまぜ🌀',
 };
@@ -219,7 +219,7 @@ export const modesCaption: { [key in Mode]: string } = {
   powerplant: '発電所が出題されます',
   spa: '温泉が出題されます',
   specialty: '特産品が出題されます',
-  goods: '名産品が出題されます',
+  goods: '伝統工芸品が出題されます',
   quiz: '雑学が出題されます',
   random: 'モードがランダムで選択されます',
   mixed: '1問ごとに違うモードになります',
@@ -242,7 +242,7 @@ export const modesDetail: { [key in Mode]: string } = {
   powerplant: '発電所',
   spa: '温泉モード',
   specialty: '特産品',
-  goods: '名産品',
+  goods: '伝統工芸品',
   quiz: '雑学モード',
   random: 'おまかせ',
   mixed: 'ごちゃまぜ',
