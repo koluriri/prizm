@@ -125,7 +125,6 @@ const specialties = (): DefinedQuestions => ({
     '花みょうが',
     'ラズベリー',
     'ブラックベリー',
-    '米',
     'ワカサギ',
   ],
   山形県: [
@@ -510,7 +509,6 @@ const specialties = (): DefinedQuestions => ({
     '明石鯛',
     '山椒',
     '山桃',
-    '鳴門',
     '小豆',
   ],
   奈良県: [

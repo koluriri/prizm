@@ -69,52 +69,21 @@ const usePushGame =
       'sweets',
       'museums',
     ] as const;
-    let importPath: typeof importPathes[number];
-    switch (modeUltimate) {
-      case 'station':
-        importPath = 'stations';
-        break;
+    type ImportPath = typeof importPathes[number];
+    const mappings: { [key in Mode]?: ImportPath } = {
+      station: 'stations',
+      mountain: 'mountains',
+      castle: 'castles',
+      reststop: 'reststops',
+      goods: 'goods',
+      specialty: 'specialties',
+      cuisine: 'cuisines',
+      attraction: 'attractions',
+      sweets: 'sweets',
+      museum: 'museums',
+    };
+    const importPath: ImportPath = mappings[modeUltimate] || 'cities';
 
-      case 'mountain':
-        importPath = 'mountains';
-        break;
-
-      case 'castle':
-        importPath = 'castles';
-        break;
-
-      case 'reststop':
-        importPath = 'reststops';
-        break;
-
-      case 'goods':
-        importPath = 'goods';
-        break;
-
-      case 'specialty':
-        importPath = 'specialties';
-        break;
-
-      case 'cuisine':
-        importPath = 'cuisines';
-        break;
-
-      case 'attraction':
-        importPath = 'attractions';
-        break;
-
-      case 'sweets':
-        importPath = 'sweets';
-        break;
-
-      case 'museum':
-        importPath = 'museums';
-        break;
-
-      default:
-        importPath = 'cities';
-        break;
-    }
     import(`assets/data/${importPath}`)
       .then(async (data: ImportData) => {
         if (modeUltimate === 'mixed') {
