@@ -56,7 +56,7 @@ const usePushGame =
     const countDown: ('3' | '2' | '1')[] = ['3', '2', '1'];
     const mixedCityModes: Mode[] = ['easy', 'normal', 'veryveryhell'];
 
-    const importPathes = [
+    const importPaths = [
       'stations',
       'mountains',
       'cities',
@@ -69,8 +69,8 @@ const usePushGame =
       'sweets',
       'museums',
     ] as const;
-    type ImportPath = typeof importPathes[number];
-    const mappings: { [key in Mode]?: ImportPath } = {
+    type ImportPath = typeof importPaths[number];
+    const mappingPaths: { [key in Mode]?: ImportPath } = {
       station: 'stations',
       mountain: 'mountains',
       castle: 'castles',
@@ -82,14 +82,14 @@ const usePushGame =
       sweets: 'sweets',
       museum: 'museums',
     };
-    const importPath: ImportPath = mappings[modeUltimate] || 'cities';
+    const importPath: ImportPath = mappingPaths[modeUltimate] || 'cities';
 
     import(`assets/data/${importPath}`)
       .then(async (data: ImportData) => {
         if (modeUltimate === 'mixed') {
           let importedData: string[] = [];
           await Promise.all(
-            importPathes.map(async (path) => {
+            importPaths.map(async (path) => {
               importedData = [
                 ...importedData,
                 ...(
