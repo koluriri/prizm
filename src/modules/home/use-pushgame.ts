@@ -70,6 +70,7 @@ const usePushGame =
       'museums',
       'spas',
       'festivals',
+      'powerplants',
     ] as const;
     type ImportPath = typeof importPaths[number];
     const mappingPaths: { [key in Mode]?: ImportPath } = {
@@ -85,6 +86,7 @@ const usePushGame =
       museum: 'museums',
       spa: 'spas',
       festival: 'festivals',
+      powerplant: 'powerplants',
     };
     const importPath: ImportPath = mappingPaths[modeUltimate] || 'cities';
 
