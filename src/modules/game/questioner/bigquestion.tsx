@@ -45,6 +45,52 @@ const BigQuestion: FC<{
     }
   }, [censoredDisplayQuestion, censorship]);
 
+  const hiderPositions = ['left', 'top', 'bottom', 'right'];
+  const hiderPos = useMemo(
+    () => hiderPositions[Math.floor(Math.random() * hiderPositions.length)],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [displayQuestion],
+  );
+
+  const hider =
+    mode === 'veryveryveryhell' && !['1', '2', '3'].includes(displayQuestion)
+      ? css`
+          position: relative;
+          &:before {
+            content: '';
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            inset: 15%;
+            ${hiderPos}: 42%;
+            opacity: 1;
+            backdrop-filter: blur(25px);
+            position: absolute;
+            z-index: 4800;
+            /* transform: translateZ(6px); */
+            transition: 0.2s;
+            animation: wiggle 0.8s infinite;
+          }
+
+          @keyframes wiggle {
+            0% {
+              transform: translate(0px, 0px) rotateZ(0deg);
+            }
+            25% {
+              transform: translate(4px, 4px) rotateZ(4deg);
+            }
+            50% {
+              transform: translate(0px, 4px) rotateZ(0deg);
+            }
+            75% {
+              transform: translate(4px, 0px) rotateZ(-4deg);
+            }
+            100% {
+              transform: translate(0px, 0px) rotateZ(0deg);
+            }
+          }
+        `
+      : css``;
+
   const bigQuestionContainer = css`
     width: ${size}px;
     height: ${size}px;
@@ -57,36 +103,10 @@ const BigQuestion: FC<{
     color: var(--bg-color);
     margin-top: 17px;
     position: relative;
+    ${hider}
   `;
 
-  const hiderPositions = ['left', 'top', 'bottom', 'right'];
-  const hiderPos = useMemo(
-    () => hiderPositions[Math.floor(Math.random() * hiderPositions.length)],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [displayQuestion],
-  );
-
-  const hider =
-    mode === 'veryveryveryhell' && !['1', '2', '3'].includes(displayQuestion)
-      ? css`
-          & div > span {
-            position: relative;
-          }
-          & div > span:before {
-            content: '';
-            display: block;
-            background: var(--red);
-            inset: 0;
-            ${hiderPos}: 33%;
-            position: absolute;
-            z-index: 4800;
-            transform: translateZ(6px);
-          }
-        `
-      : css``;
-
   const layersStyle = css`
-    ${hider}
     /*& div > span {
       animation: 1.5s linear 0s infinite normal rotate-horizontal;
     }*/
