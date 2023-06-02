@@ -52,44 +52,58 @@ const BigQuestion: FC<{
     [displayQuestion],
   );
 
-  const hider =
-    mode === 'veryveryveryhell' && !['1', '2', '3'].includes(displayQuestion)
-      ? css`
-          position: relative;
-          &:before {
-            content: '';
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.1);
-            inset: 15%;
-            ${hiderPos}: 42%;
-            opacity: 1;
-            backdrop-filter: blur(25px);
-            position: absolute;
-            z-index: 4800;
-            /* transform: translateZ(6px); */
-            transition: 0.2s;
-            animation: wiggle 0.8s infinite;
-          }
+  const isMosaicEnabled = useMemo(
+    () =>
+      mode === 'veryveryveryhell' && !['1', '2', '3'].includes(displayQuestion),
+    [mode, displayQuestion],
+  );
 
-          @keyframes wiggle {
-            0% {
-              transform: translate(0px, 0px) rotateZ(0deg);
-            }
-            25% {
-              transform: translate(4px, 4px) rotateZ(4deg);
-            }
-            50% {
-              transform: translate(0px, 4px) rotateZ(0deg);
-            }
-            75% {
-              transform: translate(4px, 0px) rotateZ(-4deg);
-            }
-            100% {
-              transform: translate(0px, 0px) rotateZ(0deg);
-            }
-          }
-        `
-      : css``;
+  const hider = isMosaicEnabled
+    ? css`
+        position: relative;
+      `
+    : css``;
+
+  const mosaicWrapper = css`
+    content: '';
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.025);
+    inset: 15%;
+    ${hiderPos}: 42%;
+    opacity: 1;
+    position: absolute;
+    z-index: 4800;
+    /* transform: translateZ(6px); */
+    transition: 0.2s;
+    animation: wiggle 0.8s infinite;
+
+    @keyframes wiggle {
+      0% {
+        transform: translate(0px, 0px) rotateZ(0deg);
+      }
+      25% {
+        transform: translate(4px, 4px) rotateZ(4deg);
+      }
+      50% {
+        transform: translate(0px, 4px) rotateZ(0deg);
+      }
+      75% {
+        transform: translate(4px, 0px) rotateZ(-4deg);
+      }
+      100% {
+        transform: translate(0px, 0px) rotateZ(0deg);
+      }
+    }
+
+    & > span {
+      display: block;
+      backdrop-filter: blur(60px);
+      width: 33.33%;
+      aspect-ratio: 1 / 1;
+    }
+  `;
 
   const bigQuestionContainer = css`
     width: ${size}px;
@@ -118,10 +132,20 @@ const BigQuestion: FC<{
 
   return (
     <div css={bigQuestionContainer}>
+      {isMosaicEnabled && (
+        <div css={mosaicWrapper}>
+          {Array(16)
+            .fill(null)
+            .map((_, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <span key={index} />
+            ))}
+        </div>
+      )}
       <BigQuestionCircle size={size} />
       <span className="bigquestion-layers" css={layersStyle} ref={spanDom}>
         <Ztext
-          depth={mode === 'veryveryveryhell' ? '10px' : '100px'}
+          depth="100px"
           direction="both"
           event="none"
           eventRotation="30deg"
