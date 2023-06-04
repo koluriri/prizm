@@ -6,10 +6,12 @@
 }
 
 :root {
-  --primary-color: #0b141c;
+  --black: #0b141c;
+  --white: #f2efe2;
+  --primary-color: var(--black);
   --primary-color-subdued: #555348;
   --secondary-color: #dad6c5;
-  --bg-color: #f2efe2;
+  --bg-color: var(--white);
   --font-size: 16px;
   --indigo: #395298;
   --lightblue: #51b2c9;
@@ -30,6 +32,37 @@
   --lightbeige: #f7e3c1;
   --orange: #ffb554;
   --border: 4px solid var(--primary-color);
+  --mode-caption-color: #7a5154;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+
+  :root {
+    --primary-color: var(--white);
+    --primary-color-subdued: #dad6c5;
+    --secondary-color: #2e363e;
+    --bg-color: #141d26;
+    --red-subdued: #4e2629;
+    --mode-caption-color: #b17b7f;
+  }
+
+  .gamewrapper {
+    /* --primary-color: var(--black);
+    --primary-color-subdued: #555348;
+    --secondary-color: #dad6c5;
+    --bg-color: var(--white);
+    --border: 4px solid var(--primary-color);
+
+    color: var(--primary-color); */
+  }
+}
+
+::selection {
+  color: var(--black);
+  background-color: var(--red);
 }
 
 html,
@@ -107,7 +140,7 @@ button:active {
   font-size: 27px;
   font-weight: 900;
   line-height: 1.03;
-  color: var(--bg-color);
+  color: var(--white);
   cursor: pointer;
   background: var(--red);
   border: 0;
@@ -323,7 +356,7 @@ input[type='submit'].bordercomp {
   font-size: 15px;
   line-height: 1.3;
   text-align: right;
-  background-color: var(--bg-color);
+  background-color: var(--white);
   border: 0;
 }
 
@@ -488,7 +521,7 @@ body.matched {
   width: 100vw;
   font-size: 58px;
   font-weight: 900;
-  color: var(--primary-color);
+  color: var(--black);
   text-align: center;
   letter-spacing: -6px;
   content: 'あたり!';

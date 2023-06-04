@@ -16,6 +16,7 @@ const Message: FC<{
       message.type !== 'end');
 
   const messageContainer = css`
+    color: var(--message-color);
     display: flex;
     justify-content: center;
     align-items: end;

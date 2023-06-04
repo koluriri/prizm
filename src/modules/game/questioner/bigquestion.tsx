@@ -114,7 +114,7 @@ const BigQuestion: FC<{
     white-space: nowrap;
     word-break: keep-all;
     font-weight: 900;
-    color: var(--bg-color);
+    color: var(--white);
     margin-top: 17px;
     position: relative;
     ${hider}
@@ -126,7 +126,7 @@ const BigQuestion: FC<{
     }*/
 
     & div > span > span:not(:first-of-type) {
-      color: var(--primary-color);
+      color: var(--black);
     }
   `;
 

@@ -27,7 +27,15 @@ const GameCancelOnReady: FC = () => {
         margin-top: 25px;
       `}
     >
-      <button type="button" className="bordercomp" onClick={() => cancel()}>
+      <button
+        type="button"
+        className="bordercomp"
+        css={css`
+          color: var(--black);
+          border-color: var(--black);
+        `}
+        onClick={() => cancel()}
+      >
         中止する
       </button>
     </div>

@@ -26,6 +26,7 @@ const InputSuggest: FC<{
     right: 0;
     bottom: 0;
     width: 100%;
+    color: var(--black);
     /*width: calc(100% - 53px);*/
     overflow: hidden;
     border-radius: 23px;

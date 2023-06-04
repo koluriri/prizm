@@ -89,10 +89,12 @@ const AnswerInput: FC<{
     left: 0;
     right: 0;
     bottom: 0;
+    color: var(--black);
+    border-color: var(--black);
 
     &::placeholder {
       opacity: 0.5;
-      color: var(--primary-color);
+      color: var(--black);
       font-weight: 500;
       font-size: 20px;
     }

@@ -12,6 +12,7 @@ const MessageNotice: FC<{
     css={css`
       animation-delay: ${animationDelay}s;
       background-color: var(--${background});
+      color: var(--black);
     `}
   >
     {children}

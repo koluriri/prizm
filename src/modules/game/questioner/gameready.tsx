@@ -14,14 +14,14 @@ const GameReady: FC<{
   const startHeading = css`
     text-align: center;
     margin: 0;
-    color: var(--bg-color);
+    color: var(--white);
     font-size: 30px;
     font-weight: 900;
   `;
   const modeHeading = css`
     text-align: center;
     margin: 10px 0 22px;
-    color: var(--primary-color);
+    color: var(--black);
     font-size: 30px;
     font-weight: 900;
   `;
@@ -31,7 +31,7 @@ const GameReady: FC<{
     margin-top: 6px;
   `;
   const usersWrapper = css`
-    color: var(--primary-color);
+    color: var(--black);
     margin-bottom: 22px;
   `;
 

@@ -16,8 +16,7 @@ const BigQuestionCircle: FC<{
   );
 
   const circleBg = currentQuesIndex > 3 ? 'var(--red)' : gameColor;
-  const circleEngaged =
-    currentQuesIndex > 3 ? 'var(--primary-color)' : 'var(--red)';
+  const circleEngaged = currentQuesIndex > 3 ? 'var(--black)' : 'var(--red)';
 
   const animation = useMemo(
     () => css`

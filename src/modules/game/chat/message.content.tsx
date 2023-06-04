@@ -22,6 +22,9 @@ const MessageContent: FC<{
     ${message.type === 'answer' &&
     !message.matched &&
     'animation: 0.4s ease 0s 1 normal redblink;'}
+    color: var(--message-color);
+    ${message.type !== 'answer' && 'color: var(--black);'}
+    border-color: var(--message-color) !important;
   `;
   const hintHeading = css`
     color: ${gameColor};

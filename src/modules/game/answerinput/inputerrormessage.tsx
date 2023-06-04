@@ -13,7 +13,7 @@ const InputErrorMessage: FC<{
       right: 10px;
       width: fit-content;
       background: var(--red);
-      color: var(--bg-color);
+      color: var(--white);
       border-radius: 20px;
       line-height: 1;
       padding: 4px 8px;

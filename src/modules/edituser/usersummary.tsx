@@ -17,6 +17,7 @@ const UserSummary: FC<{ summary: UserSummaryObj }> = ({ summary }) => {
     padding-bottom: 25px;
     border: 0;
     background-color: var(--${bgColor});
+    color: var(--black);
   `;
 
   return (

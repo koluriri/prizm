@@ -46,6 +46,7 @@ const Questioner: FC<{
     font-size: 15px;
     font-weight: 700;
     text-align: center;
+    color: var(--black);
   `;
 
   return (

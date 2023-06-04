@@ -27,6 +27,7 @@ const Game: FC<{
     display: flex;
     justify-content: center;
     align-items: center;
+    --message-color: ${isDuringGame ? 'var(--black)' : 'var(--primary-color)'};
   `;
   const gameContent = css`
     height: ${gameHeight - 20}px;

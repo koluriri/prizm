@@ -78,7 +78,7 @@ const ModeSelector: FC<{
     font-weight: 700;
     font-size: 16px;
     text-align: center;
-    color: #7a5154;
+    color: var(--mode-caption-color);
   `;
 
   const selectorContainer = css`

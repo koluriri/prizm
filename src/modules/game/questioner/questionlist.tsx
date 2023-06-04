@@ -27,6 +27,7 @@ const QuestionList: FC<{
         line-height: 1;
         height: 1em;
         animation: 0.4s ease 0s 1 normal dynamicclicked;
+        color: var(--black);
       `
     : css`
         padding: 1px 5px;
@@ -36,6 +37,7 @@ const QuestionList: FC<{
         font-size: 13px;
         letter-spacing: -1px;
         animation: 0.4s ease 0s 1 both dynamicclicked;
+        color: var(--primary-color);
       `;
   const listHiddenItem = css`
     width: 2px;

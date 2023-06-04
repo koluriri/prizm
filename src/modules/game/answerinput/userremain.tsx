@@ -18,6 +18,7 @@ const UserRemain: FC<{
       justify-content: center;
       align-items: center;
       margin: 3px;
+      color: var(--black);
     `}
   >
     <FaHeart />
