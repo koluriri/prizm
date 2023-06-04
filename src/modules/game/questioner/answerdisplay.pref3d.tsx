@@ -15,6 +15,7 @@ const Pref3D: FC<{
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 8050;
 
       & > div > span {
         animation: 8s linear 0s infinite alternate ${keyframes`

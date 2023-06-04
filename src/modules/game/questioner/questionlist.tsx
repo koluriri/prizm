@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'ducks/rootReducer';
 
 import { useGenerateColor } from 'hooks/use-generates';
+import useCensorship from './use-censorship';
 
 const QuestionList: FC<{
   questions: string[];
@@ -45,6 +46,8 @@ const QuestionList: FC<{
     line-height: 1;
   `;
 
+  const censorship = useCensorship();
+
   return (
     <>
       {questions
@@ -63,7 +66,9 @@ const QuestionList: FC<{
                   : {}
               }
             >
-              {question}
+              {isDuringGame
+                ? censorship(question, false)
+                : censorship(question, true)}
             </span>
           ) : (
             <span

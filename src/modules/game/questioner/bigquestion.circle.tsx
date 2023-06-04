@@ -26,26 +26,62 @@ const BigQuestionCircle: FC<{
       font-size: ${currentQuesIndex};
       background-image: conic-gradient(${circleEngaged} 0deg, ${circleBg} 0deg);
     }
-    12.5% {
-      background-image: conic-gradient(${circleEngaged} 45deg, ${circleBg} 45deg);
+    5% {
+      background-image: conic-gradient(${circleEngaged} 18deg, ${circleBg} 18deg);
+    }
+    10% {
+      background-image: conic-gradient(${circleEngaged} 36deg, ${circleBg} 36deg);
+    }
+    15% {
+      background-image: conic-gradient(${circleEngaged} 54deg, ${circleBg} 54deg);
+    }
+    20% {
+      background-image: conic-gradient(${circleEngaged} 72deg, ${circleBg} 72deg);
     }
     25% {
       background-image: conic-gradient(${circleEngaged} 90deg, ${circleBg} 90deg);
     }
-    37.5% {
-      background-image: conic-gradient(${circleEngaged} 135deg, ${circleBg} 135deg);
+    30% {
+      background-image: conic-gradient(${circleEngaged} 108deg, ${circleBg} 108deg);
+    }
+    35% {
+      background-image: conic-gradient(${circleEngaged} 126deg, ${circleBg} 126deg);
+    }
+    40% {
+      background-image: conic-gradient(${circleEngaged} 144deg, ${circleBg} 144deg);
+    }
+    45% {
+      background-image: conic-gradient(${circleEngaged} 162deg, ${circleBg} 162deg);
     }
     50% {
       background-image: conic-gradient(${circleEngaged} 180deg, ${circleBg} 180deg);
     }
-    62.5% {
-      background-image: conic-gradient(${circleEngaged} 225deg, ${circleBg} 225deg);
+    55% {
+      background-image: conic-gradient(${circleEngaged} 198deg, ${circleBg} 198deg);
+    }
+    60% {
+      background-image: conic-gradient(${circleEngaged} 216deg, ${circleBg} 216deg);
+    }
+    65% {
+      background-image: conic-gradient(${circleEngaged} 234deg, ${circleBg} 234deg);
+    }
+    70% {
+      background-image: conic-gradient(${circleEngaged} 252deg, ${circleBg} 252deg);
     }
     75% {
       background-image: conic-gradient(${circleEngaged} 270deg, ${circleBg} 270deg);
     }
-    87.5% {
-      background-image: conic-gradient(${circleEngaged} 315deg, ${circleBg} 315deg);
+    80% {
+      background-image: conic-gradient(${circleEngaged} 288deg, ${circleBg} 288deg);
+    }
+    85% {
+      background-image: conic-gradient(${circleEngaged} 306deg, ${circleBg} 306deg);
+    }
+    90% {
+      background-image: conic-gradient(${circleEngaged} 324deg, ${circleBg} 324deg);
+    }
+    95% {
+      background-image: conic-gradient(${circleEngaged} 342deg, ${circleBg} 342deg);
     }
     100% {
       background-image: conic-gradient(${circleEngaged} 360deg, ${circleBg} 360deg);

@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 @import 'https://fonts.googleapis.com/css2?family=Aoboshi+One&family=RocknRoll+One&display=swap';
 
 * {
@@ -6,6 +7,8 @@
 
 :root {
   --primary-color: #0b141c;
+  --primary-color-subdued: #555348;
+  --secondary-color: #dad6c5;
   --bg-color: #f2efe2;
   --font-size: 16px;
   --indigo: #395298;
@@ -19,6 +22,7 @@
   --tea: #c9c31e;
   --beige: #d6a672;
   --red: #d94550;
+  --red-subdued: #efd1c8;
   --yellow: #e8a21c;
   --scarlet: #eb5c4b;
   --pink: #ed9489;
@@ -120,7 +124,7 @@ button:active {
   align-items: center;
   justify-content: center;
   max-width: 100%;
-  padding: 6px 15px 5px;
+  padding: 4px 15px;
   margin: 3px;
   font-size: 20px;
   font-weight: 900;
@@ -146,6 +150,161 @@ button:active {
   color: var(--bg-color);
   background: var(--primary-color);
   animation: 0.4s ease 0s 1 normal clicked;
+}
+
+.bordercomp.mode-more-button {
+  color: var(--primary-color-subdued);
+  background: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.bordercomp.mode-more-button[data-active='true'] {
+  color: var(--red);
+  background: var(--red-subdued);
+  border-color: var(--red-subdued);
+}
+
+.mode-with-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mode-with-icon svg,
+.modes-more .mode-with-icon svg {
+  width: 26px;
+  height: 26px;
+  margin: 0 -10px;
+  transition: 0.2s;
+}
+
+.mode-with-icon span,
+.modes-more .mode-with-icon span {
+  max-width: 0;
+  overflow: hidden;
+  transition: 0.2s;
+}
+
+.mode-more-button svg {
+  transform: rotate(90deg);
+}
+
+h4 .mode-with-icon svg {
+  width: 32px;
+  height: 32px;
+  margin-right: 2px;
+  margin-left: -2px;
+}
+
+h4 .mode-with-icon span {
+  max-width: 12em;
+}
+
+[data-active='true'] .mode-with-icon svg,
+.modes-more [data-active='true'] .mode-with-icon svg {
+  margin-right: 2px;
+  margin-left: -2px;
+}
+
+[data-active='true'] .mode-with-icon span,
+.modes-more [data-active='true'] .mode-with-icon span {
+  max-width: 12em;
+}
+
+.modes-more,
+.modes-more-wrapper {
+  display: contents;
+  transition: 0.2s;
+}
+
+.mode-more-button {
+  display: none;
+}
+
+.mode-divider {
+  display: block;
+  height: 35px;
+  margin: 0 14px;
+  border-left: 2px solid var(--secondary-color);
+}
+
+@media (min-width: 768px) {
+  .mode-divider {
+    display: none;
+  }
+
+  .mode-with-icon svg {
+    margin-right: 2px;
+    margin-left: -2px;
+  }
+
+  .mode-with-icon span {
+    max-width: 12em;
+  }
+
+  .mode-more-button {
+    display: flex;
+  }
+
+  .modes-more-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+  }
+
+  .modes-more-wrapper::after,
+  .modes-more-wrapper::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    width: 10px;
+    height: 60px;
+    pointer-events: none;
+    content: '';
+    background-image:
+      linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--bg-color) 100%
+      );
+  }
+
+  .modes-more-wrapper::before {
+    left: 0;
+    background-image:
+      linear-gradient(
+        -90deg,
+        transparent 0%,
+        var(--bg-color) 100%
+      );
+  }
+
+  .modes-more {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 100%;
+    max-height: 0;
+    padding: 0 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .modes-more[data-open='true'] {
+    max-width: 100%;
+    max-height: 3em;
+  }
+
+  .modes-more::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mode-more-button svg {
+    transform: rotate(0deg);
+  }
 }
 
 a.bordercomp,

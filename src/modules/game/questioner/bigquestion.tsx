@@ -1,16 +1,25 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import Ztext from 'react-ztext';
 
 import useFitFontSizeToWidth from 'modules/game/questioner/use-fitfontsizetowidth';
 
 import BigQuestionCircle from 'modules/game/questioner/bigquestion.circle';
+import { Mode } from 'utils/types';
+import useCensorship from './use-censorship';
 
 const BigQuestion: FC<{
   displayQuestion: string;
-}> = ({ displayQuestion = 'Unknown' }) => {
+  mode: Mode;
+}> = ({ displayQuestion = 'Unknown', mode }) => {
   const fontSize = useFitFontSizeToWidth();
+
+  const censorship = useCensorship();
+  const censoredDisplayQuestion = useMemo(
+    () => censorship(displayQuestion, false),
+    [displayQuestion, censorship],
+  );
 
   const [size, setSize] = useState(118);
   useEffect(() => {
@@ -23,7 +32,7 @@ const BigQuestion: FC<{
     if (spanDom.current) {
       const nodeList = spanDom.current.querySelectorAll('div > span > span');
       Object.keys(nodeList).forEach((key) => {
-        nodeList[Number(key)].innerHTML = displayQuestion;
+        nodeList[Number(key)].innerHTML = censoredDisplayQuestion;
       });
 
       const nodeList2 = spanDom.current.querySelectorAll('div > span');
@@ -34,7 +43,67 @@ const BigQuestion: FC<{
         }, 30);
       });
     }
-  }, [displayQuestion]);
+  }, [censoredDisplayQuestion, censorship]);
+
+  const hiderPositions = ['left', 'top', 'bottom', 'right'];
+  const hiderPos = useMemo(
+    () => hiderPositions[Math.floor(Math.random() * hiderPositions.length)],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [displayQuestion],
+  );
+
+  const isMosaicEnabled = useMemo(
+    () =>
+      mode === 'veryveryveryhell' && !['1', '2', '3'].includes(displayQuestion),
+    [mode, displayQuestion],
+  );
+
+  const hider = isMosaicEnabled
+    ? css`
+        position: relative;
+      `
+    : css``;
+
+  const mosaicWrapper = css`
+    content: '';
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.025);
+    inset: 15%;
+    ${hiderPos}: 42%;
+    opacity: 1;
+    position: absolute;
+    z-index: 4800;
+    /* transform: translateZ(6px); */
+    transition: 0.2s;
+    animation: wiggle 0.8s infinite;
+
+    @keyframes wiggle {
+      0% {
+        transform: translate(0px, 0px) rotateZ(0deg);
+      }
+      25% {
+        transform: translate(4px, 4px) rotateZ(4deg);
+      }
+      50% {
+        transform: translate(0px, 4px) rotateZ(0deg);
+      }
+      75% {
+        transform: translate(4px, 0px) rotateZ(-4deg);
+      }
+      100% {
+        transform: translate(0px, 0px) rotateZ(0deg);
+      }
+    }
+
+    & > span {
+      display: block;
+      backdrop-filter: blur(60px);
+      width: 33.33%;
+      aspect-ratio: 1 / 1;
+    }
+  `;
 
   const bigQuestionContainer = css`
     width: ${size}px;
@@ -48,6 +117,7 @@ const BigQuestion: FC<{
     color: var(--bg-color);
     margin-top: 17px;
     position: relative;
+    ${hider}
   `;
 
   const layersStyle = css`
@@ -62,6 +132,16 @@ const BigQuestion: FC<{
 
   return (
     <div css={bigQuestionContainer}>
+      {isMosaicEnabled && (
+        <div css={mosaicWrapper}>
+          {Array(16)
+            .fill(null)
+            .map((_, index) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <span key={index} />
+            ))}
+        </div>
+      )}
       <BigQuestionCircle size={size} />
       <span className="bigquestion-layers" css={layersStyle} ref={spanDom}>
         <Ztext
@@ -74,10 +154,10 @@ const BigQuestion: FC<{
           perspective="400px"
           layers={10}
           style={{
-            fontSize: fontSize(size, displayQuestion),
+            fontSize: fontSize(size, censoredDisplayQuestion),
           }}
         >
-          {displayQuestion}
+          {censoredDisplayQuestion}
         </Ztext>
       </span>
     </div>
