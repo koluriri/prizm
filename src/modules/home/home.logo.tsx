@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { FC } from 'react';
+import { TbInfoCircle } from 'react-icons/tb';
 
 const HomeLogo: FC = () => {
   const homeLogoContainer = css`
@@ -52,9 +53,91 @@ const HomeLogo: FC = () => {
         </svg>
       </h1>
       <h2 css={homeLogoCopy}>
-        市町村から
+        市町村
+        <span
+          css={css`
+            position: relative;
+            display: inline-block;
+
+            &:hover > ul {
+              z-index: 5025;
+              display: inline-block;
+            }
+          `}
+        >
+          <ul
+            css={css`
+              position: absolute;
+              top: 30px;
+              left: 50%;
+              display: none;
+              font-size: 14px;
+              width: 170px;
+              max-width: 90vw;
+              color: var(--red);
+              background: var(--red-subdued);
+              padding: 12px;
+              border-radius: 12px;
+              text-align: left;
+              transform: translateX(-50%);
+              transform-origin: bottom center;
+              margin: 0;
+              list-style-type: none;
+              padding-left: 26px;
+
+              &::after {
+                position: absolute;
+                top: -10px;
+                left: 50%;
+                width: 0;
+                height: 0;
+                margin-left: -10px;
+                content: '';
+                border-color: var(--red-subdued);
+                border-right: 10px solid transparent;
+                border-bottom-style: solid;
+                border-bottom-width: 10px;
+                border-left: 10px solid transparent;
+              }
+
+              & li {
+                position: relative;
+              }
+
+              & li::before {
+                position: absolute;
+                content: '';
+                width: 5px;
+                height: 5px;
+                background: currentColor;
+                border-radius: 50%;
+                left: -12px;
+                top: 7px;
+              }
+            `}
+          >
+            <li>特別区(東京23区)を含む</li>
+            <li>市町村以外のモードも数多く用意しています</li>
+          </ul>
+          <TbInfoCircle
+            css={css`
+              color: var(--primary-color-subdued);
+            `}
+          />
+        </span>
+        から
         <br />
-        都道府県を当てるだけ！
+        <u
+          css={css`
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-thickness: 2px;
+            text-decoration-style: dashed;
+          `}
+        >
+          都道府県を当てる
+        </u>
+        だけ！
       </h2>
     </div>
   );
