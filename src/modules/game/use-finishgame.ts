@@ -24,6 +24,9 @@ const useFinishGame = (): FinishGameFunction => {
       document
         .querySelector("meta[name='theme-color']")
         ?.setAttribute('content', '#f2efe2');
+      document
+        .querySelector("meta[name='theme-color'][media*='dark']")
+        ?.setAttribute('content', '#0b141c');
     },
     [gameKey, dispatch, stopGame, unsetGame],
   );

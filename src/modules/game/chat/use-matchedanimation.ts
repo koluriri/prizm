@@ -15,6 +15,9 @@ const useMatchedAnimation =
       document
         .querySelector("meta[name='theme-color']")
         ?.setAttribute('content', '#f2efe2');
+      document
+        .querySelector("meta[name='theme-color'][media*='dark']")
+        ?.setAttribute('content', '#0b141c');
     }, 800);
 
     setTimeout(() => scrollChat(), 900);
